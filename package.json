@@ -1,0 +1,33 @@
+{
+  "name": "croncat-ui",
+  "version": "0.0.0",
+  "workspaces": [
+    "app",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build --continue",
+    "dev": "yarn app dev",
+    "format": "prettier --write \"**/*.{css,json,md}\" && turbo run format --continue",
+    "lint": "prettier --check \"**/*.{css,json,md}\" && turbo run lint --continue",
+    "test": "turbo run test",
+    "app": "yarn workspace @croncat-ui/app",
+    "icons": "yarn workspace @croncat-ui/icons",
+    "state": "yarn workspace @croncat-ui/state",
+    "ui": "yarn workspace @croncat-ui/ui",
+    "utils": "yarn workspace @croncat-ui/utils",
+    "actions": "yarn workspace @croncat-ui/actions",
+    "common": "yarn workspace @croncat-ui/common",
+    "i18n": "yarn workspace @croncat-ui/i18n"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "prettier": "@croncat-ui/config/prettier",
+  "packageManager": "yarn@1.22.11",
+  "private": true
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@croncat-ui/icons",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "svgr --out-dir dist --typescript --icon --replace-attr-values \"#191D20={props.color}\" -- assets/",
+    "clean": "rm -rf dist/",
+    "dev": "npm run build",
+    "postinstall": "npm run build"
+  },
+  "devDependencies": {
+    "@croncat-ui/config": "*",
+    "@svgr/cli": "^6.1.1"
+  },
+  "prettier": "@croncat-ui/config/prettier",
+  "private": true
+}

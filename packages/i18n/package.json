@@ -1,0 +1,20 @@
+{
+  "name": "@croncat-ui/i18n",
+  "version": "0.0.0",
+  "scripts": {
+    "format": "eslint . --fix",
+    "lint": "eslint .",
+    "lint-missing-keys": "eslint . -c .eslintrc-missing-keys.js"
+  },
+  "devDependencies": {
+    "@croncat-ui/config": "*",
+    "@croncat-ui/tsconfig": "*",
+    "eslint-plugin-i18n-json": "^3.1.0"
+  },
+  "prettier": "@croncat-ui/config/prettier",
+  "private": true,
+  "dependencies": {
+    "i18next": "^21.8.10",
+    "next-i18next": "^11.0.0"
+  }
+}

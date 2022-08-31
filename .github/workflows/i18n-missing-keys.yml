@@ -39,7 +39,7 @@ jobs:
         with:
           issue-number: 778
           body: |
-            # :yin_yang: Auto-generated Missing i18n Keys :yin_yang:
+            # Auto-generated Missing i18n Keys
 
             Updated at ${{ github.event.head_commit.timestamp }} (HEAD -> ${{ github.event.head_commit.id }})
 
@@ -54,7 +54,7 @@ jobs:
           edit-mode: replace
           comment-id: ${{ steps.fc.outputs.comment-id }}
           body: |
-            # :yin_yang: Auto-generated Missing i18n Keys :yin_yang:
+            # Auto-generated Missing i18n Keys
 
             Updated at ${{ github.event.head_commit.timestamp }} (HEAD -> ${{ github.event.head_commit.id }})
 

@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { InputLabel } from 'components/input/InputLabel'
 
 export default {
-  title: 'DAO DAO UI / input / InputLabel',
+  title: 'Croncat UI / input / InputLabel',
   component: InputLabel,
 } as ComponentMeta<typeof InputLabel>
 

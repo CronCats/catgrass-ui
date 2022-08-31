@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { GradientWrapper } from 'components/GradientWrapper'
 
 export default {
-  title: 'DAO DAO UI / GradientWrapper',
+  title: 'Croncat UI / GradientWrapper',
   component: GradientWrapper,
 } as ComponentMeta<typeof GradientWrapper>
 

@@ -1,6 +1,6 @@
 # @croncat-ui/i18n
 
-Translations for the DAO DAO UI.
+Translations for the Croncat UI.
 
 ## Contributing a translation
 

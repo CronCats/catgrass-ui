@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { CosmosMessageDisplay } from 'components/CosmosMessageDisplay'
 
 export default {
-  title: 'DAO DAO UI / CosmosMessageDisplay',
+  title: 'Croncat UI / CosmosMessageDisplay',
   component: CosmosMessageDisplay,
 } as ComponentMeta<typeof CosmosMessageDisplay>
 

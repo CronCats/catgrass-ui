@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ToastCard } from 'components/toasts/ToastCard'
 
 export default {
-  title: 'DAO DAO UI / toasts / ToastCard',
+  title: 'Croncat UI / toasts / ToastCard',
   component: ToastCard,
 } as ComponentMeta<typeof ToastCard>
 

@@ -1,18 +1,15 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import type { GetStaticProps, Redirect } from 'next'
 import { TFunction } from 'next-i18next'
-import removeMarkdown from 'remove-markdown'
 
 import { serverSideTranslationsWithServerT } from '@croncat-ui/i18n/serverSideTranslations'
 import { CwCoreV0_1_0QueryClient } from '@croncat-ui/state'
 import { ConfigResponse } from '@croncat-ui/state/clients/cw-core/0.1.0'
-import { Loader, Logo } from '@croncat-ui/ui'
 import {
   CHAIN_RPC_ENDPOINT,
   CI,
   DAO_STATIC_PROPS_CACHE_SECONDS,
   LEGACY_URL_PREFIX,
-  MAX_META_CHARS_PROPOSAL_DESCRIPTION,
   cosmWasmClientRouter,
   parseCoreVersion,
   processError,

@@ -5,7 +5,7 @@ import { RadioInput } from 'components/input/RadioInput'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / RadioInput',
+  title: 'Croncat UI / input / RadioInput',
   component: RadioInput,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof RadioInput>

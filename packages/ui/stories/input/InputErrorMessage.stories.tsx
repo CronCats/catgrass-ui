@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { InputErrorMessage } from 'components/input/InputErrorMessage'
 
 export default {
-  title: 'DAO DAO UI / input / InputErrorMessage',
+  title: 'Croncat UI / input / InputErrorMessage',
   component: InputErrorMessage,
 } as ComponentMeta<typeof InputErrorMessage>
 

@@ -2,7 +2,7 @@ import { selectorFamily, waitForAll } from 'recoil'
 
 import { TokenInfoResponse } from '@croncat-ui/types/contracts/cw20-gov'
 
-import { Cw20BaseSelectors, Cw20StakedBalanceVotingSelectors } from '..'
+import { Cw20BaseSelectors } from '..'
 import {
   AdminResponse,
   ConfigResponse,

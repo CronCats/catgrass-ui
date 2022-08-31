@@ -1,4 +1,4 @@
-import { InformationCircleIcon } from '@heroicons/react/outline'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import Tooltip, { TooltipProps } from '@reach/tooltip'
 import { forwardRef } from 'react'
 

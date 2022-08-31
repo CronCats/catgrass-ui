@@ -1,4 +1,4 @@
-import { XIcon } from '@heroicons/react/solid'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import { ReactNode, useCallback, useEffect } from 'react'
 
@@ -47,7 +47,7 @@ export const Modal = ({
     >
       <div
         className={clsx(
-          'relative p-6 max-w-md h-min bg-white rounded-lg border border-focus cursor-auto',
+          'relative p-6 max-w-md h-min bg-white rounded-lg border cursor-auto border-focus',
           containerClassName
         )}
       >
@@ -56,7 +56,7 @@ export const Modal = ({
             className="absolute top-2 right-2 p-1 hover:bg-secondary rounded-full transition"
             onClick={onClose}
           >
-            <XIcon className="w-4 h-4" />
+            <XMarkIcon className="w-4 h-4" />
           </button>
         )}
 

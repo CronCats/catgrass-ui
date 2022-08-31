@@ -5,7 +5,7 @@ import { Pie } from '@croncat-ui/icons'
 import { NavItem } from 'components/NavItem'
 
 export default {
-  title: 'DAO DAO UI / NavItem',
+  title: 'Croncat UI / NavItem',
   component: NavItem,
 } as ComponentMeta<typeof NavItem>
 

@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { MarkdownPreview } from 'components/MarkdownPreview'
 
 export default {
-  title: 'DAO DAO UI / MarkdownPreview',
+  title: 'Croncat UI / MarkdownPreview',
   component: MarkdownPreview,
 } as ComponentMeta<typeof MarkdownPreview>
 

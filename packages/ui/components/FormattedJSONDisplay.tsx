@@ -2,7 +2,11 @@ import { ComponentType } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Loadable } from 'recoil'
 
-import { Loader as DefaultLoader, InputLabel, LoaderProps } from '@croncat-ui/ui'
+import {
+  Loader as DefaultLoader,
+  InputLabel,
+  LoaderProps,
+} from '@croncat-ui/ui'
 
 export interface FormattedJSONDisplayProps {
   jsonLoadable: Loadable<any>

@@ -5,7 +5,7 @@ import { ImageSelectorModal } from 'components/input/ImageSelector'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / ImageSelectorModal',
+  title: 'Croncat UI / input / ImageSelectorModal',
   component: ImageSelectorModal,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof ImageSelectorModal>

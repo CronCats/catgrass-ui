@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { TooltipIcon } from 'components/TooltipIcon'
 
 export default {
-  title: 'DAO DAO UI / TooltipIcon',
+  title: 'Croncat UI / TooltipIcon',
   component: TooltipIcon,
 } as ComponentMeta<typeof TooltipIcon>
 

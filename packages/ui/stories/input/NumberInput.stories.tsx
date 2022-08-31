@@ -5,7 +5,7 @@ import { NumberInput } from 'components/input/NumberInput'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / NumberInput',
+  title: 'Croncat UI / input / NumberInput',
   component: NumberInput,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof NumberInput>

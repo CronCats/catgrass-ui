@@ -5,7 +5,7 @@ import { TextAreaInput } from 'components/input/TextAreaInput'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / TextAreaInput',
+  title: 'Croncat UI / input / TextAreaInput',
   component: TextAreaInput,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof TextAreaInput>

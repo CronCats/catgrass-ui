@@ -47,11 +47,11 @@ const backgroundColor = {
 }
 
 const borderColor = {
-  disabled: generateColorClass('dark', 0.03),
-  inactive: generateColorClass('dark', 0.05),
-  default: generateColorClass('dark', 0.15),
-  focus: generateColorClass('dark', 0.25),
-  selected: generateColorClass('dark', 0.25),
+  // disabled: generateColorClass('dark', 0.03),
+  // inactive: generateColorClass('dark', 0.05),
+  // default: generateColorClass('dark', 0.15),
+  // focus: generateColorClass('dark', 0.25),
+  // selected: generateColorClass('dark', 0.25),
   error: generateColorClass('error', 0.6),
 }
 

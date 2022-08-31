@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { SuccessToast } from 'components/toasts/SuccessToast'
 
 export default {
-  title: 'DAO DAO UI / toasts / SuccessToast',
+  title: 'Croncat UI / toasts / SuccessToast',
   component: SuccessToast,
 } as ComponentMeta<typeof SuccessToast>
 

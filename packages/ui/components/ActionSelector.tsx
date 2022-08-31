@@ -97,7 +97,6 @@ export const ActionSelector = ({
       containerClassName="max-w-[96vw] w-[32rem] !h-[38rem] max-h-[96vh] flex flex-col gap-2"
       onClose={onClose}
     >
-
       <ul
         className="flex overflow-y-auto flex-col grow gap-3 pr-2 list-none styled-scrollbar"
         ref={actionsListRef}

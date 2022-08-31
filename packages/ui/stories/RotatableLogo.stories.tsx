@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { RotatableLogo } from 'components/RotatableLogo'
 
 export default {
-  title: 'DAO DAO UI / RotatableLogo',
+  title: 'Croncat UI / RotatableLogo',
   component: RotatableLogo,
 } as ComponentMeta<typeof RotatableLogo>
 

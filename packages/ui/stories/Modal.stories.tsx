@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { Modal } from 'components/Modal'
 
 export default {
-  title: 'DAO DAO UI / Modal',
+  title: 'Croncat UI / Modal',
   component: Modal,
 } as ComponentMeta<typeof Modal>
 

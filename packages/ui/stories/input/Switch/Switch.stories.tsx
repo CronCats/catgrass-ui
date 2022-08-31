@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { Switch } from 'components/input/Switch'
 
 export default {
-  title: 'DAO DAO UI / input / Switch',
+  title: 'Croncat UI / input / Switch',
   component: Switch,
 } as ComponentMeta<typeof Switch>
 

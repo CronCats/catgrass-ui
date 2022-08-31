@@ -9,6 +9,5 @@ export const useRegisterAdaptersOnMount = () => {
     if (isFallback) {
       return
     }
-
   }, [isFallback])
 }

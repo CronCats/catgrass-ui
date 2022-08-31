@@ -4,6 +4,7 @@ export * from './not_found'
 export * from './toasts'
 
 export * from './ActionSelector'
+export * from './AccountSelector'
 export * from './Breadcrumbs'
 export * from './CopyToClipboard'
 export * from './CosmosMessageDisplay'

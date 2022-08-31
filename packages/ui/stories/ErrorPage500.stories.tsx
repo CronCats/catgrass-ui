@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ErrorPage500 } from 'components/ErrorPage500'
 
 export default {
-  title: 'DAO DAO UI / ErrorPage500',
+  title: 'Croncat UI / ErrorPage500',
   component: ErrorPage500,
 } as ComponentMeta<typeof ErrorPage500>
 

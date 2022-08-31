@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { LinkText } from 'components/LinkText'
 
 export default {
-  title: 'DAO DAO UI / LinkText',
+  title: 'Croncat UI / LinkText',
   component: LinkText,
 } as ComponentMeta<typeof LinkText>
 

@@ -13,8 +13,9 @@
     "@croncat-ui/icons": "*",
     "@croncat-ui/types": "*",
     "@croncat-ui/utils": "*",
-    "@heroicons/react": "^1.0.5",
+    "@heroicons/react": "^2.0.0",
     "a11y-react-emoji": "^1.2.0",
+    "chain-registry": "^0.8.1",
     "chart.js": "^3.9.1",
     "clsx": "^1.1.1",
     "codemirror": "^5.65.0",
@@ -23,7 +24,8 @@
     "react-chartjs-2": "^4.3.1",
     "react-hook-form": "7.20.4",
     "react-hot-toast": "^2.1.1",
-    "react-markdown": "^8.0.0"
+    "react-markdown": "^8.0.0",
+    "tailwindcss": "^3.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",

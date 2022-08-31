@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { Progress } from 'components/Progress'
 
 export default {
-  title: 'DAO DAO UI / Progress',
+  title: 'Croncat UI / Progress',
   component: Progress,
 } as ComponentMeta<typeof Progress>
 

@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { RadioButton } from 'components/input/RadioInput'
 
 export default {
-  title: 'DAO DAO UI / input / RadioButton',
+  title: 'Croncat UI / input / RadioButton',
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>
 

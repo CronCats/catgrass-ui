@@ -6,7 +6,7 @@ import { SelectInput } from 'components/input/SelectInput'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / SelectInput',
+  title: 'Croncat UI / input / SelectInput',
   component: SelectInput,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof SelectInput>

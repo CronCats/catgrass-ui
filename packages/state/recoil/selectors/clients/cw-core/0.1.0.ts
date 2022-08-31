@@ -2,7 +2,7 @@ import { selectorFamily, waitForAll } from 'recoil'
 
 import { TokenInfoResponse } from '@croncat-ui/types/contracts/cw20-gov'
 
-import { Cw20BaseSelectors, Cw20StakedBalanceVotingSelectors } from '..'
+import { Cw20BaseSelectors } from '..'
 import {
   AdminResponse,
   ConfigResponse,
@@ -193,8 +193,7 @@ export const allCw20TokenListSelector = selectorFamily<
   get:
     (queryClientParams) =>
     async ({ get }) => {
-
-      let hasGovernanceToken  = false
+      let hasGovernanceToken = false
       const governanceTokenAddress = undefined
 
       //! Get all tokens.
@@ -313,7 +312,6 @@ export const allCw20BalancesSelector = selectorFamily<
   get:
     (queryClientParams) =>
     async ({ get }) => {
-
       let hasGovernanceToken = false
       const governanceTokenAddress = undefined
       const governanceTokenBalance = undefined

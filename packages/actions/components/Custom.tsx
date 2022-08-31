@@ -1,4 +1,4 @@
-import { CheckIcon, XIcon } from '@heroicons/react/outline'
+import { CheckIcon, XIcon } from '@heroicons/react/24/outline'
 import Emoji from 'a11y-react-emoji'
 import JSON5 from 'json5'
 import { useFormContext } from 'react-hook-form'

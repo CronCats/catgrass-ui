@@ -5,7 +5,7 @@ import { CodeMirrorInput } from 'components/input/CodeMirrorInput'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / CodeMirrorInput',
+  title: 'Croncat UI / input / CodeMirrorInput',
   component: CodeMirrorInput,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof CodeMirrorInput>

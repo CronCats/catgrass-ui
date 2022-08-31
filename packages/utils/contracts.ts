@@ -3,7 +3,4 @@ export enum CwCoreVersion {
 }
 
 export const parseCoreVersion = (version: string): CwCoreVersion | undefined =>
-  version === CwCoreVersion.V0_0_0
-    ? CwCoreVersion.V0_0_0
-    : undefined
-
+  version === CwCoreVersion.V0_0_0 ? CwCoreVersion.V0_0_0 : undefined

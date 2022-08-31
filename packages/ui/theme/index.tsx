@@ -10,7 +10,8 @@ export type UpdateThemeFn = (themeName: Theme) => void
 export type SetAccentColorFn = (accentColor: string | undefined) => void
 
 export enum Theme {
-  Light = 'light',
+  // Light = 'light',
+  Light = 'cupcake',
   Dark = 'dark',
 }
 

@@ -1,7 +1,9 @@
 // eslint-disable-next-line regex/invalid
+import { Asset, Chain } from '@chain-registry/types'
 import { ComponentType, FunctionComponent } from 'react'
 import { FieldErrors } from 'react-hook-form'
 
+import { Addr, Coin } from '@croncat-ui/state/clients/cw-core/0.1.0'
 import { CosmosMsgFor_Empty } from '@croncat-ui/types/contracts/cw3-dao'
 import { LoaderProps, LogoProps } from '@croncat-ui/ui'
 
@@ -68,9 +70,7 @@ export type ActionComponent<T = undefined, D = any> = FunctionComponent<
   ActionComponentProps<T, D>
 >
 
-export type UseDefaults<D extends {} = any> = (
-  coreAddress: string
-) => D
+export type UseDefaults<D extends {} = any> = (coreAddress: string) => D
 
 export type UseTransformToCosmos<D extends {} = any> = (
   coreAddress: string
@@ -102,4 +102,17 @@ export interface Action<O extends {} = any, D extends {} = any> {
   useTransformToCosmos: UseTransformToCosmos<D>
   // Hook to make function to convert decoded msg to form display fields.
   useDecodedCosmosMsg: UseDecodedCosmosMsg<D>
+}
+
+export interface Account {
+  title: string
+  address: Addr
+  balance: Coin
+}
+
+export interface AccountNetwork {
+  accounts: Account[]
+  brandColor: string
+  asset?: Asset
+  chain: Chain
 }

@@ -1,4 +1,4 @@
-import { ArrowNarrowLeftIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -13,7 +13,7 @@ export const Breadcrumbs = ({ crumbs, className }: BreadcrumbsProps) => (
     <li key="icon">
       <Link href={crumbs[crumbs.length - 2][0]}>
         <a>
-          <ArrowNarrowLeftIcon className="inline mb-1 w-5 h-5 hover:opacity-80 transition" />
+          <ArrowLeftIcon className="inline mb-1 w-5 h-5 hover:opacity-80 transition" />
         </a>
       </Link>
     </li>

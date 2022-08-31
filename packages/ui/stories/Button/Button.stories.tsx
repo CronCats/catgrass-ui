@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { Button } from 'components/Button/Button'
 
 export default {
-  title: 'DAO DAO UI / Button / Button',
+  title: 'Croncat UI / Button / Button',
   component: Button,
 } as ComponentMeta<typeof Button>
 

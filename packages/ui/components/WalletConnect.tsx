@@ -1,4 +1,7 @@
-import { CheckCircleIcon, LogoutIcon } from '@heroicons/react/outline'
+import {
+  ArrowRightOnRectangleIcon,
+  CheckCircleIcon,
+} from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -106,7 +109,7 @@ const DisconnectButton = ({ onClick }: DisconnectButtonProps) => {
   return (
     <Tooltip label={t('info.disconnectWalletTooltip')}>
       <button onClick={onClick} type="button">
-        <LogoutIcon className="w-[18px]" />
+        <ArrowRightOnRectangleIcon className="w-[18px]" />
       </button>
     </Tooltip>
   )

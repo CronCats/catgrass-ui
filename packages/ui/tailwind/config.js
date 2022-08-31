@@ -11,8 +11,8 @@ const tailwindConfig = {
     safelist: [/data-theme$/],
   },
   plugins: [
-    require('@tailwindcss/line-clamp'),
     require('daisyui'),
+    require('@tailwindcss/line-clamp'),
     require('./button'),
     require('@tailwindcss/typography'),
   ],
@@ -47,13 +47,13 @@ const tailwindConfig = {
   // daisyUI config (optional)
   daisyui: {
     styled: true,
-    themes: ["lofi", "dark"],
+    themes: [],
     base: true,
     utils: true,
     logs: false,
     rtl: false,
-    prefix: "",
-    darkTheme: "dark",
+    prefix: '',
+    darkTheme: 'dark',
   },
 }
 

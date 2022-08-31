@@ -1,4 +1,4 @@
-import { XIcon } from '@heroicons/react/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { ReactNode, cloneElement } from 'react'
 import { Toast, ToastBar, toast as hotToast } from 'react-hot-toast'
@@ -36,7 +36,7 @@ export const ToastCard = ({
           onClick={() => hotToast.dismiss(toast.id)}
         >
           {/* Height equal to line height of message above (text-sm). */}
-          <XIcon className="w-4 h-5" />
+          <XMarkIcon className="w-4 h-5" />
         </button>
       </div>
     )}

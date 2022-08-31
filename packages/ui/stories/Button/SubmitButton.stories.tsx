@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { SubmitButton } from 'components/Button/SubmitButton'
 
 export default {
-  title: 'DAO DAO UI / Button / SubmitButton',
+  title: 'Croncat UI / Button / SubmitButton',
   component: SubmitButton,
 } as ComponentMeta<typeof SubmitButton>
 

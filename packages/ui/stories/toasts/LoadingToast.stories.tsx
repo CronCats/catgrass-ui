@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { LoadingToast } from 'components/toasts/LoadingToast'
 
 export default {
-  title: 'DAO DAO UI / toasts / LoadingToast',
+  title: 'Croncat UI / toasts / LoadingToast',
   component: LoadingToast,
 } as ComponentMeta<typeof LoadingToast>
 

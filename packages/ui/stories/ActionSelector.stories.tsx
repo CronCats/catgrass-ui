@@ -5,7 +5,7 @@ import { useActions } from '@croncat-ui/actions'
 import { ActionSelector } from 'components/ActionSelector'
 
 export default {
-  title: 'DAO DAO UI / ActionSelector',
+  title: 'Croncat UI / ActionSelector',
   component: ActionSelector,
 } as ComponentMeta<typeof ActionSelector>
 

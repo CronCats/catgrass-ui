@@ -17,6 +17,7 @@
     "@cosmjs/cosmwasm-stargate": "0.28.10",
     "@noahsaso/cosmodal": "0.6.1",
     "ajv": "^8.11.0",
+    "chain-registry": "^0.8.1",
     "react": "18.1.0"
   }
 }

@@ -1,19 +1,15 @@
+// GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
+// See the "LICENSE" file in the root directory of this package for more copyright information.
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 import { SuspenseLoader } from '@croncat-ui/common'
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
-import { ArrowUpRight } from '@croncat-ui/icons'
-import {
-  Button,
-  GradientWrapper,
-  Logo,
-  PageLoader,
-} from '@croncat-ui/ui'
+import { GradientWrapper, Logo, PageLoader } from '@croncat-ui/ui'
 
 import {
-  EnterAppButton,
+  // EnterAppButton,
   FeaturedDao,
 } from '@/components'
 
@@ -27,7 +23,7 @@ const Home: NextPage<HomePageProps> = ({ featuredDaos }) => {
   return (
     <SuspenseLoader fallback={<PageLoader className="w-screen h-screen" />}>
       <GradientWrapper>
-        <nav className="py-4 px-6 w-full bg-clip-padding bg-opacity-40 border-b border-inactive backdrop-blur-xl backdrop-filter">
+        <nav className="py-4 px-6 w-full bg-clip-padding bg-opacity-40 border-b backdrop-blur-xl border-inactive backdrop-filter">
           <div className="flex justify-between items-center mx-auto max-w-screen-lg">
             <Link href="/" passHref>
               <a className="flex items-center">
@@ -44,12 +40,9 @@ const Home: NextPage<HomePageProps> = ({ featuredDaos }) => {
         <p className="px-4 my-10 mx-auto max-w-lg text-lg text-center text-secondary">
           {t('splash.longTagline')}
         </p>
-        <div className="mx-auto">
-          <EnterAppButton />
-        </div>
+        <div className="mx-auto">{/* <EnterAppButton /> */}</div>
 
         <div className="px-3 -mt-8">
-          
           <div className="grid grid-cols-1 gap-2 my-10 font-mono md:grid-cols-3 caption-text">
             <div className="flex flex-wrap gap-6 items-center mx-2 text-xs">
               <p>
@@ -68,7 +61,6 @@ const Home: NextPage<HomePageProps> = ({ featuredDaos }) => {
 export default Home
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-
   return {
     props: {
       ...(await serverSideTranslations(locale, ['translation'])),

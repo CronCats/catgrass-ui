@@ -1,4 +1,5 @@
-
+// GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
+// See the "LICENSE" file in the root directory of this package for more copyright information.
 import { useWalletManager } from '@noahsaso/cosmodal'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useCallback, useEffect } from 'react'
@@ -15,9 +16,9 @@ import {
 } from '@/atoms'
 
 import { InstallKeplr } from './InstallKeplr'
-import { PageHeader } from './PageHeader'
 import { Nav } from './Nav'
 import { NoKeplrAccountModal } from './NoKeplrAccountModal'
+import { PageHeader } from './PageHeader'
 
 const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
   const router = useRouter()
@@ -79,9 +80,7 @@ const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
         <Nav />
         <PageHeader />
 
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
       </div>
     </>
   )

@@ -1,8 +1,8 @@
 import {
+  ArrowRightOnRectangleIcon,
   InformationCircleIcon,
-  LogoutIcon,
-  XIcon,
-} from '@heroicons/react/outline'
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +43,7 @@ export const MobileWalletConnect = ({
         <Wallet fill="currentColor" height="18px" width="18px" />
         <p className="link-text">{walletName}</p>
       </div>
-      <LogoutIcon className="w-4" />
+      <ArrowRightOnRectangleIcon className="w-4" />
     </button>
   ) : (
     <button
@@ -86,7 +86,7 @@ export const NoMobileWallet = () => {
               className="hover:bg-secondary rounded-full transition"
               onClick={() => setShowInfo(false)}
             >
-              <XIcon className="w-4 h-4" />
+              <XMarkIcon className="w-4 h-4" />
             </button>
           </div>
 

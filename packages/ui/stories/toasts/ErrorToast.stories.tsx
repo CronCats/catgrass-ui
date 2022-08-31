@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ErrorToast } from 'components/toasts/ErrorToast'
 
 export default {
-  title: 'DAO DAO UI / toasts / ErrorToast',
+  title: 'Croncat UI / toasts / ErrorToast',
   component: ErrorToast,
 } as ComponentMeta<typeof ErrorToast>
 

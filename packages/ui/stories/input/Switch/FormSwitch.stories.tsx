@@ -5,7 +5,7 @@ import { FormSwitch } from 'components/input/Switch'
 import { ReactHookFormDecorator } from 'decorators'
 
 export default {
-  title: 'DAO DAO UI / input / FormSwitch',
+  title: 'Croncat UI / input / FormSwitch',
   component: FormSwitch,
   decorators: [ReactHookFormDecorator],
 } as ComponentMeta<typeof FormSwitch>

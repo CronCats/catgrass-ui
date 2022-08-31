@@ -1,4 +1,5 @@
-
+// GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
+// See the "LICENSE" file in the root directory of this package for more copyright information.
 import '@croncat-ui/ui/styles/index.css'
 import '@fontsource/inter/latin.css'
 import '@fontsource/jetbrains-mono/latin.css'
@@ -13,7 +14,12 @@ import { RecoilRoot, useRecoilState, useSetRecoilState } from 'recoil'
 
 import { useRegisterAdaptersOnMount } from '@croncat-ui/common'
 import { activeThemeAtom, mountedInBrowserAtom } from '@croncat-ui/state'
-import { ErrorBoundary, Notifications, Theme, ThemeProvider } from '@croncat-ui/ui'
+import {
+  ErrorBoundary,
+  Notifications,
+  Theme,
+  ThemeProvider,
+} from '@croncat-ui/ui'
 import { SITE_IMAGE, SITE_URL } from '@croncat-ui/utils'
 
 import { AppLayout, HomepageLayout } from '@/components'

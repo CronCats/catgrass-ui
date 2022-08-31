@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 export interface LogoProps {
   size?: number | string
@@ -14,9 +14,9 @@ export const Logo = ({ size = 28 }: LogoProps) => {
   return (
     <Image
       alt="Croncat"
-      width={size}
       height={size}
       src="/croncat_color_logo.png"
+      width={size}
     />
   )
 }
@@ -60,7 +60,6 @@ export const LogoFromImage = ({
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      alt={t('info.logo')}
       className={clsx(
         {
           'overflow-hidden rounded-full': rounded,

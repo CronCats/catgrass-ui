@@ -1,10 +1,12 @@
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
+import {
+  CheckCircleIcon,
+  DocumentDuplicateIcon,
+} from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 
-import { Copy } from '@croncat-ui/icons'
 import { Button } from '@croncat-ui/ui'
 
 const concatAddressImpl = (
@@ -59,7 +61,11 @@ export const CopyToClipboard = ({
       {copied ? (
         <CheckCircleIcon className="w-[18px]" />
       ) : (
-        <Copy color="currentColor" height="18px" width="18px" />
+        <DocumentDuplicateIcon
+          color="currentColor"
+          height="18px"
+          width="18px"
+        />
       )}
 
       <span className="inline flex-1 p-1 truncate hover:bg-btn-secondary-hover rounded-md transition">
@@ -85,7 +91,11 @@ export const CopyToClipboardMobile = ({
         {copied ? (
           <CheckCircleIcon className="w-[18px]" />
         ) : (
-          <Copy color="currentColor" height="18px" width="18px" />
+          <DocumentDuplicateIcon
+            color="currentColor"
+            height="18px"
+            width="18px"
+          />
         )}
         <span className="inline py-1 hover:bg-btn-secondary-hover transition">
           {concatAddress(value, takeN)}

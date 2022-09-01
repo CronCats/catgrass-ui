@@ -7,10 +7,11 @@ import {
   CHAIN_NAME,
   CHAIN_REST_ENDPOINT,
   CHAIN_RPC_ENDPOINT,
-  MICRO_STAKING_DENOM,
   NATIVE_DECIMALS,
 } from './constants'
 import { convertFromMicroDenom } from './conversion'
+
+const MICRO_STAKING_DENOM = 'ujuno'
 
 declare global {
   interface Window extends KeplrWindow {}

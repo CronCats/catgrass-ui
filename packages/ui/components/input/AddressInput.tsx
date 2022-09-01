@@ -1,3 +1,4 @@
+import { WalletIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
 import {
@@ -9,8 +10,6 @@ import {
   Validate,
 } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-
-import { Wallet } from '@croncat-ui/icons'
 
 export interface AddressInputProps<
   FV extends FieldValues,
@@ -55,7 +54,7 @@ export const AddressInput = <
         containerClassName
       )}
     >
-      <Wallet color="currentColor" width="24px" />
+      <WalletIcon color="currentColor" width="24px" />
       <input
         className={clsx(
           'w-full bg-transparent border-none outline-none ring-none body-text',

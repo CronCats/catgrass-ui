@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/outline'
+import { PaperAirplaneIcon, PlusIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import {
@@ -12,8 +12,6 @@ import {
   Validate,
 } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-
-import { Airplane } from '@croncat-ui/icons'
 
 import { Button } from '../Button'
 import { Modal } from '../Modal'
@@ -91,7 +89,7 @@ export const ImageSelectorModal = <
       </div>
       <div className="w-full text-right">
         <Button onClick={onClose} size="sm" type="button">
-          {t('button.done')} <Airplane color="currentColor" />
+          {t('button.done')} <PaperAirplaneIcon color="currentColor" />
         </Button>
       </div>
     </Modal>

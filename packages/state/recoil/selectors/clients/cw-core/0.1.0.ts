@@ -1,6 +1,6 @@
 import { selectorFamily, waitForAll } from 'recoil'
 
-import { TokenInfoResponse } from '@croncat-ui/types/contracts/cw20-gov'
+import { TokenInfoResponse } from '@croncat-ui/state/clients/cw20-base'
 
 import { Cw20BaseSelectors } from '..'
 import {

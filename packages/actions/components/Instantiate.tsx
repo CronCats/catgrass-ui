@@ -1,5 +1,5 @@
 import { Coin } from '@cosmjs/stargate'
-import { CheckIcon, XIcon } from '@heroicons/react/outline'
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Emoji from 'a11y-react-emoji'
 import JSON5 from 'json5'
 import { useFieldArray, useFormContext } from 'react-hook-form'
@@ -23,12 +23,7 @@ import {
   validateRequired,
 } from '@croncat-ui/utils'
 
-import {
-  ActionCard,
-  ActionComponent,
-  NativeCoinSelector,
-  NativeCoinSelectorProps,
-} from '..'
+import { ActionComponent } from '..'
 
 export interface InstantiateOptions {
   nativeBalances: readonly Coin[]
@@ -58,11 +53,7 @@ export const InstantiateComponent: ActionComponent<InstantiateOptions> = (
   })
 
   return (
-    <ActionCard
-      Icon={InstantiateIcon}
-      onRemove={onRemove}
-      title={t('title.instantiateSmartContract')}
-    >
+    <div>
       {instantiatedAddress && (
         <div className="flex flex-row gap-3 items-center mb-2 text-primary">
           <InputLabel name={t('form.instantiatedAddress') + ':'} />
@@ -133,7 +124,8 @@ export const InstantiateComponent: ActionComponent<InstantiateOptions> = (
 
       {errors?.message ? (
         <p className="flex gap-1 items-center text-sm text-error">
-          <XIcon className="inline w-5" /> <span>{errors.message.message}</span>
+          <XMarkIcon className="inline w-5" />{' '}
+          <span>{errors.message.message}</span>
         </p>
       ) : (
         <p className="flex gap-1 items-center text-sm text-success">
@@ -143,19 +135,6 @@ export const InstantiateComponent: ActionComponent<InstantiateOptions> = (
 
       <InputLabel className="mt-1 -mb-1" name={t('form.funds')} />
       <div className="flex flex-col gap-2 items-stretch">
-        {coins.map(({ id }, index) => (
-          <NativeCoinSelector
-            key={id}
-            {...({
-              ...props,
-              onRemove: props.isCreating
-                ? () => removeCoin(index)
-                : props.onRemove,
-            } as NativeCoinSelectorProps)}
-            errors={errors?.funds?.[index]}
-            fieldNamePrefix={fieldNamePrefix + `funds.${index}.`}
-          />
-        ))}
         {!isCreating && coins.length === 0 && (
           <p className="mt-1 mb-2 text-xs italic text-tertiary">
             {t('info.none')}
@@ -184,7 +163,7 @@ export const InstantiateComponent: ActionComponent<InstantiateOptions> = (
         />
         <InputErrorMessage error={errors?.admin} />
       </div>
-    </ActionCard>
+    </div>
   )
 }
 

@@ -4,13 +4,11 @@ import {
   BankMsg,
   DistributionMsg,
   StakingMsg,
-} from '@croncat-ui/state/clients/cw-proposal-single'
-import { ExecuteMsg as MintExecuteMsg } from '@croncat-ui/types/contracts/cw20-gov'
+} from '@croncat-ui/actions/types'
 import {
   CosmosMsgFor_Empty,
-  ProposalResponse,
   WasmMsg,
-} from '@croncat-ui/types/contracts/cw3-dao'
+} from '@croncat-ui/actions/types'
 
 export function parseEncodedMessage(base64String?: string) {
   if (base64String) {
@@ -66,49 +64,6 @@ function isBinaryType(msgType?: WasmMsgType): boolean {
   return false
 }
 
-export function decodeMessages(
-  msgs: ProposalResponse['msgs']
-): { [key: string]: any }[] {
-  const decodedMessageArray: any[] = []
-  const proposalMsgs = Object.values(msgs)
-  for (const msgObj of proposalMsgs) {
-    if (isWasmMsg(msgObj)) {
-      const msgType = getWasmMsgType(msgObj.wasm)
-      if (msgType && isBinaryType(msgType)) {
-        const base64Msg = (msgObj.wasm as any)[msgType]
-        if (base64Msg) {
-          const msg = parseEncodedMessage(base64Msg.msg)
-          if (msg) {
-            decodedMessageArray.push({
-              ...msgObj,
-              wasm: {
-                ...msgObj.wasm,
-                [msgType]: {
-                  ...base64Msg,
-                  msg,
-                },
-              },
-            })
-          }
-        }
-      }
-    } else {
-      decodedMessageArray.push(msgObj)
-    }
-  }
-
-  const decodedMessages = decodedMessageArray.length
-    ? decodedMessageArray
-    : proposalMsgs
-
-  return decodedMessages
-}
-
-export function decodedMessagesString(msgs: ProposalResponse['msgs']): string {
-  const decodedMessageArray = decodeMessages(msgs)
-  return JSON.stringify(decodedMessageArray, undefined, 2)
-}
-
 // This function mutates its input message.
 export const makeWasmMessage = (message: {
   wasm: any
@@ -133,29 +88,6 @@ export const makeWasmMessage = (message: {
   // Messages such as update or clear admin pass through without modification.
   return msg
 }
-
-export const makeExecutableMintMessage = (
-  msg: MintExecuteMsg,
-  contractAddress: string
-): CosmosMsgFor_Empty => ({
-  wasm: {
-    execute: {
-      contract_addr: contractAddress,
-      msg: toBase64(toAscii(JSON.stringify(msg))),
-      funds: [],
-    },
-  },
-})
-
-export const makeMintMessage = (
-  amount: string,
-  recipient: string
-): MintExecuteMsg => ({
-  mint: {
-    amount,
-    recipient,
-  },
-})
 
 export const makeBankMessage = (
   amount: string,

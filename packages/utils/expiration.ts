@@ -1,4 +1,4 @@
-import { Expiration } from '@croncat-ui/types/contracts/cw3-dao'
+import { Expiration } from '@croncat-ui/actions/types'
 
 export const expirationExpired = (
   expiration: Expiration,

@@ -1,6 +1,6 @@
 import { useWallet } from '@noahsaso/cosmodal'
 import { useCallback, useMemo } from 'react'
-import { constSelector, useRecoilValue, waitForAll } from 'recoil'
+import { useRecoilValue, waitForAll } from 'recoil'
 
 import {
   Cw20BaseSelectors,
@@ -89,10 +89,7 @@ const useTransformToCosmos: UseTransformToCosmos<SpendData> = (
         throw new Error(`Unknown token: ${data.denom}`)
       }
 
-      const amount = convertDenomToMicroDenomWithDecimals(
-        data.amount,
-        cw20TokenInfo.decimals
-      )
+      const amount = convertDenomToMicroDenomWithDecimals(data.amount, 6)
 
       return makeWasmMessage({
         wasm: {
@@ -124,17 +121,7 @@ const useDecodedCosmosMsg: UseDecodedCosmosMsg<SpendData> = (
     'recipient' in msg.wasm.execute.msg.transfer &&
     'amount' in msg.wasm.execute.msg.transfer
 
-  const spentTokenAddress = isTransfer
-    ? msg.wasm.execute.contract_addr
-    : undefined
-  const spentTokenDecimals = useRecoilValue(
-    spentTokenAddress
-      ? Cw20BaseSelectors.tokenInfoSelector({
-          contractAddress: spentTokenAddress,
-          params: [],
-        })
-      : constSelector(undefined)
-  )?.decimals
+  const spentTokenDecimals = 6
 
   return useMemo(() => {
     if (

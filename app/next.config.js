@@ -1,5 +1,3 @@
-// GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
-// See the "LICENSE" file in the root directory of this package for more copyright information.
 const path = require('path')
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -8,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withInterceptStdout = require('next-intercept-stdout')
 const withTM = require('next-transpile-modules')([
   '@croncat-ui/ui',
-  '@croncat-ui/icons',
   '@croncat-ui/utils',
   '@croncat-ui/state',
   '@croncat-ui/actions',

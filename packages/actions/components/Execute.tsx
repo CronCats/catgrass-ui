@@ -1,5 +1,5 @@
 import { Coin } from '@cosmjs/stargate'
-import { CheckIcon, XIcon } from '@heroicons/react/outline'
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Emoji from 'a11y-react-emoji'
 import JSON5 from 'json5'
 import { useFieldArray, useFormContext } from 'react-hook-form'
@@ -20,12 +20,7 @@ import {
   validateRequired,
 } from '@croncat-ui/utils'
 
-import {
-  ActionCard,
-  ActionComponent,
-  NativeCoinSelector,
-  NativeCoinSelectorProps,
-} from '..'
+import { ActionComponent } from '..'
 
 export interface ExecuteOptions {
   nativeBalances: readonly Coin[]
@@ -47,11 +42,7 @@ export const ExecuteComponent: ActionComponent<ExecuteOptions> = (props) => {
   })
 
   return (
-    <ActionCard
-      Icon={ExecuteIcon}
-      onRemove={onRemove}
-      title={t('title.executeSmartContract')}
-    >
+    <div>
       <div className="flex flex-col gap-1 items-stretch">
         <InputLabel name={t('form.smartContractAddress')} />
         <TextInput
@@ -97,7 +88,8 @@ export const ExecuteComponent: ActionComponent<ExecuteOptions> = (props) => {
 
       {errors?.message ? (
         <p className="flex gap-1 items-center text-sm text-error">
-          <XIcon className="inline w-5" /> <span>{errors.message.message}</span>
+          <XMarkIcon className="inline w-5" />{' '}
+          <span>{errors.message.message}</span>
         </p>
       ) : (
         <p className="flex gap-1 items-center text-sm text-success">
@@ -107,19 +99,6 @@ export const ExecuteComponent: ActionComponent<ExecuteOptions> = (props) => {
 
       <InputLabel className="mt-1 -mb-1" name={t('form.funds')} />
       <div className="flex flex-col gap-2 items-stretch">
-        {coins.map(({ id }, index) => (
-          <NativeCoinSelector
-            key={id}
-            {...({
-              ...props,
-              onRemove: props.isCreating
-                ? () => removeCoin(index)
-                : props.onRemove,
-            } as NativeCoinSelectorProps)}
-            errors={errors?.funds?.[index]}
-            fieldNamePrefix={fieldNamePrefix + `funds.${index}.`}
-          />
-        ))}
         {!isCreating && coins.length === 0 && (
           <p className="mt-1 mb-2 text-xs italic text-tertiary">
             {t('info.none')}
@@ -135,7 +114,7 @@ export const ExecuteComponent: ActionComponent<ExecuteOptions> = (props) => {
           </Button>
         )}
       </div>
-    </ActionCard>
+    </div>
   )
 }
 

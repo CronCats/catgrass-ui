@@ -24,40 +24,40 @@ jobs:
           echo "LINT_OUTPUT<<EOF" >> $GITHUB_ENV
           echo "$output" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-      # Attempt to find existing comment.
-      - name: Find Comment
-        uses: peter-evans/find-comment@v2
-        id: fc
-        with:
-          issue-number: 778
-          comment-author: 'github-actions[bot]'
-          body-includes: 'Auto-generated Missing i18n Keys'
-      # Create comment if does not exist.
-      - name: Create comment
-        if: steps.fc.outputs.comment-id == ''
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          issue-number: 778
-          body: |
-            # Auto-generated Missing i18n Keys
+      # # Attempt to find existing comment.
+      # - name: Find Comment
+      #   uses: peter-evans/find-comment@v2
+      #   id: fc
+      #   with:
+      #     issue-number: 778
+      #     comment-author: 'github-actions[bot]'
+      #     body-includes: 'Auto-generated Missing i18n Keys'
+      # # Create comment if does not exist.
+      # - name: Create comment
+      #   if: steps.fc.outputs.comment-id == ''
+      #   uses: peter-evans/create-or-update-comment@v2
+      #   with:
+      #     issue-number: 778
+      #     body: |
+      #       # Auto-generated Missing i18n Keys
 
-            Updated at ${{ github.event.head_commit.timestamp }} (HEAD -> ${{ github.event.head_commit.id }})
+      #       Updated at ${{ github.event.head_commit.timestamp }} (HEAD -> ${{ github.event.head_commit.id }})
 
-            ```diff
-            ${{ env.LINT_OUTPUT }}
-            ```
-      # Update comment if exists.
-      - name: Update comment
-        if: steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          edit-mode: replace
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          body: |
-            # Auto-generated Missing i18n Keys
+      #       ```diff
+      #       ${{ env.LINT_OUTPUT }}
+      #       ```
+      # # Update comment if exists.
+      # - name: Update comment
+      #   if: steps.fc.outputs.comment-id != ''
+      #   uses: peter-evans/create-or-update-comment@v2
+      #   with:
+      #     edit-mode: replace
+      #     comment-id: ${{ steps.fc.outputs.comment-id }}
+      #     body: |
+      #       # Auto-generated Missing i18n Keys
 
-            Updated at ${{ github.event.head_commit.timestamp }} (HEAD -> ${{ github.event.head_commit.id }})
+      #       Updated at ${{ github.event.head_commit.timestamp }} (HEAD -> ${{ github.event.head_commit.id }})
 
-            ```diff
-            ${{ env.LINT_OUTPUT }}
-            ```
+      #       ```diff
+      #       ${{ env.LINT_OUTPUT }}
+      #       ```

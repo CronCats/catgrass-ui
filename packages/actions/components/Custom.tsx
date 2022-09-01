@@ -1,4 +1,4 @@
-import { CheckIcon, XIcon } from '@heroicons/react/24/outline'
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Emoji from 'a11y-react-emoji'
 import JSON5 from 'json5'
 import { useFormContext } from 'react-hook-form'
@@ -8,7 +8,7 @@ import { Trans } from '@croncat-ui/common'
 import { CodeMirrorInput } from '@croncat-ui/ui'
 import { makeWasmMessage, validateCosmosMsg } from '@croncat-ui/utils'
 
-import { ActionCard, ActionComponent } from '..'
+import { ActionComponent } from '..'
 
 const INVALID_COSMOS_MSG = 'INVALID_COSMOS_MSG'
 
@@ -23,7 +23,7 @@ export const CustomComponent: ActionComponent = ({
   const { control } = useFormContext()
 
   return (
-    <ActionCard Icon={CustomIcon} onRemove={onRemove} title={t('title.custom')}>
+    <div>
       <CodeMirrorInput
         control={control}
         error={errors?.message}
@@ -52,7 +52,7 @@ export const CustomComponent: ActionComponent = ({
       <div className="mt-2">
         {errors?.message ? (
           <p className="flex gap-1 items-center text-sm text-error">
-            <XIcon className="inline w-5" />{' '}
+            <XMarkIcon className="inline w-5" />{' '}
             {errors.message.message === INVALID_COSMOS_MSG ? (
               <Trans Loader={Loader} i18nKey="error.invalidCosmosMessage">
                 Invalid{' '}
@@ -75,7 +75,7 @@ export const CustomComponent: ActionComponent = ({
           </p>
         )}
       </div>
-    </ActionCard>
+    </div>
   )
 }
 

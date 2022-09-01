@@ -1,4 +1,4 @@
-import { Duration } from '@croncat-ui/types/contracts/cw3-dao'
+import { Duration } from '@croncat-ui/actions/types'
 
 import { secondsToWdhms } from './time'
 

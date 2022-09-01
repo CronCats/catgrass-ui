@@ -1,12 +1,12 @@
 import {
   ArrowRightOnRectangleIcon,
   CheckCircleIcon,
+  DocumentDuplicateIcon,
+  WalletIcon,
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Copy, Wallet } from '@croncat-ui/icons'
 
 import { Button } from './Button'
 import { ButtonProps } from './Button/Button'
@@ -44,7 +44,7 @@ export const WalletConnect = ({
       )}
     >
       <div className="flex gap-4 items-center w-full h-full justify-left">
-        <Wallet fill="currentColor" height="20px" width="20px" />
+        <WalletIcon fill="currentColor" height="20px" width="20px" />
         <div className="link-text">
           <span>{walletName}</span>
           <br />
@@ -65,7 +65,7 @@ export const WalletConnect = ({
       type="button"
       {...buttonProps}
     >
-      <Wallet fill="currentColor" height="20px" width="20px" />
+      <WalletIcon fill="currentColor" height="20px" width="20px" />
       <p className="text-light link-text">{t('button.connectWallet')}</p>
     </Button>
   )
@@ -92,7 +92,11 @@ const CopyButton = ({ text }: CopyButtonProps) => {
         {copied ? (
           <CheckCircleIcon className="w-[18px]" />
         ) : (
-          <Copy color="currentColor" height="18px" width="18px" />
+          <DocumentDuplicateIcon
+            color="currentColor"
+            height="18px"
+            width="18px"
+          />
         )}
       </button>
     </Tooltip>

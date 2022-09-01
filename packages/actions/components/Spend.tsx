@@ -3,8 +3,8 @@ import Emoji from 'a11y-react-emoji'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Uint128 } from '@croncat-ui/actions/types'
 
-import { TokenInfoResponse } from '@croncat-ui/types/contracts/cw20-gov'
 import {
   AddressInput,
   InputErrorMessage,
@@ -22,7 +22,15 @@ import {
   validateRequired,
 } from '@croncat-ui/utils'
 
-import { ActionCard, ActionComponent } from '..'
+import { ActionComponent } from '..'
+
+export interface TokenInfoResponse {
+  decimals: number
+  name: string
+  symbol: string
+  total_supply: Uint128
+  [k: string]: unknown
+}
 
 interface SpendOptions {
   nativeBalances: readonly Coin[]
@@ -136,7 +144,7 @@ export const SpendComponent: ActionComponent<SpendOptions> = ({
   )
 
   return (
-    <ActionCard Icon={SpendIcon} onRemove={onRemove} title={t('title.spend')}>
+    <div>
       <div className="flex flex-row gap-4 items-center">
         <div className="flex flex-row gap-2 items-center">
           <NumberInput
@@ -208,7 +216,7 @@ export const SpendComponent: ActionComponent<SpendOptions> = ({
         <InputErrorMessage error={errors?.to} />
         <InputErrorMessage error={errors?._error} />
       </div>
-    </ActionCard>
+    </div>
   )
 }
 

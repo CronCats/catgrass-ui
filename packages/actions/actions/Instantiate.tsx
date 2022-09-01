@@ -4,7 +4,6 @@ import { useCallback, useMemo } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { constSelector, useRecoilValue } from 'recoil'
 
-import { useProposalModuleAdapterIfAvailable } from '@croncat-ui/proposal-module-adapter/react/context'
 import {
   nativeBalancesSelector,
   transactionEventsSelector,
@@ -110,9 +109,9 @@ const Component: ActionComponent = (props) => {
   )
 
   const {
-    hooks: { useProposalExecutionTxHash },
-  } = useProposalModuleAdapterIfAvailable() ?? { hooks: {} }
-  const executionTxHash = useProposalExecutionTxHash?.()
+    hooks: {},
+  } = { hooks: {} }
+  const executionTxHash = ''
 
   const txEvents = useRecoilValue(
     executionTxHash

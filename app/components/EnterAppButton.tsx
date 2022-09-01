@@ -1,9 +1,7 @@
-// GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
-// See the "LICENSE" file in the root directory of this package for more copyright information.
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
-import { ArrowUpRight } from '@croncat-ui/icons'
 import { Button } from '@croncat-ui/ui'
 
 interface EnterAppButtonProps {
@@ -18,7 +16,7 @@ export const EnterAppButton = ({ small }: EnterAppButtonProps) => {
       <a>
         <Button size={small ? 'sm' : 'lg'}>
           {t('splash.cta')}
-          <ArrowUpRight color="currentColor" height="10px" width="10px" />
+          <ArrowUpRightIcon color="currentColor" height="10px" width="10px" />
         </Button>
       </a>
     </Link>

@@ -48,7 +48,7 @@ export const AccountSelector = ({
                 className="block"
                 rounded={true}
                 size="42"
-                src={network.asset.logo_URIs.png || ''}
+                src={network.asset?.logo_URIs?.png || ''}
               />
             </div>
             <div

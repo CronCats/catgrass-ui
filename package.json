@@ -12,7 +12,6 @@
     "lint": "prettier --check \"**/*.{css,json,md}\" && turbo run lint --continue",
     "test": "turbo run test",
     "app": "yarn workspace @croncat-ui/app",
-    "icons": "yarn workspace @croncat-ui/icons",
     "state": "yarn workspace @croncat-ui/state",
     "ui": "yarn workspace @croncat-ui/ui",
     "utils": "yarn workspace @croncat-ui/utils",

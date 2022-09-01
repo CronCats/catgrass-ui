@@ -42,14 +42,16 @@ class ErrorBoundaryInner extends Component<
         }
       >
         <p>
-          {this.props.i18n?.t?.('error.checkInternetOrTryAgain') ??
+          <>
+            {this.props.i18n?.t?.('error.checkInternetOrTryAgain') ??
             'Check your internet connection or try again later.'}{' '}
-          <Link href="/home">
-            <a className="underline hover:no-underline">
-              {this.props.i18n?.t?.('info.considerReturningHome') ??
-                'Consider returning home.'}
-            </a>
-          </Link>
+            {/* <Link href="/home">
+              <a className="underline hover:no-underline">
+                {this.props.i18n?.t?.('button.back') ??
+                  'Consider returning home.'}
+              </a>
+            </Link> */}
+          </>
         </p>
 
         {!!this.state.error && (

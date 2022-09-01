@@ -1,5 +1,3 @@
-// GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
-// See the "LICENSE" file in the root directory of this package for more copyright information.
 import {
   CogIcon,
   CommandLineIcon,
@@ -186,7 +184,9 @@ interface NavSubItemProps {
 
 const NavSubItem = ({ Icon, title, subtitle }: NavSubItemProps) => (
   <>
-    <Icon className="inline mr-0 w-8 h-8" />
+    <div className="inline mr-0 w-8 h-8">
+      <Icon />
+    </div>
     <div className="flex-col">
       <p className="leading-3">{title}</p>
       <small className="text-xs text-gray-400">{subtitle}</small>

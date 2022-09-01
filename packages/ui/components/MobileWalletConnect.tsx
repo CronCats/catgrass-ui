@@ -1,13 +1,13 @@
 import {
   ArrowRightOnRectangleIcon,
   InformationCircleIcon,
+  WalletIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Wallet } from '@croncat-ui/icons'
 import { Modal, WalletConnectProps } from '@croncat-ui/ui'
 import { CHAIN_NAME } from '@croncat-ui/utils'
 
@@ -40,7 +40,7 @@ export const MobileWalletConnect = ({
       {...buttonProps}
     >
       <div className="flex gap-1 items-center w-full h-full justify-left">
-        <Wallet fill="currentColor" height="18px" width="18px" />
+        <WalletIcon fill="currentColor" height="18px" width="18px" />
         <p className="link-text">{walletName}</p>
       </div>
       <ArrowRightOnRectangleIcon className="w-4" />
@@ -56,7 +56,7 @@ export const MobileWalletConnect = ({
       type="button"
       {...buttonProps}
     >
-      <Wallet fill="currentColor" height="18px" width="18px" />
+      <WalletIcon fill="currentColor" height="18px" width="18px" />
       <p className="link-text">{t('button.connectWallet')}</p>
     </button>
   )

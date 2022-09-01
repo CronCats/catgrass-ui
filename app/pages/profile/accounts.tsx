@@ -37,7 +37,7 @@ const onConnectAccount = () => {}
 // fake data
 const account = {
   title: 'Main Account 1',
-  address: 'juno1qlmwjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+  address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
   balance: { amount: '13370000', denom: 'ujuno' },
 }
 accountNetworks[0].accounts.push(account)

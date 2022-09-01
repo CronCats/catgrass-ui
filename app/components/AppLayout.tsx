@@ -3,10 +3,9 @@
 import { useWalletManager } from '@noahsaso/cosmodal'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useCallback, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 import { WalletProvider } from '@croncat-ui/common'
-import { mountedInBrowserAtom } from '@croncat-ui/state'
 import { usePlatform } from '@croncat-ui/utils'
 
 import {
@@ -22,7 +21,6 @@ import { PageHeader } from './PageHeader'
 
 const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
   const router = useRouter()
-  const mountedInBrowser = useRecoilValue(mountedInBrowserAtom)
   const [installWarningVisible, setInstallWarningVisible] = useRecoilState(
     installWarningVisibleAtom
   )

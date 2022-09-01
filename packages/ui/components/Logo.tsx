@@ -9,8 +9,6 @@ export interface LogoProps {
 }
 
 export const Logo = ({ size = 28 }: LogoProps) => {
-  const { t } = useTranslation()
-
   return (
     <Image
       alt="Croncat"
@@ -55,11 +53,10 @@ export const LogoFromImage = ({
   src,
   rounded = false,
 }: LogoFromImageProps) => {
-  const { t } = useTranslation()
-
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      alt=""
       className={clsx(
         {
           'overflow-hidden rounded-full': rounded,

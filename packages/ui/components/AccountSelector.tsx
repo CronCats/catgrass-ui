@@ -1,7 +1,6 @@
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { Account, AccountNetwork } from '@croncat-ui/actions'
 import { LogoFromImage } from '@croncat-ui/ui'
@@ -17,11 +16,8 @@ export const AccountSelector = ({
   onConnectAccount,
   disabled,
 }: AccountSelectorProps) => {
-  const { t } = useTranslation()
-
   const [selectedNetworkActive, setSelectedNetworkActive] = useState(false)
   const [selectedNetworkIndex, setSelectedNetworkIndex] = useState(0)
-  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const toggleNetwork = (index: number) => {
     setSelectedNetworkIndex(index)
@@ -111,26 +107,23 @@ export const AccountSelector = ({
                 hidden: disabled,
                 visible:
                   selectedNetworkIndex === index &&
-                  selectedNetworkActive == true,
+                  selectedNetworkActive === true,
                 invisible:
                   selectedNetworkIndex !== index ||
-                  selectedNetworkActive == false,
+                  selectedNetworkActive === false,
               }
             )}
           >
-            {network.accounts.map((account, idx) => (
-              <li
-                key={account.address}
-                className="hover:bg-transparent focus:bg-transparent active:bg-transparent"
-              >
+            {network.accounts.map((account) => (
+              <li key={account.address}>
                 <AccountItem
                   account={account}
                   onLogout={() => onConnectAccount(network)}
                 />
               </li>
             ))}
-            <li className=" hover:bg-transparent active:bg-transparent">
-              <div className="p-2 hover:bg-transparent active:bg-transparent">
+            <li>
+              <div className="p-2">
                 <button
                   className="py-0 px-5 w-full text-xs tracking-widest text-black bg-primary hover:bg-secondary rounded-full border-0 btn"
                   onClick={() => onConnectAccount(network)}

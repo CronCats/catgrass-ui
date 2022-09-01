@@ -1,16 +1,13 @@
 import { ComponentType, ReactNode } from 'react'
 
-import { LogoNoBorder, LogoProps } from './Logo'
+import { LogoProps } from './Logo'
 
 export interface GradientWrapperProps {
   Logo?: ComponentType<LogoProps>
   children: ReactNode
 }
 
-export const GradientWrapper = ({
-  Logo = LogoNoBorder,
-  children,
-}: GradientWrapperProps) => (
+export const GradientWrapper = ({ children }: GradientWrapperProps) => (
   <div className="flex overflow-x-hidden relative flex-col items-center">
     {children}
   </div>

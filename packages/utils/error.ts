@@ -3,19 +3,9 @@
 export const processError = (
   error: Error | any,
   {
-    tags,
-    extra,
     transform,
-    overrideCapture,
-    forceCapture,
   }: {
-    tags?: Record<string, string | number>
-    extra?: Record<string, string | number>
     transform?: Partial<Record<CommonError, string>>
-    overrideCapture?: Partial<Record<CommonError, boolean>>
-    // If set to true, will capture error. If set to false, will not capture
-    // error. If undefined, will use capture map.
-    forceCapture?: boolean
   } = {}
 ): string => {
   // Convert to error type.

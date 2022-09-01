@@ -8,16 +8,9 @@ import { SuspenseLoader } from '@croncat-ui/common'
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
 import { GradientWrapper, Logo, PageLoader } from '@croncat-ui/ui'
 
-import {
-  // EnterAppButton,
-  FeaturedDao,
-} from '@/components'
+interface HomePageProps {}
 
-interface HomePageProps {
-  featuredDaos: FeaturedDao[]
-}
-
-const Home: NextPage<HomePageProps> = ({ featuredDaos }) => {
+const Home: NextPage<HomePageProps> = ({}) => {
   const { t } = useTranslation()
 
   return (

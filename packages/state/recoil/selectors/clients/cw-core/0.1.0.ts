@@ -193,7 +193,6 @@ export const allCw20TokenListSelector = selectorFamily<
   get:
     (queryClientParams) =>
     async ({ get }) => {
-      let hasGovernanceToken = false
       const governanceTokenAddress = undefined
 
       //! Get all tokens.
@@ -312,7 +311,6 @@ export const allCw20BalancesSelector = selectorFamily<
   get:
     (queryClientParams) =>
     async ({ get }) => {
-      let hasGovernanceToken = false
       const governanceTokenAddress = undefined
       const governanceTokenBalance = undefined
 

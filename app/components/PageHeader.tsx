@@ -1,10 +1,7 @@
 // GNU AFFERO GENERAL PUBLIC LICENSE Version 3. Copyright (C) 2022 DAO DAO Contributors.
 // See the "LICENSE" file in the root directory of this package for more copyright information.
-import { useTranslation } from 'react-i18next'
 
 export const PageHeader = () => {
-  const { t } = useTranslation()
-
   return (
     <div
       className="py-8 bg-noise"

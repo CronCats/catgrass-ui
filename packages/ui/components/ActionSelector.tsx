@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import Fuse from 'fuse.js'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { Action } from '@croncat-ui/actions'
 
@@ -18,14 +17,13 @@ export const ActionSelector = ({
   onClose,
   onSelectAction,
 }: ActionSelectorProps) => {
-  const { t } = useTranslation()
   const actionsFuse = useMemo(
     () => new Fuse(actions, { keys: ['label', 'description'] }),
     [actions]
   )
   const actionsListRef = useRef<HTMLUListElement>(null)
 
-  const [filter, setFilter] = useState('')
+  const [filter] = useState('')
   const filteredActions = useMemo(
     () =>
       filter ? actionsFuse.search(filter).map(({ item }) => item) : actions,

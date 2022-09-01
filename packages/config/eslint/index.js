@@ -152,19 +152,19 @@ const eslintConfig = {
               message:
                 'No top-level i18n keys allowed. Organize top-level keys into a nested object.',
             },
-            {
-              regex: 'animate-spin([^-])',
-              replacement: {
-                function: '"animate-spin-medium" + $[1]',
-              },
-              message:
-                '`animate-spin` is too fast. Use `animate-spin-medium` for a chiller vibe.',
-            },
-            {
-              regex: '\\b(FC|FunctionComponent)\\b',
-              message:
-                "Using React's FunctionComponent is discouraged. Type the props explicitly: `export const Component = (props: ComponentProps) => { ... }`",
-            },
+            // {
+            //   regex: 'animate-spin([^-])',
+            //   replacement: {
+            //     function: '"animate-spin-medium" + $[1]',
+            //   },
+            //   message:
+            //     '`animate-spin` is too fast. Use `animate-spin-medium` for a chiller vibe.',
+            // },
+            // {
+            //   regex: '\\b(FC|FunctionComponent)\\b',
+            //   message:
+            //     "Using React's FunctionComponent is discouraged. Type the props explicitly: `export const Component = (props: ComponentProps) => { ... }`",
+            // },
           ],
         ],
       },

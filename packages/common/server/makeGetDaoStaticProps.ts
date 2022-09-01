@@ -92,39 +92,6 @@ export const makeGetDaoStaticProps: GetDaoStaticPropsMaker =
         throw new Error(serverT('error.failedParsingCoreVersion'))
       }
 
-      const votingModuleAddress = await coreClient.votingModule()
-
-      // If no contract name, will display fallback voting module adapter.
-      let votingModuleContractName = 'fallback'
-      try {
-        // All info queries are the same for DAO DAO contracts. If not a valid
-        // DAO DAO contract, this may fail.
-        const infoResponse = await cwClient.queryContractSmart(
-          votingModuleAddress,
-          {
-            info: {},
-          }
-        )
-
-        // Manually verify structure of info response, in case a different info
-        // query exists for this contract.
-        if (
-          'info' in infoResponse &&
-          'contract' in infoResponse.info &&
-          typeof infoResponse.info.contract === 'string'
-        ) {
-          votingModuleContractName = infoResponse.info.contract
-        }
-      } catch (err) {
-        // Report to Sentry and console.
-        console.error(
-          processError(err, {
-            tags: { coreAddress, votingModuleAddress },
-            forceCapture: true,
-          })
-        )
-      }
-
       // Must be called after server side translations has been awaited,
       // because props may use the `t` function, and it won't be available
       // until after.
@@ -222,7 +189,7 @@ export const makeGetDaoStaticProps: GetDaoStaticPropsMaker =
           title: serverT('title.500'),
           description: '',
           // Report to Sentry.
-          error: processError(error, { forceCapture: true }),
+          error: processError(error, {}),
         },
         // Regenerate the page at most once per second. Serves cached copy and
         // refreshes in background.
@@ -230,14 +197,6 @@ export const makeGetDaoStaticProps: GetDaoStaticPropsMaker =
       }
     }
   }
-
-interface GetDaoProposalStaticPropsMakerOptions
-  extends Omit<GetDaoStaticPropsMakerOptions, 'getProps'> {
-  getProposalUrlPrefix: (
-    params: Record<string, string | string[] | undefined>
-  ) => string
-  proposalIdParamKey?: string
-}
 
 export class RedirectError {
   constructor(public redirect: Redirect) {}

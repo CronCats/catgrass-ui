@@ -1,5 +1,4 @@
 /* eslint-disable i18next/no-literal-string */
-import Link from 'next/link'
 import { Component, ErrorInfo, ReactNode } from 'react'
 import { WithTranslationProps, withTranslation } from 'react-i18next'
 
@@ -44,7 +43,7 @@ class ErrorBoundaryInner extends Component<
         <p>
           <>
             {this.props.i18n?.t?.('error.checkInternetOrTryAgain') ??
-            'Check your internet connection or try again later.'}{' '}
+              'Check your internet connection or try again later.'}{' '}
             {/* <Link href="/home">
               <a className="underline hover:no-underline">
                 {this.props.i18n?.t?.('button.back') ??

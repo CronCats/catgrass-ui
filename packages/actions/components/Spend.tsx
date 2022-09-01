@@ -3,8 +3,8 @@ import Emoji from 'a11y-react-emoji'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Uint128 } from '@croncat-ui/actions/types'
 
+import { Uint128 } from '@croncat-ui/actions/types'
 import {
   AddressInput,
   InputErrorMessage,

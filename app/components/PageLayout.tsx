@@ -14,8 +14,9 @@ import {
 import { InstallKeplr } from './InstallKeplr'
 import { Nav } from './Nav'
 import { NoKeplrAccountModal } from './NoKeplrAccountModal'
+import { PageHeader } from './PageHeader'
 
-const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
+const PageLayoutInner = ({ children }: PropsWithChildren<{}>) => {
   const router = useRouter()
   const [installWarningVisible, setInstallWarningVisible] = useRecoilState(
     installWarningVisibleAtom
@@ -45,6 +46,7 @@ const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
 
       <div className="w-full h-full">
         <Nav />
+        <PageHeader />
 
         <main className="min-h-screen">{children}</main>
       </div>
@@ -52,22 +54,22 @@ const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
   )
 }
 
-const AppLayoutLoadingInner = ({ children }: PropsWithChildren<{}>) => (
+const PageLayoutLoadingInner = ({ children }: PropsWithChildren<{}>) => (
   <main className="overflow-hidden w-full h-full min-h-screen">{children}</main>
 )
 
-export const AppLayout = ({ children }: PropsWithChildren<{}>) => {
+export const PageLayout = ({ children }: PropsWithChildren<{}>) => {
   const { isFallback } = useRouter()
 
   // Don't mount wallet or modals while static page data is still loading.
   // Things look weird and broken, and the wallet connects twice. Nav in
-  // AppLayoutInner above uses wallet hook, which depends on WalletProvider, so
+  // PageLayoutInner above uses wallet hook, which depends on WalletProvider, so
   // use placeholder Layout during fallback.
   return isFallback ? (
-    <AppLayoutLoadingInner>{children}</AppLayoutLoadingInner>
+    <PageLayoutLoadingInner>{children}</PageLayoutLoadingInner>
   ) : (
     <WalletProvider>
-      <AppLayoutInner>{children}</AppLayoutInner>
+      <PageLayoutInner>{children}</PageLayoutInner>
     </WalletProvider>
   )
 }

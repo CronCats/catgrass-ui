@@ -17,6 +17,74 @@ import { Logo } from '@croncat-ui/ui'
 export const Nav = () => {
   const { t } = useTranslation()
 
+  const navData = [
+    {
+      title: t('nav.explore'),
+      href: '/explore'
+    },
+    {
+      title: t('nav.agents'),
+      href: '/agents',
+      sub: [
+        {
+          icon: CommandLineIcon,
+          title: t('nav.setup'),
+          subtitle: t('nav.setupSub'),
+          href: '/agents/setup',
+        },
+        {
+          icon: QuestionMarkCircleIcon,
+          title: t('nav.faqs'),
+          subtitle: t('nav.faqsSub'),
+          href: '/faqs',
+        },
+      ]
+    },
+    {
+      title: t('nav.more'),
+      href: '#',
+      sub: [
+        {
+          icon: PresentationChartLineIcon,
+          title: t('nav.stats'),
+          subtitle: t('nav.statsSub'),
+          href: '/stats',
+        },
+        {
+          icon: MapIcon,
+          title: t('nav.docs'),
+          subtitle: t('nav.docsSub'),
+          href: 'https://docs.cron.cat',
+        },
+      ]
+    },
+    {
+      icon: UserCircleSolidIcon,
+      className: 'inline -mr-3 ml-2 w-8 h-8',
+      href: '#',
+      sub: [
+        {
+          icon: WalletIcon,
+          title: t('nav.myAccounts'),
+          subtitle: t('nav.myAccountsSub'),
+          href: '/profile/accounts',
+        },
+        {
+          icon: Square2StackIcon,
+          title: t('nav.myRecipes'),
+          subtitle: t('nav.myRecipesSub'),
+          href: '/profile/recipes',
+        },
+        {
+          icon: CogIcon,
+          title: t('nav.settings'),
+          subtitle: t('nav.settingsSub'),
+          href: '/profile/settings',
+        },
+      ]
+    },
+  ]
+
   return (
     <>
       <nav className="fixed top-0 z-40 justify-between py-2 px-6 pr-2 w-full backdrop-blur navbar backdrop-filter">
@@ -27,147 +95,46 @@ export const Nav = () => {
             </a>
           </Link>
         </div>
-        <div className="flex-none">
+        <div className="flex-none hidden">
           <ul className="p-0 menu menu-horizontal">
-            <li>
-              <a className="mr-4 text-lg font-bold">Explore</a>
-            </li>
-            <li className="mr-4" tabIndex={0}>
-              <a className="text-lg font-bold">
-                <span className="-mr-2">Agents</span>
-                <svg
-                  className="fill-current"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul className="right-0 p-2 bg-white shadow">
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a>
-                    <NavSubItem
-                      Icon={CommandLineIcon}
-                      subtitle="Install & become an agent"
-                      title="Setup"
-                    />
-                  </a>
-                </li>
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a>
-                    <NavSubItem
-                      Icon={QuestionMarkCircleIcon}
-                      subtitle="Helpful answers & resources"
-                      title="FAQs"
-                    />
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li tabIndex={1}>
-              <a className="text-lg font-bold">
-                <span className="-mr-2">More</span>
-                <svg
-                  className="fill-current"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul className="right-0 p-2 bg-white shadow">
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a
-                    href="https://docs.cron.cat"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <NavSubItem
-                      Icon={PresentationChartLineIcon}
-                      subtitle="Operations & growth analytics"
-                      title="Stats"
-                    />
-                  </a>
-                </li>
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a
-                    href="https://docs.cron.cat"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <NavSubItem
-                      Icon={MapIcon}
-                      subtitle="Developer references & SDKs"
-                      title={t('title.documentation')}
-                    />
-                  </a>
-                </li>
-              </ul>
-            </li>
-            {/* <li tabIndex={2} className="ml-4 mr-6">
-              <div className="p-0 active:bg-transparent hover:bg-transparent">
-                <button className="btn bg-white hover:bg-white text-black border-0 rounded-full text-xs tracking-widest px-5 py-0">Create Recipe</button>
-              </div>
-            </li> */}
-            <li tabIndex={3}>
-              <a>
-                <UserCircleSolidIcon className="inline -mr-3 ml-2 w-8 h-8" />
-                <svg
-                  className="fill-current"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul className="right-0 p-2 bg-white shadow">
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a
-                    href="https://docs.cron.cat"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <NavSubItem
-                      Icon={WalletIcon}
-                      subtitle="Manage your connected networks & accounts"
-                      title="My Accounts"
-                    />
-                  </a>
-                </li>
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a
-                    href="https://docs.cron.cat"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <NavSubItem
-                      Icon={Square2StackIcon}
-                      subtitle="Watch & manage automated tasks"
-                      title="My Recipes"
-                    />
-                  </a>
-                </li>
-                <li className="hover:bg-gray-200 rounded-md">
-                  <a
-                    href="https://docs.cron.cat"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <NavSubItem
-                      Icon={CogIcon}
-                      subtitle="Notifications, preferences & more"
-                      title="Settings"
-                    />
-                  </a>
-                </li>
-              </ul>
-            </li>
+            {navData.map((item, index) => (
+              <li className="mr-4" tabIndex={index}>
+                <a className="text-lg font-bold" href={item.href}>
+                  {(item.icon) ? (
+                    <item.icon className={item.className} />
+                  ) : ''}
+                  {(item.title) ? (
+                    <span className="-mr-2">{item.title}</span>
+                  ) : ''}
+                  {(item.sub && item.sub.length > 0) ? (
+                    <svg
+                      className="fill-current"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </svg>
+                  ) : ''}
+                </a>
+                {(item.sub && item.sub.length > 0) ? (
+                  <ul className="right-0 p-2 bg-white shadow">
+                    {item.sub.map((sub, i) => (
+                      <li className="hover:bg-gray-200 rounded-md">
+                        <a href={sub.href}>
+                          <NavSubItem
+                            Icon={sub.icon}
+                            subtitle={sub.subtitle}
+                            title={sub.title}
+                          />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>) : ''
+                }
+              </li>
+            ))}
             {/* <li><a><ThemeToggle /></a></li> */}
           </ul>
         </div>

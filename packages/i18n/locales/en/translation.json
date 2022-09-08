@@ -29,17 +29,27 @@
     "showInstantiateMessage": "Show Instantiate Message",
     "showRawData": "Show raw data"
   },
+  "nav": {
+    "explore": "Explore",
+    "agents": "Agents",
+    "more": "More",
+    "myAccounts": "My Accounts",
+    "myAccountsSub": "Manage your connected networks & accounts",
+    "myRecipes": "My Recipes",
+    "myRecipesSub": "Watch & manage automated tasks",
+    "settings": "Settings",
+    "settingsSub": "Notifications, preferences & more",
+    "docs": "Docs",
+    "docsSub": "Developer references & SDKs",
+    "stats": "Stats",
+    "statsSub": "Operations & growth analytics",
+    "setup": "Setup",
+    "setupSub": "Install & become an agent",
+    "faqs": "FAQs",
+    "faqsSub": "Helpful answers & resources"
+  },
   "emoji": {
-    "box": "Box",
     "chart": "Chart",
-    "gear": "Gear",
-    "image": "Image",
-    "info": "Info",
-    "party": "Party",
-    "people": "People",
-    "robot": "Robot",
-    "rocketShip": "Rocket ship",
-    "token": "Token",
     "x": "X"
   },
   "error": {

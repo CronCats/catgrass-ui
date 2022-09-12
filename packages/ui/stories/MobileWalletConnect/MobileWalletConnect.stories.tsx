@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof MobileWalletConnect> = (args) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  "connected": null, // TODO: Fill in default value.
-  "walletBalanceDenom": null, // TODO: Fill in default value.
-  "onConnect": null, // TODO: Fill in default value.
+  connected: null, // TODO: Fill in default value.
+  walletBalanceDenom: null, // TODO: Fill in default value.
+  onConnect: null, // TODO: Fill in default value.
 }

@@ -12,9 +12,9 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { UserCircleIcon as UserCircleSolidIcon } from '@heroicons/react/24/solid'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { ComponentType, useState } from 'react'
-import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import { Logo } from '@croncat-ui/ui'
@@ -41,7 +41,7 @@ export const Nav = () => {
           href: '/explore',
           sort: 1,
         },
-      ]
+      ],
     },
     {
       title: t('nav.agents'),
@@ -61,7 +61,7 @@ export const Nav = () => {
           href: '/faqs',
           sort: 10,
         },
-      ]
+      ],
     },
     {
       title: t('nav.more'),
@@ -81,7 +81,7 @@ export const Nav = () => {
           href: 'https://docs.cron.cat',
           sort: 7,
         },
-      ]
+      ],
     },
     {
       icon: UserCircleSolidIcon,
@@ -109,19 +109,22 @@ export const Nav = () => {
           href: '/profile/settings',
           sort: 4,
         },
-      ]
+      ],
     },
   ]
 
-  const mobileNav = navData.map(({ sub }) => {
-    return sub
-  }).reduce((pre, cur) => {
-    return pre.concat(cur)
-  }, []).sort((a, b) => a.sort - b.sort)
-  
+  const mobileNav = navData
+    .map(({ sub }) => {
+      return sub
+    })
+    .reduce((pre, cur) => {
+      return pre.concat(cur)
+    }, [])
+    .sort((a, b) => a.sort - b.sort)
+
   return (
     <>
-      <nav className="fixed top-0 right-0 left-0 z-40 justify-between md:py-2 md:px-6 w-full backdrop-blur navbar backdrop-filter">
+      <nav className="fixed top-0 right-0 left-0 z-40 justify-between w-full backdrop-blur md:py-2 md:px-6 navbar backdrop-filter">
         <div className="flex-none md:hidden">
           <div className="w-6 h-6">
             {/* <ArrowSmallLeftIcon className="w-6 h-6" /> */}
@@ -145,15 +148,18 @@ export const Nav = () => {
         </div>
 
         <div
-          data-note="mobile menu"
           className={clsx(
-            'flex-none md:hidden fixed bg-white shadow w-full h-fit left-0 top-16 bottom-0 right-0 rounded-t-xl',
-            { 'flex-none': menuActive, 'hidden': !menuActive }
+            'fixed top-16 right-0 bottom-0 left-0 flex-none w-full h-fit bg-white rounded-t-xl shadow md:hidden',
+            { 'flex-none': menuActive, hidden: !menuActive }
           )}
+          data-note="mobile menu"
         >
-          <ul className="p-3 list-none w-full">
+          <ul className="p-3 w-full list-none">
             {mobileNav.map((item, index) => (
-              <li key={index} className="active:bg-gray-200 hover:bg-gray-200 rounded-md flex mb-2 p-2">
+              <li
+                key={index}
+                className="flex p-2 mb-2 hover:bg-gray-200 active:bg-gray-200 rounded-md"
+              >
                 <a href={item.href}>
                   <NavSubItem
                     Icon={item.icon}
@@ -164,27 +170,28 @@ export const Nav = () => {
               </li>
             ))}
             <li>
-              <button
-                className="my-8 mx-auto py-0 px-5 w-full text-xs tracking-widest text-gray-50 bg-green-600 hover:bg-green-700 rounded-full border-0 btn"
-              >
+              <button className="py-0 px-5 my-8 mx-auto w-full text-xs tracking-widest text-gray-50 bg-green-600 hover:bg-green-700 rounded-full border-0 btn">
                 Create Recipe
               </button>
             </li>
           </ul>
         </div>
 
-        <div data-note="desktop menu" className="flex-none xs:hidden sm:hidden md:flex">
+        <div
+          className="flex-none xs:hidden sm:hidden md:flex"
+          data-note="desktop menu"
+        >
           <ul className="p-0 menu menu-horizontal">
             {navData.map((item, index) => (
-              <li className="mr-4" key={index} tabIndex={index}>
+              <li key={index} className="mr-4" tabIndex={index}>
                 <a className="text-lg font-bold" href={item.href}>
-                  {(item.icon) ? (
-                    <item.icon className={item.className} />
-                  ) : ''}
-                  {(item.title) ? (
+                  {item.icon ? <item.icon className={item.className} /> : ''}
+                  {item.title ? (
                     <span className="-mr-2">{item.title}</span>
-                  ) : ''}
-                  {(item.sub && item.sub.length > 0 && !item.hideSubDesktop) ? (
+                  ) : (
+                    ''
+                  )}
+                  {item.sub && item.sub.length > 0 && !item.hideSubDesktop ? (
                     <svg
                       className="fill-current"
                       height="20"
@@ -194,13 +201,15 @@ export const Nav = () => {
                     >
                       <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
                     </svg>
-                  ) : ''}
+                  ) : (
+                    ''
+                  )}
                 </a>
-                {(item.sub && item.sub.length > 0 && !item.hideSubDesktop) ? (
+                {item.sub && item.sub.length > 0 && !item.hideSubDesktop ? (
                   <ul className="right-0 p-2 bg-white shadow">
                     {item.sub.map((sub, i) => (
                       <li key={i} className="hover:bg-gray-200 rounded-md">
-                        <a href={sub.href} className="flex">
+                        <a className="flex" href={sub.href}>
                           <NavSubItem
                             Icon={sub.icon}
                             subtitle={sub.subtitle}
@@ -209,8 +218,10 @@ export const Nav = () => {
                         </a>
                       </li>
                     ))}
-                  </ul>) : ''
-                }
+                  </ul>
+                ) : (
+                  ''
+                )}
               </li>
             ))}
           </ul>

@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof CopyToClipboardMobile> = (args) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  "value": null, // TODO: Fill in default value.
+  value: null, // TODO: Fill in default value.
 }

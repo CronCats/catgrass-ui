@@ -13,6 +13,6 @@ const Template: ComponentStory<typeof AccountSelector> = (args) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  "accountNetworks": null, // TODO: Fill in default value.
-  "onConnectAccount": null, // TODO: Fill in default value.
+  accountNetworks: null, // TODO: Fill in default value.
+  onConnectAccount: null, // TODO: Fill in default value.
 }

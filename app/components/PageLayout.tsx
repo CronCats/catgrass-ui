@@ -1,15 +1,11 @@
 import { useWalletManager } from '@noahsaso/cosmodal'
 import { useRouter } from 'next/router'
-import { PropsWithChildren, useCallback, useEffect } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 
 import { WalletProvider } from '@croncat-ui/common'
-import { usePlatform } from '@croncat-ui/utils'
 
-import {
-  installWarningVisibleAtom,
-  noKeplrAccountAtom,
-} from '@/atoms'
+import { installWarningVisibleAtom, noKeplrAccountAtom } from '@/atoms'
 
 import { InstallKeplr } from './InstallKeplr'
 import { Nav } from './Nav'

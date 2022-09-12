@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof FormattedJSONDisplay> = (args) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  "jsonLoadable": null, // TODO: Fill in default value.
+  jsonLoadable: null, // TODO: Fill in default value.
 }

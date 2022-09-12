@@ -29,27 +29,6 @@
     "showInstantiateMessage": "Show Instantiate Message",
     "showRawData": "Show raw data"
   },
-  "nav": {
-    "explore": "Explore",
-    "exploreSub": "Search & automate anything",
-    "agents": "Agents",
-    "more": "More",
-    "profile": "Profile",
-    "myAccounts": "My Accounts",
-    "myAccountsSub": "Manage your connected networks & accounts",
-    "myRecipes": "My Recipes",
-    "myRecipesSub": "Watch & manage automated tasks",
-    "settings": "Settings",
-    "settingsSub": "Notifications, preferences & more",
-    "docs": "Docs",
-    "docsSub": "Developer references & SDKs",
-    "stats": "Stats",
-    "statsSub": "Operations & growth analytics",
-    "setup": "Agent Setup",
-    "setupSub": "Install & become an agent",
-    "faqs": "FAQs",
-    "faqsSub": "Helpful answers & resources"
-  },
   "emoji": {
     "chart": "Chart",
     "x": "X"
@@ -121,6 +100,27 @@
   "meta": {
     "description": "Decentralized Automation Layer",
     "title": "Croncat"
+  },
+  "nav": {
+    "agents": "Agents",
+    "docs": "Docs",
+    "docsSub": "Developer references & SDKs",
+    "explore": "Explore",
+    "exploreSub": "Search & automate anything",
+    "faqs": "FAQs",
+    "faqsSub": "Helpful answers & resources",
+    "more": "More",
+    "myAccounts": "My Accounts",
+    "myAccountsSub": "Manage your connected networks & accounts",
+    "myRecipes": "My Recipes",
+    "myRecipesSub": "Watch & manage automated tasks",
+    "profile": "Profile",
+    "settings": "Settings",
+    "settingsSub": "Notifications, preferences & more",
+    "setup": "Agent Setup",
+    "setupSub": "Install & become an agent",
+    "stats": "Stats",
+    "statsSub": "Operations & growth analytics"
   },
   "success": {
     "addedToken": "Added token to Keplr.",

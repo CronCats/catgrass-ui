@@ -1,10 +1,9 @@
 import type { GetStaticProps, NextPage } from 'next'
-import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 import { SuspenseLoader } from '@croncat-ui/common'
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
-import { GradientWrapper, Logo, PageLoader } from '@croncat-ui/ui'
+import { PageLoader } from '@croncat-ui/ui'
 
 interface HomePageProps {}
 

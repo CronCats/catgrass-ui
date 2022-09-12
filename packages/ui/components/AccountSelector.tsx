@@ -148,17 +148,18 @@ const AccountItem = ({
   account: { title, address, balance },
   onLogout,
 }: AccountItemProps) => (
-  <div className="flex active:text-gray-800 hover:bg-transparent focus:bg-transparent active:bg-gray-300 active:bg-transparent cursor-default">
-    <div className="flex-col my-auto w-full">
+  <div className="flex justify-between w-full active:text-gray-800 hover:bg-transparent focus:bg-transparent active:bg-gray-300 active:bg-transparent cursor-default">
+    <div className="flex-col my-auto w-10/12">
       <h3 className="text-lg leading-4">{title}</h3>
       <div className="flex w-full">
-        <small className="text-xs text-gray-400 lowercase">{address}</small>
-        <small className="ml-auto text-xs text-gray-400 uppercase">
+        {/* <small className="text-xs text-gray-400 lowercase">{address.substring(0,20)}...</small> */}
+        <small className="text-xs text-gray-400 lowercase w-1/2 text-ellipsis overflow-hidden">{address}</small>
+        <small className="ml-auto text-xs text-right text-gray-400 uppercase w-1/2">
           {balance.amount} {balance.denom}
         </small>
       </div>
     </div>
-    <div className="px-2 cursor-pointer" onClick={onLogout} title="Logout">
+    <div className="px-2 cursor-pointer text-right" onClick={onLogout} title="Logout">
       <ArrowRightOnRectangleIcon className="inline mr-0 w-5 h-5 text-gray-400 hover:text-gray-700" />
     </div>
   </div>

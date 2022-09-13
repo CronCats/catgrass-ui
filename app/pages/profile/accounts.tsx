@@ -42,8 +42,8 @@ accountNetworks[0].accounts.push(account)
 
 const AccountsPage: NextPage = () => (
   <>
-    <div className="py-12">
-      <div className="mx-auto max-w-xl">
+    <div className="py-8 md:py-12">
+      <div className="px-2 mx-auto max-w-xl md:px-0">
         <h4 className="mb-2 text-xs tracking-widest text-gray-400 uppercase">
           Supported Networks
         </h4>

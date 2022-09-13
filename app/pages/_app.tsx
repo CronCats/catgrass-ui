@@ -20,7 +20,7 @@ import {
 } from '@croncat-ui/ui'
 import { SITE_IMAGE, SITE_URL } from '@croncat-ui/utils'
 
-import { AppLayout, HomepageLayout } from '@/components'
+import { AppLayout, PageLayout } from '@/components'
 
 const InnerApp = ({ Component, pageProps }: AppProps) => {
   useRegisterAdaptersOnMount()
@@ -31,12 +31,10 @@ const InnerApp = ({ Component, pageProps }: AppProps) => {
   const [_theme, setTheme] = useRecoilState(activeThemeAtom)
   const [themeChangeCount, setThemeChangeCount] = useState(0)
   const [accentColor, setAccentColor] = useState<string | undefined>()
+  const theme = _theme
 
   const isHomepage = router.pathname === '/'
-  // Always display the homepage with dark theme.
-  // const theme = isHomepage ? Theme.Dark : _theme
-  const theme = _theme
-  const Layout = isHomepage ? HomepageLayout : AppLayout
+  const Layout = isHomepage ? AppLayout : PageLayout
 
   // Indicate that we are mounted.
   useEffect(() => setMountedInBrowser(true), [setMountedInBrowser])
@@ -99,10 +97,6 @@ const DApp = (props: AppProps) => {
             href: '/site.webmanifest',
             rel: 'manifest',
           },
-          {
-            href: '/yin_yang.png',
-            rel: 'icon',
-          },
         ]}
         additionalMetaTags={[
           {
@@ -112,11 +106,11 @@ const DApp = (props: AppProps) => {
           },
           {
             name: 'msapplication-TileColor',
-            content: '#da532c',
+            content: '#212529',
           },
           {
             name: 'theme-color',
-            content: '#111213',
+            content: '#212529',
           },
         ]}
         description={t('meta.description')}

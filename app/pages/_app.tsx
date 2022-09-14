@@ -20,7 +20,7 @@ import {
 } from '@croncat-ui/ui'
 import { SITE_IMAGE, SITE_URL } from '@croncat-ui/utils'
 
-import { AppLayout, PageLayout } from '@/components'
+import { AppLayout } from '@/components'
 
 const InnerApp = ({ Component, pageProps }: AppProps) => {
   useRegisterAdaptersOnMount()
@@ -34,7 +34,6 @@ const InnerApp = ({ Component, pageProps }: AppProps) => {
   const theme = _theme
 
   const isHomepage = router.pathname === '/'
-  const Layout = isHomepage ? AppLayout : PageLayout
 
   // Indicate that we are mounted.
   useEffect(() => setMountedInBrowser(true), [setMountedInBrowser])
@@ -58,9 +57,9 @@ const InnerApp = ({ Component, pageProps }: AppProps) => {
       updateTheme={setTheme}
     >
       <ErrorBoundary>
-        <Layout>
+        <AppLayout>
           <Component {...pageProps} />
-        </Layout>
+        </AppLayout>
 
         <Notifications />
       </ErrorBoundary>

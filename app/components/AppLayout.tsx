@@ -9,6 +9,7 @@ import { installWarningVisibleAtom, noKeplrAccountAtom } from '@/atoms'
 
 import { InstallKeplr } from './InstallKeplr'
 import { Nav } from './Nav'
+import { Footer } from './Footer'
 import { NoKeplrAccountModal } from './NoKeplrAccountModal'
 
 const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
@@ -42,7 +43,11 @@ const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
       <div className="w-full h-full">
         <Nav />
 
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen">
+          {children}
+        </main>
+
+        <Footer />
       </div>
     </>
   )

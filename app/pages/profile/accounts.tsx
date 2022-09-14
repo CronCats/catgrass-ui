@@ -1,10 +1,12 @@
 import { assets, chains } from 'chain-registry'
 import { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'react-i18next'
 
 import { AccountNetwork } from '@croncat-ui/actions'
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
-import { AccountSelector } from '@croncat-ui/ui'
+import { NetworkAccountSelector } from '@croncat-ui/ui'
 import { chainColors } from '@croncat-ui/utils'
+import { PageHeader } from '@/components/PageHeader'
 
 const getChainData = (chain) => {
   const assetList = assets.find(
@@ -13,10 +15,12 @@ const getChainData = (chain) => {
   const asset = assetList?.assets[0]
 
   return {
-    asset,
-    chain,
     accounts: [],
-    brandColor: chainColors[chain.chain_id],
+    network: {
+      asset,
+      chain,
+      brandColor: chainColors[chain.chain_id],
+    }
   }
 }
 
@@ -40,32 +44,38 @@ const account = {
 }
 accountNetworks[0].accounts.push(account)
 
-const AccountsPage: NextPage = () => (
-  <>
-    <div className="py-8 md:py-12">
-      <div className="px-2 mx-auto max-w-xl md:px-0">
-        <h4 className="mb-2 text-xs tracking-widest text-gray-400 uppercase">
-          Supported Networks
-        </h4>
+const AccountsPage: NextPage = () => {
+  const { t } = useTranslation()
 
-        <AccountSelector
-          accountNetworks={accountNetworks}
-          onConnectAccount={onConnectAccount}
-        />
+  return (
+    <>
+      <PageHeader title={t('title.my_accounts')} />
 
-        <h4 className="mt-12 mb-2 text-xs tracking-widest text-gray-400 uppercase">
-          Coming Soon
-        </h4>
+      <div className="py-8 md:py-12">
+        <div className="px-2 mx-auto max-w-xl md:px-0">
+          <h4 className="mb-2 text-xs tracking-widest text-gray-400 uppercase">
+            Supported Networks
+          </h4>
 
-        <AccountSelector
-          accountNetworks={soonAccountNetworks}
-          disabled={true}
-          onConnectAccount={onConnectAccount}
-        />
+          <NetworkAccountSelector
+            accountNetworks={accountNetworks}
+            onConnectAccount={onConnectAccount}
+          />
+
+          <h4 className="mt-12 mb-2 text-xs tracking-widest text-gray-400 uppercase">
+            Coming Soon
+          </h4>
+
+          <NetworkAccountSelector
+            accountNetworks={soonAccountNetworks}
+            disabled={true}
+            onConnectAccount={onConnectAccount}
+          />
+        </div>
       </div>
-    </div>
-  </>
-)
+    </>
+  )
+}
 
 export default AccountsPage
 

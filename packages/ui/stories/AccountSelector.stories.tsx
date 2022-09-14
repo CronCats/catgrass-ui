@@ -1,14 +1,14 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { AccountSelector } from 'components/AccountSelector'
+import { NetworkAccountSelector } from 'components/NetworkAccountSelector'
 
 export default {
-  title: 'Croncat UI / AccountSelector',
-  component: AccountSelector,
-} as ComponentMeta<typeof AccountSelector>
+  title: 'Croncat UI / NetworkAccountSelector',
+  component: NetworkAccountSelector,
+} as ComponentMeta<typeof NetworkAccountSelector>
 
-const Template: ComponentStory<typeof AccountSelector> = (args) => (
-  <AccountSelector {...args} />
+const Template: ComponentStory<typeof NetworkAccountSelector> = (args) => (
+  <NetworkAccountSelector {...args} />
 )
 
 export const Default = Template.bind({})

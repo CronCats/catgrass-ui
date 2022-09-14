@@ -56,7 +56,18 @@
     "instantiatedAddress": "Instantiated Address",
     "junoAddress": "Juno address",
     "message": "Message",
-    "name": "Name"
+    "action_dca_title": "Dollar Cost Average",
+    "action_dca_subtitle": "Periodically swap a token to another token",
+    "action_transfer_title": "Transfer Tokens",
+    "action_transfer_subtitle": "Send tokens from one account to another",
+    "action_custom_title": "Custom Message",
+    "action_custom_subtitle": "Freeform json, use caution!",
+    "from_account": "From Account",
+    "from_token": "From Token",
+    "to_account": "To Account",
+    "to_token": "To Token",
+    "amount_to_swap_total": "Amount to swap total",
+    "amount_to_swap_each": "Amount to swap each time"
   },
   "format": {
     "usdc": "{{val, currency(currency: USD)}} USDC"
@@ -130,6 +141,9 @@
   "title": {
     "404": "404: Not Found",
     "500": "500: Internal Server Error",
+    "explore": "Explore",
+    "my_accounts": "My Accounts",
+    "create": "Create Your Recipe",
     "actions_one": "Action",
     "actions_other": "Actions",
     "addresses": "Addresses",

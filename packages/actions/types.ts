@@ -5,45 +5,22 @@ import { FieldErrors } from 'react-hook-form'
 
 import { LoaderProps, LogoProps } from '@croncat-ui/ui'
 
-export enum ActionKey {
-  Spend = 'spend',
-  Mint = 'mint',
-  Stake = 'stake',
-  AddCw20 = 'addCw20',
-  RemoveCw20 = 'removeCw20',
-  AddCw721 = 'addCw721',
-  RemoveCw721 = 'removeCw721',
-  ManageMembers = 'manageMembers',
-  UpdateInfo = 'updateInfo',
-  UpdateProposalConfig = 'updateProposalConfig',
-  Instantiate = 'instantiate',
-  Execute = 'execute',
-  Migrate = 'migrate',
-  UpdateAdmin = 'updateAdmin',
-  Custom = 'custom',
-}
-
 export interface ActionAndData {
   action: Action
   data: any
 }
 
-export interface ActionKeyAndData {
-  key: ActionKey
-  data: any
-}
-
-export interface FormProposalData {
+export interface FormData {
   title: string
   description: string
-  actionData: ActionKeyAndData[]
+  actionData: ActionAndData[]
 }
 
 // A component which will render an action's input form.
 export type ActionComponentProps<T = undefined, D = any> = {
   coreAddress: string
   fieldNamePrefix: string
-  allActionsWithData: ActionKeyAndData[]
+  allActionsWithData: ActionAndData[]
   index: number
   data: D
   Loader: ComponentType<LoaderProps>
@@ -68,6 +45,58 @@ export type ActionComponent<T = undefined, D = any> = FunctionComponent<
 >
 
 export type UseDefaults<D extends {} = any> = (coreAddress: string) => D
+
+export type UseTransformToCosmos<D extends {} = any> = (
+  coreAddress: string
+) => (data: D) => CosmosMsgFor_Empty | undefined
+
+export interface DecodeCosmosMsgNoMatch {
+  match: false
+  data?: never
+}
+export interface DecodeCosmosMsgMatch<D extends {} = any> {
+  match: true
+  data: D
+}
+export type UseDecodedCosmosMsg<D extends {} = any> = (
+  msg: Record<string, any>,
+  coreAddress: string
+) => DecodeCosmosMsgNoMatch | DecodeCosmosMsgMatch<D>
+
+// Defines a new action.
+export interface Action<O extends {} = any, D extends {} = any> {
+  Icon: ComponentType
+  title: string
+  subtitle?: string
+  Component?: ActionComponent<O>
+  // Hook to get default fields for form display.
+  useDefaults?: UseDefaults<D>
+  // Hook to make function to convert action data to CosmosMsgFor_Empty.
+  useTransformToCosmos?: UseTransformToCosmos<D>
+  // Hook to make function to convert decoded msg to form display fields.
+  useDecodedCosmosMsg?: UseDecodedCosmosMsg<D>
+}
+
+export interface Account {
+  title: string
+  address: Addr
+  balance: Coin
+  chain?: ChainMetadata
+}
+
+export interface ChainMetadata {
+  brandColor: string
+  asset?: Asset
+  chain: Chain
+}
+
+export interface AccountNetwork {
+  accounts: Account[]
+  network: ChainMetadata
+}
+
+
+
 /**
  * Duration is a delta of time. You can add it to a BlockInfo or Expiration to move that further in the future. Note that an height-based Duration and a time-based Expiration cannot be combined
  */
@@ -342,94 +371,4 @@ export interface Coin {
  */
 export interface Empty {
   [k: string]: unknown
-}
-export type Status = 'pending' | 'open' | 'rejected' | 'passed' | 'executed'
-/**
- * This defines the different ways tallies can happen. Every contract should support a subset of these, ideally all.
- *
- * The total_weight used for calculating success as well as the weights of each individual voter used in tallying should be snapshotted at the beginning of the block at which the proposal starts (this is likely the responsibility of a correct cw4 implementation).
- */
-export type ThresholdResponse =
-  | {
-      absolute_count: {
-        total_weight: Uint128
-        weight: Uint128
-        [k: string]: unknown
-      }
-    }
-  | {
-      absolute_percentage: {
-        percentage: Decimal
-        total_weight: Uint128
-        [k: string]: unknown
-      }
-    }
-  | {
-      threshold_quorum: {
-        quorum: Decimal
-        threshold: Decimal
-        total_weight: Uint128
-        [k: string]: unknown
-      }
-    }
-export interface Votes {
-  [k: string]: unknown
-  abstain: Uint128
-  no: Uint128
-  veto: Uint128
-  yes: Uint128
-}
-/**
- * Returns the vote (opinion as well as weight counted) as well as the address of the voter who submitted it
- */
-export interface VoteInfo {
-  [k: string]: unknown
-  vote: Vote
-  voter: string
-  weight: Uint128
-}
-
-export type UseTransformToCosmos<D extends {} = any> = (
-  coreAddress: string
-) => (data: D) => CosmosMsgFor_Empty | undefined
-
-export interface DecodeCosmosMsgNoMatch {
-  match: false
-  data?: never
-}
-export interface DecodeCosmosMsgMatch<D extends {} = any> {
-  match: true
-  data: D
-}
-export type UseDecodedCosmosMsg<D extends {} = any> = (
-  msg: Record<string, any>,
-  coreAddress: string
-) => DecodeCosmosMsgNoMatch | DecodeCosmosMsgMatch<D>
-
-// Defines a new action.
-export interface Action<O extends {} = any, D extends {} = any> {
-  key: ActionKey
-  Icon: ComponentType
-  label: string
-  description: string
-  Component: ActionComponent<O>
-  // Hook to get default fields for form display.
-  useDefaults: UseDefaults<D>
-  // Hook to make function to convert action data to CosmosMsgFor_Empty.
-  useTransformToCosmos: UseTransformToCosmos<D>
-  // Hook to make function to convert decoded msg to form display fields.
-  useDecodedCosmosMsg: UseDecodedCosmosMsg<D>
-}
-
-export interface Account {
-  title: string
-  address: Addr
-  balance: Coin
-}
-
-export interface AccountNetwork {
-  accounts: Account[]
-  brandColor: string
-  asset?: Asset
-  chain: Chain
 }

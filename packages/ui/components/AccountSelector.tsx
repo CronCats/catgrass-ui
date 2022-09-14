@@ -69,7 +69,7 @@ export const AccountSelector = ({
         )}
       >
         {accounts.map((account) => (
-          <div key={account.address} className="rounded-lg hover:bg-gray-200 active:bg-gray-200">
+          <div key={account.address} onClick={() => {selectAccount(account)}} className="rounded-lg hover:bg-gray-200 active:bg-gray-200">
             <AccountItem account={account} hideBalance={false} />
           </div>
         ))}
@@ -114,12 +114,12 @@ const AccountItem = ({
         <h3 className="text-lg font-bold leading-4">
           {title}
         </h3>
-        <div className="flex w-full">
-          <small className="overflow-hidden w-1/2 text-xs text-gray-400 lowercase text-ellipsis">
+        <div className="flex-col sm:flex w-10/12">
+          <small className="block overflow-hidden h-10/12 sm:w-1/2 text-xs text-gray-400 lowercase text-ellipsis">
             {address}
           </small>
           {hideBalance === false ? (
-            <small className="ml-auto w-1/2 text-xs text-right text-gray-400 uppercase">
+            <small className="block ml-auto h-10/12 sm:w-1/2 text-xs sm:text-right text-gray-400 uppercase">
               {balance.amount} {balance.denom}
             </small>
           ) : ''}

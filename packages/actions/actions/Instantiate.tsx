@@ -194,10 +194,10 @@ const Component: ActionComponent = (props) => {
 }
 
 export const instantiateAction: Action<InstantiateData> = {
-  key: ActionKey.Instantiate,
+  // key: ActionKey.Instantiate,
   Icon: InstantiateIcon,
-  label: 'Instantiate Smart Contract',
-  description: 'Instantiate a smart contract.',
+  title: 'Instantiate Smart Contract',
+  subtitle: 'Instantiate a smart contract.',
   Component,
   useDefaults,
   useTransformToCosmos,

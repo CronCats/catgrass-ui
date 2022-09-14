@@ -1,11 +1,11 @@
 export const Footer = () => {
   return (
-    <footer className="footer items-center p-4 bg-neutral text-neutral-content">
-      <div className="items-center grid-flow-col">
+    <footer className="footer items-center p-4 text-neutral-content bg-gray-50 md:bg-neutral">
+      <div className="items-center grid-flow-col mx-auto md:mx-0">
         <p>CronCat © {new Date().getFullYear()}</p>
       </div>
-      <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-        <a href="#" target="_blank" className="flex mr-4 text-gray-500 hover:text-gray-600">
+      <div className="grid-flow-col gap-4 mx-auto md:mx-0 md:place-self-center md:justify-self-end">
+        <a href="#" target="_blank" className="flex mr-4 opacity-60 hover:opacity-100">
           <svg fill="none" height={24} viewBox={`0 0 28 28`} width={24} xmlns="http://www.w3.org/2000/svg" >
             <circle cx="8.5" cy="14" r="1.5" style={{ fill: `rgb(var(--black))` }} transform="rotate(-180 8.5 14)" />
             <path clipRule="evenodd" d="M14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0ZM14 1.25C6.95837 1.25 1.25 6.95837 1.25 14C1.25 21.0416 6.95837 26.75 14 26.75C21.0416 26.75 26.75 21.0416 26.75 14C26.75 6.95837 21.0416 1.25 14 1.25Z" fillRule="evenodd" style={{ fill: `rgb(var(--black))` }} />

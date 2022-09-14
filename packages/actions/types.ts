@@ -22,9 +22,9 @@ export type ActionComponentProps<T = undefined, D = any> = {
   fieldNamePrefix: string
   allActionsWithData: ActionAndData[]
   index: number
-  data: D
+  data?: D
   Loader: ComponentType<LoaderProps>
-  Logo: ComponentType<LogoProps>
+  Logo?: ComponentType<LogoProps>
 } & (
   | {
       isCreating: true

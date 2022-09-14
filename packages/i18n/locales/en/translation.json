@@ -62,11 +62,12 @@
     "action_transfer_subtitle": "Send tokens from one account to another",
     "action_custom_title": "Custom Message",
     "action_custom_subtitle": "Freeform json, use caution!",
+    "custom_message": "Custom JSON Message",
     "from_account": "From Account",
     "from_token": "From Token",
     "to_account": "To Account",
     "to_token": "To Token",
-    "amount_to_swap_total": "Amount to swap total",
+    "amount_to_swap_total": "Amount total",
     "amount_to_swap_each": "Amount to swap each time"
   },
   "format": {

@@ -1,4 +1,5 @@
 export * from './AddressInput'
+export * from './Balance'
 export * from './CodeMirrorInput'
 export * from './ImageSelector'
 export * from './InputErrorMessage'

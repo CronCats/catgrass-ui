@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Account, AccountNetwork } from '@croncat-ui/actions'
-import { LogoFromImage } from '@croncat-ui/ui'
+import { LogoFromImage, Balance } from '@croncat-ui/ui'
 
 export interface NetworkAccountSelectorProps {
   accountNetworks: AccountNetwork[]
@@ -64,10 +64,10 @@ export const NetworkAccountSelector = ({
               }}
             >
               <h3 className="text-lg font-bold leading-4">
-                {network.network.chain.pretty_name}
+                {network.network.chain?.pretty_name}
               </h3>
               <small className="text-xs text-gray-400 lowercase">
-                {network.network.chain.chain_id}
+                {network.network.chain?.chain_id}
                 {network.accounts.length > 0
                   ? `, ${network.accounts.length} account${
                       network.accounts.length > 1 ? 's' : ''
@@ -157,7 +157,7 @@ const AccountItem = ({
           {address}
         </small>
         <small className="ml-auto w-1/2 text-xs text-right text-gray-400 uppercase">
-          {balance.amount} {balance.denom}
+          <Balance {...balance} decimals={6} />
         </small>
       </div>
     </div>

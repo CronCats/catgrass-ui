@@ -1,4 +1,7 @@
 export * from './Custom'
+export * from './CustomMessage'
+export * from './DollarCostAverage'
 export * from './Execute'
 export * from './Instantiate'
+export * from './Payroll'
 export * from './Spend'

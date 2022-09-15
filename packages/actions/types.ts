@@ -77,17 +77,17 @@ export interface Action<O extends {} = any, D extends {} = any> {
   useDecodedCosmosMsg?: UseDecodedCosmosMsg<D>
 }
 
+export interface ChainMetadata extends Chain {
+  brandColor: string
+  asset?: Asset
+  chain?: Chain
+}
+
 export interface Account {
   title: string
   address: Addr
   balance: Coin
   chain?: ChainMetadata
-}
-
-export interface ChainMetadata {
-  brandColor: string
-  asset?: Asset
-  chain: Chain
 }
 
 export interface AccountNetwork {

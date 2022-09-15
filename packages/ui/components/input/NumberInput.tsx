@@ -62,15 +62,15 @@ export const NumberInput = <
     <div
       className={clsx(
         'flex flex-row gap-1 items-center text-sm',
-        'py-3 px-3 bg-transparent rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default',
+        containerClassName,
+        'py-3 px-3 rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default',
         {
           'ring-2 ring-error': error,
           'w-28': sizing === 'sm',
           'w-40': sizing === 'md',
           'w-full': sizing === 'full',
           'w-28 md:w-32 lg:w-40': sizing === 'auto',
-        },
-        containerClassName
+        }
       )}
     >
       {onPlus && (

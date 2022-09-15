@@ -49,19 +49,19 @@ export const AddressInput = <
   return (
     <div
       className={clsx(
-        'flex gap-1 items-center py-2 px-3 font-mono text-sm bg-transparent rounded-lg border focus-within:outline-none focus-within:ring-1 ring-brand ring-offset-0 transition border-default',
+        'flex gap-1 items-center py-3 px-3 font-mono text-sm rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default',
         { 'ring-1 ring-error': error },
         containerClassName
       )}
     >
-      <WalletIcon color="currentColor" width="24px" />
+      <WalletIcon className="mr-2" color="currentColor" width="24px" />
       <input
         className={clsx(
           'w-full bg-transparent border-none outline-none ring-none body-text',
           className
         )}
         disabled={disabled}
-        placeholder={t('form.junoAddress')}
+        placeholder={t('form.bechAddress')}
         type="text"
         {...rest}
         {...register(fieldName, {

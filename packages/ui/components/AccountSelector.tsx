@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Account, AccountNetwork } from '@croncat-ui/actions'
-import { LogoFromImage } from '@croncat-ui/ui'
+import { LogoFromImage, Balance } from '@croncat-ui/ui'
 
 export interface AccountSelectorProps {
   accounts: Account[]
@@ -114,13 +114,13 @@ const AccountItem = ({
         <h3 className="text-lg font-bold leading-4">
           {title}
         </h3>
-        <div className="flex-col sm:flex w-10/12">
-          <small className="block overflow-hidden h-10/12 sm:w-1/2 text-xs text-gray-400 lowercase text-ellipsis">
+        <div className="flex flex-col md:flex-row w-10/12 md:w-full justify-between">
+          <small className="inline md:block overflow-hidden w-full h-10/12 md:h-auto md:w-1/2 mr-auto text-xs text-gray-400 lowercase text-ellipsis">
             {address}
           </small>
           {hideBalance === false ? (
-            <small className="block ml-auto h-10/12 sm:w-1/2 text-xs sm:text-right text-gray-400 uppercase">
-              {balance.amount} {balance.denom}
+            <small className="inline md:block grow h-10/12 md:h-auto md:w-1/2 text-xs md:text-right text-gray-400 uppercase">
+              <Balance {...balance} decimals={6} />
             </small>
           ) : ''}
         </div>

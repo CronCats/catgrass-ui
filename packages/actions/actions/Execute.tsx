@@ -18,7 +18,6 @@ import {
 import {
   Action,
   ActionComponent,
-  ActionKey,
   UseDecodedCosmosMsg,
   UseDefaults,
   UseTransformToCosmos,
@@ -107,10 +106,9 @@ const Component: ActionComponent = (props) => {
 }
 
 export const executeAction: Action<ExecuteData> = {
-  key: ActionKey.Execute,
   Icon: ExecuteIcon,
-  label: 'Execute Smart Contract',
-  description: 'Execute a message on a smart contract.',
+  title: 'Execute Smart Contract',
+  subtitle: 'Execute a message on a smart contract.',
   Component,
   useDefaults,
   useTransformToCosmos,

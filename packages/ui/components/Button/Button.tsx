@@ -12,7 +12,7 @@ import { Logo as DefaultLogo, LogoProps } from '../Logo'
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children: ReactNode
   variant?: 'primary' | 'secondary' | 'ghost'
-  size?: 'sm' | 'lg'
+  size?: 'sm' | 'lg' | 'xl' | '2xl'
   disabled?: boolean
   className?: string
   loading?: boolean
@@ -42,20 +42,23 @@ function ButtonComponent(
   return variant === 'primary' || variant === 'secondary' ? (
     <button
       className={clsx(
-        'relative py-[6px] px-[16px] rounded-md transition',
+        'relative py-[6px] px-[16px] text-center rounded-full transition',
         {
           // Primary
           'text-light bg-btn link-text': variant === 'primary',
           'hover:bg-dark active:bg-toast': variant === 'primary' && !isDisabled,
           'bg-dark': variant === 'primary' && active,
           // Secondary
-          'bg-primary link-text': variant === 'secondary',
+          'border-2 border-gray-700 link-text': variant === 'secondary',
           'hover:bg-btn-secondary-hover active:bg-btn-secondary-pressed':
             variant === 'secondary' && !isDisabled,
           'bg-btn-secondary-hover': variant === 'secondary' && active,
           // Shared
           'bg-btn-disabled': isDisabled,
-          'py-[10px]': size === 'lg',
+          'py-[18px] px-10 min-w-[110px] text-lg md:min-w-[190px]':
+            size === '2xl',
+          'py-[12px] px-[24px]': size === 'xl',
+          'py-[10px] px-[16px]': size === 'lg',
           'py-[4px] px-[8px]': size === 'sm',
         },
         className
@@ -65,7 +68,7 @@ function ButtonComponent(
       type={type}
       {...rest}
     >
-      <div className="flex absolute top-0 right-0 bottom-0 left-0 justify-center items-center">
+      {/* <div className="flex absolute top-0 right-0 bottom-0 left-0 justify-center items-center">
         <div
           className={clsx('inline-block mx-auto animate-spin-medium', {
             invisible: !loading,
@@ -73,10 +76,10 @@ function ButtonComponent(
         >
           <Logo invert size={20} />
         </div>
-      </div>
+      </div> */}
       <div
         className={clsx(
-          'flex flex-row gap-2 items-center',
+          'flex flex-row gap-2 justify-center items-center',
           {
             invisible: loading,
           },

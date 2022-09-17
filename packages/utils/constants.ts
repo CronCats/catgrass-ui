@@ -61,7 +61,7 @@ export const DAO_STATIC_PROPS_CACHE_SECONDS = parseInt(
 )
 
 // Lame hardcoding i know... in future, process image and find main theme
-export const chainColors = {
+export const chainColors: Record<string, any> = {
   'juno-1': '#F0827D',
   'osmosis-1': '#4F01A8',
   'stargaze-1': '#80D5C0',

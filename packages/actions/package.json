@@ -9,6 +9,7 @@
     "@croncat-ui/state": "*",
     "@croncat-ui/ui": "*",
     "@croncat-ui/utils": "*",
+    "@headlessui/react": "^1.7.2",
     "@heroicons/react": "^2.0.0",
     "a11y-react-emoji": "^1.2.0",
     "clsx": "^1.1.1",

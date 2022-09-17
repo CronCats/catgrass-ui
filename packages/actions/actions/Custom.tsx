@@ -6,7 +6,6 @@ import { makeWasmMessage } from '@croncat-ui/utils'
 import { CustomComponent as Component, CustomIcon } from '../components'
 import {
   Action,
-  ActionKey,
   UseDecodedCosmosMsg,
   UseDefaults,
   UseTransformToCosmos,
@@ -51,10 +50,9 @@ const useDecodedCosmosMsg: UseDecodedCosmosMsg<CustomData> = (
   )
 
 export const customAction: Action<CustomData> = {
-  key: ActionKey.Custom,
   Icon: CustomIcon,
-  label: 'Custom',
-  description: 'Perform any custom action a wallet can.',
+  title: 'Custom',
+  subtitle: 'Perform any custom action a wallet can.',
   Component,
   useDefaults,
   useTransformToCosmos,

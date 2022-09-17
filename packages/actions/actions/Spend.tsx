@@ -1,32 +1,21 @@
 import { useWallet } from '@noahsaso/cosmodal'
-import { useCallback, useMemo } from 'react'
-import { useRecoilValue, waitForAll } from 'recoil'
+import { useMemo } from 'react'
+import { useRecoilValue } from 'recoil'
 
-import {
-  Cw20BaseSelectors,
-  CwCoreV0_1_0Selectors,
-  nativeBalancesSelector,
-} from '@croncat-ui/state'
+import { nativeBalancesSelector } from '@croncat-ui/state'
 import {
   NATIVE_DENOM,
-  convertDenomToMicroDenomWithDecimals,
   convertMicroDenomToDenomWithDecimals,
-  makeBankMessage,
-  makeWasmMessage,
   nativeTokenDecimals,
 } from '@croncat-ui/utils'
 
-import {
-  SpendIcon,
-  SpendComponent as StatelessSpendComponent,
-} from '../components'
+import { SpendIcon } from '../components'
 import {
   Action,
   ActionComponent,
-  ActionKey,
+  // ActionKey,
   UseDecodedCosmosMsg,
   UseDefaults,
-  UseTransformToCosmos,
 } from '../types'
 
 interface SpendData {
@@ -45,70 +34,70 @@ const useDefaults: UseDefaults<SpendData> = () => {
   }
 }
 
-const useTransformToCosmos: UseTransformToCosmos<SpendData> = (
-  coreAddress: string
-) => {
-  const cw20Addresses = useRecoilValue(
-    CwCoreV0_1_0Selectors.allCw20TokenListSelector({
-      contractAddress: coreAddress,
-    })
-  )
-  const cw20Infos = useRecoilValue(
-    waitForAll(
-      cw20Addresses.map((contractAddress) =>
-        Cw20BaseSelectors.tokenInfoSelector({ contractAddress, params: [] })
-      )
-    )
-  )
-  const cw20Tokens = useMemo(
-    () =>
-      cw20Addresses.map((address, idx) => ({
-        address,
-        info: cw20Infos[idx],
-      })),
-    [cw20Addresses, cw20Infos]
-  )
+// const useTransformToCosmos: UseTransformToCosmos<SpendData> = (
+//   coreAddress: string
+// ) => {
+// const cw20Addresses = useRecoilValue(
+//   CwCoreV0_1_0Selectors.allCw20TokenListSelector({
+//     contractAddress: coreAddress,
+//   })
+// )
+// const cw20Infos = useRecoilValue(
+//   waitForAll(
+//     cw20Addresses.map((contractAddress) =>
+//       Cw20BaseSelectors.tokenInfoSelector({ contractAddress, params: [] })
+//     )
+//   )
+// )
+// const cw20Tokens = useMemo(
+//   () =>
+//     cw20Addresses.map((address, idx) => ({
+//       address,
+//       info: cw20Infos[idx],
+//     })),
+//   [cw20Addresses, cw20Infos]
+// )
 
-  return useCallback(
-    (data: SpendData) => {
-      if (data.denom === NATIVE_DENOM || data.denom.startsWith('ibc/')) {
-        const decimals = nativeTokenDecimals(data.denom)!
-        const amount = convertDenomToMicroDenomWithDecimals(
-          data.amount,
-          decimals
-        )
-        const bank = makeBankMessage(amount, data.to, data.denom)
-        return { bank }
-      }
+//   return useCallback(
+//     (data: SpendData) => {
+//       if (data.denom === NATIVE_DENOM || data.denom.startsWith('ibc/')) {
+//         const decimals = nativeTokenDecimals(data.denom)!
+//         const amount = convertDenomToMicroDenomWithDecimals(
+//           data.amount,
+//           decimals
+//         )
+//         const bank = makeBankMessage(amount, data.to, data.denom)
+//         return { bank }
+//       }
 
-      // Get cw20 token decimals from cw20 treasury list.
-      const cw20TokenInfo = cw20Tokens.find(
-        ({ address }) => address === data.denom
-      )?.info
-      if (!cw20TokenInfo) {
-        throw new Error(`Unknown token: ${data.denom}`)
-      }
+//       // Get cw20 token decimals from cw20 treasury list.
+//       const cw20TokenInfo = cw20Tokens.find(
+//         ({ address }) => address === data.denom
+//       )?.info
+//       if (!cw20TokenInfo) {
+//         throw new Error(`Unknown token: ${data.denom}`)
+//       }
 
-      const amount = convertDenomToMicroDenomWithDecimals(data.amount, 6)
+//       const amount = convertDenomToMicroDenomWithDecimals(data.amount, 6)
 
-      return makeWasmMessage({
-        wasm: {
-          execute: {
-            contract_addr: data.denom,
-            funds: [],
-            msg: {
-              transfer: {
-                recipient: data.to,
-                amount,
-              },
-            },
-          },
-        },
-      })
-    },
-    [cw20Tokens]
-  )
-}
+//       return makeWasmMessage({
+//         wasm: {
+//           execute: {
+//             contract_addr: data.denom,
+//             funds: [],
+//             msg: {
+//               transfer: {
+//                 recipient: data.to,
+//                 amount,
+//               },
+//             },
+//           },
+//         },
+//       })
+//     },
+//     [cw20Tokens]
+//   )
+// }
 
 const useDecodedCosmosMsg: UseDecodedCosmosMsg<SpendData> = (
   msg: Record<string, any>
@@ -171,50 +160,51 @@ const Component: ActionComponent = (props) => {
   const nativeBalances = useRecoilValue(
     nativeBalancesSelector(props.coreAddress)
   )
-  const cw20AddressesAndBalances = useRecoilValue(
-    CwCoreV0_1_0Selectors.allCw20BalancesSelector({
-      contractAddress: props.coreAddress,
-    })
-  )
+  // const cw20AddressesAndBalances = useRecoilValue(
+  //   CwCoreV0_1_0Selectors.allCw20BalancesSelector({
+  //     contractAddress: props.coreAddress,
+  //   })
+  // )
 
-  const cw20Infos = useRecoilValue(
-    waitForAll(
-      cw20AddressesAndBalances.map(({ addr }) =>
-        Cw20BaseSelectors.tokenInfoSelector({
-          contractAddress: addr,
-          params: [],
-        })
-      )
-    )
-  )
-  const cw20Balances = useMemo(
-    () =>
-      cw20AddressesAndBalances.map(({ addr, balance }, idx) => ({
-        address: addr,
-        balance,
-        info: cw20Infos[idx],
-      })),
-    [cw20AddressesAndBalances, cw20Infos]
-  )
+  // const cw20Infos = useRecoilValue(
+  //   waitForAll(
+  //     cw20AddressesAndBalances.map(({ addr }) =>
+  //       Cw20BaseSelectors.tokenInfoSelector({
+  //         contractAddress: addr,
+  //         params: [],
+  //       })
+  //     )
+  //   )
+  // )
+  // const cw20Balances = useMemo(
+  //   () =>
+  //     cw20AddressesAndBalances.map(({ addr, balance }, idx) => ({
+  //       address: addr,
+  //       balance,
+  //       info: cw20Infos[idx],
+  //     })),
+  //   [cw20AddressesAndBalances, cw20Infos]
+  // )
 
   return (
-    <StatelessSpendComponent
-      {...props}
-      options={{
-        nativeBalances,
-        cw20Balances,
-      }}
-    />
+    // <StatelessSpendComponent
+    //   {...props}
+    //   options={{
+    //     nativeBalances,
+    //     cw20Balances,
+    //   }}
+    // />
+    <></>
   )
 }
 
 export const spendAction: Action<SpendData> = {
-  key: ActionKey.Spend,
+  // key: ActionKey.Spend,
   Icon: SpendIcon,
-  label: 'Spend',
-  description: 'Spend native or cw20 tokens from the treasury.',
+  title: 'Spend',
+  subtitle: 'Spend native or cw20 tokens from the treasury.',
   Component,
   useDefaults,
-  useTransformToCosmos,
+  // useTransformToCosmos,
   useDecodedCosmosMsg,
 }

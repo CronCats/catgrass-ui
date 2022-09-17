@@ -1,143 +1,83 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
-import Fuse from 'fuse.js'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useState } from 'react'
 
 import { Action } from '@croncat-ui/actions'
 
-import { Modal } from './Modal'
-
 export interface ActionSelectorProps {
   actions: Action[]
-  onClose: () => void
-  onSelectAction: (action: Action) => void
+  onSelectedAction: (action: Action) => void
 }
 
 export const ActionSelector = ({
   actions,
-  onClose,
-  onSelectAction,
+  onSelectedAction,
 }: ActionSelectorProps) => {
-  const actionsFuse = useMemo(
-    () => new Fuse(actions, { keys: ['label', 'description'] }),
-    [actions]
-  )
-  const actionsListRef = useRef<HTMLUListElement>(null)
+  const [toggleActive, setToggleActive] = useState(false)
+  const [selectedAction, setSelectedAction] = useState(actions[0])
 
-  const [filter] = useState('')
-  const filteredActions = useMemo(
-    () =>
-      filter ? actionsFuse.search(filter).map(({ item }) => item) : actions,
-    [actions, actionsFuse, filter]
-  )
+  const toggleList = () => {
+    setToggleActive(!toggleActive)
+  }
 
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  // When filtered actions update, reset selection to top.
-  useEffect(() => setSelectedIndex(0), [filteredActions])
-  // Ensure selected action is scrolled into view.
-  useEffect(() => {
-    const item = actionsListRef.current?.children[selectedIndex]
-    if (!item) {
-      return
-    }
-
-    // Only scroll if not already visible.
-    const { bottom, top } = item.getBoundingClientRect()
-    const containerRect = actionsListRef.current.getBoundingClientRect()
-    if (top >= containerRect.top && bottom <= containerRect.bottom) {
-      return
-    }
-
-    item.scrollIntoView({
-      behavior: 'smooth',
-    })
-  }, [selectedIndex])
-
-  const handleKeyPress = useCallback(
-    (event: KeyboardEvent) => {
-      switch (event.key) {
-        case 'ArrowLeft':
-        case 'ArrowUp':
-          event.preventDefault()
-          setSelectedIndex((index) =>
-            index - 1 < 0
-              ? filteredActions.length - 1
-              : // Just in case for some reason the index is overflowing.
-                Math.min(index - 1, filteredActions.length - 1)
-          )
-          break
-        case 'ArrowRight':
-        case 'ArrowDown':
-          event.preventDefault()
-          setSelectedIndex(
-            // Just in case for some reason the index is underflowing.
-            (index) => Math.max(index + 1, 0) % filteredActions.length
-          )
-          break
-        case 'Enter':
-          event.preventDefault()
-          if (selectedIndex >= 0 && selectedIndex < filteredActions.length) {
-            onSelectAction(filteredActions[selectedIndex])
-          }
-          break
-      }
-    },
-    [selectedIndex, filteredActions, onSelectAction]
-  )
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyPress)
-    // Clean up event listener on unmount.
-    return () => document.removeEventListener('keydown', handleKeyPress)
-  }, [handleKeyPress])
+  const selectAction = (action: Action) => {
+    toggleList()
+    setSelectedAction(action)
+    onSelectedAction(action)
+  }
 
   return (
-    <Modal
-      containerClassName="max-w-[96vw] w-[32rem] !h-[38rem] max-h-[96vh] flex flex-col gap-2"
-      onClose={onClose}
-    >
-      <ul
-        className="flex overflow-y-auto flex-col grow gap-3 pr-2 list-none styled-scrollbar"
-        ref={actionsListRef}
-      >
-        {filteredActions.map((action, index) => (
-          <li key={action.key}>
-            <ActionDisplayItem
-              action={action}
-              onClick={() => onSelectAction(action)}
-              selected={selectedIndex === index}
-            />
-          </li>
-        ))}
-      </ul>
-    </Modal>
+    <div>
+      <div className="relative">
+        <div
+          className="flex z-10 p-4 text-gray-100 bg-gray-800 rounded-lg"
+          onClick={toggleList}
+        >
+          <ActionItem action={selectedAction} />
+
+          <div className="flex my-auto w-6">
+            {toggleActive ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </div>
+        </div>
+
+        <div
+          className={clsx(
+            'absolute top-12 -right-1 -left-1 z-20 flex-col p-2 text-gray-100 bg-gray-500 rounded-lg shadow-lg',
+            {
+              visible: toggleActive === true,
+              invisible: toggleActive === false,
+            }
+          )}
+        >
+          {actions.map((action, index) => (
+            <div
+              key={index}
+              className="p-1 hover:bg-gray-800 active:bg-gray-800 rounded-lg"
+              onClick={() => {
+                selectAction(action)
+              }}
+            >
+              <ActionItem action={action} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
-interface ActionDisplayItemProps {
+interface ActionItemProps {
   action: Action
-  onClick: () => void
-  selected: boolean
 }
 
-const ActionDisplayItem = ({
-  action: { Icon, label, description },
-  onClick,
-  selected,
-}: ActionDisplayItemProps) => (
-  <button
-    className={clsx(
-      'flex flex-row gap-3 items-center p-2 w-full text-left hover:bg-primary rounded transition',
-      { 'bg-primary': selected }
-    )}
-    onClick={onClick}
-    type="button"
-  >
-    <p className="text-3xl">
+const ActionItem = ({ action: { title, subtitle, Icon } }: ActionItemProps) => (
+  <div className="flex px-2 w-full cursor-pointer">
+    <div className="flex py-2 mr-4 w-8">
       <Icon />
-    </p>
-    <div className="flex flex-col items-start">
-      <p className="body-text">{label}</p>
-      <p className="secondary-text">{description}</p>
     </div>
-  </button>
+    <div className="flex-col py-2 m-auto w-full">
+      <h3 className="text-lg font-bold leading-4">{title}</h3>
+      <small className="text-xs text-gray-400">{subtitle}</small>
+    </div>
+  </div>
 )

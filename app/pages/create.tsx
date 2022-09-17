@@ -39,7 +39,14 @@ import {
   validatePositive,
   validateRequired,
 } from '@croncat-ui/utils'
-import { CustomMessageComponent, DCAComponent, PayrollComponent } from '@/../packages/actions'
+import {
+  CadenceBoundaryComponent,
+  CustomMessageComponent,
+  DCAComponent,
+  PayrollComponent,
+  NetworkSignerComponent,
+  RecipeSummaryComponent,
+} from '@/../packages/actions'
 import { SuspenseLoader } from '@/../packages/common'
 
 // TODO: fake data, remove once wallet finished
@@ -65,16 +72,16 @@ const supportedChains = chains
 
 const accounts = [
   {
-    title: 'Main Account 1',
-    address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    balance: { amount: '420690000', denom: 'uosmo' },
-    chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
-  },
-  {
     title: 'Dev Main Account',
     address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
     balance: { amount: '13370000', denom: 'ujuno' },
     chain: supportedChains.find(({chain_name})=>chain_name==='juno')
+  },
+  {
+    title: 'Main Account 1',
+    address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+    balance: { amount: '420690000', denom: 'uosmo' },
+    chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
   },
 ]
 
@@ -190,33 +197,32 @@ const CreatePage: NextPage = () => {
               <section id="1" className={clsx({
                 'hidden': currentSectionIndex != 1,
               })}>
-                <h3 className="text-xl mb-2">How often should this occur?</h3>
-
-                TODO:
+                <CadenceBoundaryComponent />  
               </section>
 
               <section id="2" className={clsx({
                 'hidden': currentSectionIndex != 2,
               })}>
-                <h3 className="text-xl mb-2">Confirm Details</h3>
-
-                TODO:
+                <RecipeSummaryComponent />
               </section>
 
               <section id="3" className={clsx({
                 'hidden': currentSectionIndex != 3,
               })}>
-                <h3 className="text-xl mb-2">Sign Transactions</h3>
-
-                TODO:
+                <NetworkSignerComponent />
               </section>
 
               <section id="4" className={clsx({
                 'hidden': currentSectionIndex != 4,
               })}>
-                <h3 className="text-xl mb-2">Success!</h3>
+                <div className="text-center">
+                  <h3 className="text-xl mb-2">{t('form.recipe_success_title')}</h3>
+                  <p>{t('form.recipe_success_subtitle')}</p>
+                </div>
 
-                TODO:
+                <div className="my-24">
+                  TODO: Recipe card, link to users recipes
+                </div>
               </section>
 
               <footer className="flex justify-between">

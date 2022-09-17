@@ -53,16 +53,16 @@ export const PayrollComponent = () => {
 
   const accounts: Account[] = [
     {
-      title: 'Main Account 1',
-      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
-    },
-    {
       title: 'Dev Main Account',
       address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
       balance: { amount: '13370000', denom: 'ujuno' },
       chain: supportedChains.find(({chain_name})=>chain_name==='juno')
+    },
+    {
+      title: 'Main Account 1',
+      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+      balance: { amount: '420690000', denom: 'uosmo' },
+      chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
     },
   ]
 
@@ -143,34 +143,7 @@ export const PayrollComponent = () => {
 
       <h3 className="text-xl mb-2">Recipients</h3>
 
-      <div className="bg-gray-50 rounded-lg p-2 -mx-2 md:p-4 md:-mx-4">
-        <div className="overflow-x-auto">
-          <table className="table table-compact w-full">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Address</th>
-                <th>Payment</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recipients.map((r, index) => 
-                (
-                  <tr key={index}>
-                    <th>{index + 1}</th>
-                    <td>{r.address}</td>
-                    <td>
-                      <Balance {...r.balance} decimals={6} />
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody> 
-          </table>
-        </div>
-      </div>
-
-      <div className="bg-gray-50 rounded-lg p-2 -mx-2 md:p-4 md:-mx-4 mt-4">
+      <div className="bg-gray-50 rounded-lg p-2 pb-0 -mx-2 md:p-4 md:pb-0 md:-mx-4 mt-4">
 
         <InputLabel name={t('form.recipientAddress')} className="mb-2" />
         <AddressInput
@@ -219,6 +192,33 @@ export const PayrollComponent = () => {
           <PlusIcon className="w-4" />
           <span>Add Recipient</span>
         </Button>
+
+        <div className="bg-gray-100 rounded-lg p-2 mt-8 -mx-2 md:p-4 md:-mx-4">
+          <div className="overflow-x-auto">
+            <table className="table table-compact w-full">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Address</th>
+                  <th>Payment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recipients.map((r, index) => 
+                  (
+                    <tr key={index}>
+                      <th>{index + 1}</th>
+                      <td>{r.address}</td>
+                      <td>
+                        <Balance {...r.balance} decimals={6} />
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody> 
+            </table>
+          </div>
+        </div>
 
       </div>
 

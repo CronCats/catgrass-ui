@@ -55,7 +55,7 @@ function ButtonComponent(
           'bg-btn-secondary-hover': variant === 'secondary' && active,
           // Shared
           'bg-btn-disabled': isDisabled,
-          'py-[18px] px-10 min-w-[190px] text-lg': size === '2xl',
+          'py-[18px] px-10 min-w-[110px] md:min-w-[190px] text-lg': size === '2xl',
           'py-[12px] px-[24px]': size === 'xl',
           'py-[10px] px-[16px]': size === 'lg',
           'py-[4px] px-[8px]': size === 'sm',

@@ -72,7 +72,15 @@
     "to_token": "To Token",
     "amount_total": "Amount total",
     "amount_to_receive_each": "Amount to receive each time",
-    "amount_to_swap_each": "Amount to swap each time"
+    "amount_to_swap_each": "Amount to swap each time",
+    "cadence_how_often": "How often should this occur?",
+    "cadence_when_start": "When should this start?",
+    "cadence_when_end": "When should this end?",
+    "signer_sign_txns": "Sign Transactions",
+    "note": "Note:",
+    "signer_note_full": "You will be signing transactions per-network. Depending on how many actions you have, there will more multiple times required to sign. Failure to sign all items could result in a bad state, please proceed carefully!",
+    "recipe_success_title": "Great Job!",
+    "recipe_success_subtitle": "All transactions completed, your recipe will begin immediately."
   },
   "format": {
     "usdc": "{{val, currency(currency: USD)}} USDC"

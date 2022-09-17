@@ -96,6 +96,26 @@ export interface AccountNetwork {
 }
 
 
+/**
+ * Cadence & Boundary Types
+ */
+export enum Interval {
+  Once = 'once',
+  Immediate = 'immediate',
+  Block = 'block',
+  Cron = 'cron',
+}
+
+export type BoundaryType = number | Timestamp
+
+export type BoundaryRange = {
+  start?: number,
+  end?: number,
+} | {
+  start?: Timestamp,
+  end?: Timestamp,
+}
+
 
 /**
  * Duration is a delta of time. You can add it to a BlockInfo or Expiration to move that further in the future. Note that an height-based Duration and a time-based Expiration cannot be combined

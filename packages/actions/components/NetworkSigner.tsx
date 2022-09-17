@@ -6,7 +6,14 @@ import { useTranslation } from 'react-i18next'
 import { assets, chains } from 'chain-registry'
 import { Chain, Asset } from '@chain-registry/types'
 import {
+  PlusIcon,
+} from '@heroicons/react/24/outline'
+import {
   AccountSelector,
+  AddressInput,
+  Balance,
+  Button,
+  SelectInput,
   InputLabel,
   NumberInput,
   TokenSelector,
@@ -14,6 +21,7 @@ import {
 import {
   NATIVE_DECIMALS,
   chainColors,
+  validateAddress,
   validatePositive,
   validateRequired,
 } from '@croncat-ui/utils'
@@ -32,7 +40,7 @@ const getChainData = (chain: Chain) => {
   }
 }
 
-export const DCAComponent = () => {
+export const NetworkSignerComponent = () => {
   const { register, watch, setValue } = useFormContext()
   const { t } = useTranslation()
 
@@ -56,6 +64,25 @@ export const DCAComponent = () => {
       address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
       balance: { amount: '420690000', denom: 'uosmo' },
       chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
+    },
+  ]
+
+  const stakeActions: { type: string; name: string }[] = [
+    {
+      type: 'StakeType.Delegate',
+      name: 'Delegate',
+    },
+    {
+      type: 'StakeType.Undelegate',
+      name: 'Undelegate',
+    },
+    {
+      type: 'StakeType.Redelegate',
+      name: 'Redelegate',
+    },
+    {
+      type: 'StakeType.WithdrawDelegatorReward',
+      name: 'Claim Rewards',
     },
   ]
 
@@ -85,87 +112,15 @@ export const DCAComponent = () => {
 
   return (
     <div aria-details='dca fields' className="my-8">
-      <InputLabel name={t('form.from_account')} className="mb-2" />
-      <AccountSelector accounts={accounts} onSelectedAccount={accountCallback} />
+      <h3 className="text-xl mb-2">{t('form.signer_sign_txns')}</h3>
+
+
+      <br />
+      <InputLabel name={t('form.note')} className="mb-2" />
+      <small className="text-gray-400">{t('form.signer_note_full')}</small>
 
       <br />
 
-      <InputLabel name={t('form.from_token')} className="mb-2" />
-      <TokenSelector tokens={tokens} onSelectedToken={tokenCallback} />
-
-      <br />
-
-      <InputLabel name={t('form.amount_total')} className="mb-2" />
-      <NumberInput
-        // disabled={!isCreating}
-        // error={errors?.amount}
-        fieldName={fieldNamePrefix + 'amount_total'}
-        onMinus={() =>
-          setValue(
-            fieldNamePrefix + 'amount_total',
-            Math.max(
-              Number(spendTotalAmount) - 1,
-              1 / 10 ** amountDecimals
-            ).toString()
-          )
-        }
-        onPlus={() =>
-          setValue(
-            fieldNamePrefix + 'amount_total',
-            Math.max(
-              Number(spendTotalAmount) + 1,
-              1 / 10 ** amountDecimals
-            ).toString()
-          )
-        }
-        register={register}
-        sizing="full"
-        step={1 / 10 ** amountDecimals}
-        defaultValue={10}
-        validation={[validateRequired, validatePositive]}
-      />
-
-      <br />
-
-      <InputLabel name={t('form.amount_to_swap_each')} className="mb-2" />
-      <NumberInput
-        // disabled={!isCreating}
-        // error={errors?.amount}
-        fieldName={fieldNamePrefix + 'amount_to_swap_each'}
-        onMinus={() =>
-          setValue(
-            fieldNamePrefix + 'amount_to_swap_each',
-            Math.max(
-              Number(spendEachAmount) - 1,
-              1 / 10 ** amountDecimals
-            ).toString()
-          )
-        }
-        onPlus={() =>
-          setValue(
-            fieldNamePrefix + 'amount_to_swap_each',
-            Math.max(
-              Number(spendEachAmount) + 1,
-              1 / 10 ** amountDecimals
-            ).toString()
-          )
-        }
-        register={register}
-        sizing="full"
-        step={1 / 10 ** amountDecimals}
-        defaultValue={1}
-        validation={[validateRequired, validatePositive]}
-      />
-
-      <hr className="my-8 w-1/2 mx-auto border-2 border-gray-50" />
-
-      <InputLabel name={t('form.to_account')} className="mb-2" />
-      <AccountSelector accounts={accounts} onSelectedAccount={accountCallback} />
-
-      <br />
-
-      <InputLabel name={t('form.to_token')} className="mb-2" />
-      <TokenSelector tokens={tokens} onSelectedToken={tokenCallback} />
     </div>
   )
 }

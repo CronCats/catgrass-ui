@@ -137,9 +137,7 @@ const Component: ActionComponent = (props) => {
 
     // All instantiate actions' data that instantiate the same code ID.
     const instantiateActionsData = props.allActionsWithData
-      .filter(
-        ({ data }) => data.codeId === codeId
-      )
+      .filter(({ data }) => data.codeId === codeId)
       .map(({ data }) => data) as InstantiateData[]
     // Index of this action in the list of all instantiation actions.
     const innerIndex = instantiateActionsData.indexOf(

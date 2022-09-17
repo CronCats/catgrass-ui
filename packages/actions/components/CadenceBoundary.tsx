@@ -175,7 +175,7 @@ export const CadenceBoundaryComponent = () => {
         intervalValue: '',
       },
     },
-  ]//.concat(boundaryOptions)
+  ] //.concat(boundaryOptions)
   const boundaryEndOptions = [
     {
       sort: 10,
@@ -188,7 +188,7 @@ export const CadenceBoundaryComponent = () => {
       },
       // rules: [] // TODO:
     },
-  ]//.concat(boundaryOptions)
+  ] //.concat(boundaryOptions)
 
   // TODO: Add for custom
   // const intervalOptions = [

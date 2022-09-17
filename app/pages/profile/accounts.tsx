@@ -6,6 +6,7 @@ import { AccountNetwork } from '@croncat-ui/actions'
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
 import { NetworkAccountSelector } from '@croncat-ui/ui'
 import { chainColors } from '@croncat-ui/utils'
+
 import { PageHeader } from '@/components/PageHeader'
 
 const getChainData = (chain) => {
@@ -20,7 +21,7 @@ const getChainData = (chain) => {
       asset,
       chain,
       brandColor: chainColors[chain.chain_id],
-    }
+    },
   }
 }
 

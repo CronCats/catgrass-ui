@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ComponentType, ComponentProps } from 'react'
+import { ComponentProps, ComponentType } from 'react'
 import {
   FieldError,
   FieldPathValue,
@@ -42,7 +42,7 @@ export const SelectInput = <
   return (
     <select
       className={clsx(
-        'py-3 px-3 text-body w-full bg-transparent rounded-lg border-2 focus:outline-none focus:ring-2 ring-gray-400 ring-offset-0 transition border-default',
+        'py-3 px-3 w-full text-body bg-transparent rounded-lg border-2 focus:outline-none focus:ring-2 ring-gray-400 ring-offset-0 transition border-default',
         { 'ring-1 ring-error': error }
       )}
       {...props}

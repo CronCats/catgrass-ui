@@ -7,9 +7,9 @@ import { WalletProvider } from '@croncat-ui/common'
 
 import { installWarningVisibleAtom, noKeplrAccountAtom } from '@/atoms'
 
+import { Footer } from './Footer'
 import { InstallKeplr } from './InstallKeplr'
 import { Nav } from './Nav'
-import { Footer } from './Footer'
 import { NoKeplrAccountModal } from './NoKeplrAccountModal'
 
 const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
@@ -43,9 +43,7 @@ const AppLayoutInner = ({ children }: PropsWithChildren<{}>) => {
       <div className="w-full h-full">
         <Nav />
 
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen bg-gray-50">{children}</main>
 
         <Footer />
       </div>

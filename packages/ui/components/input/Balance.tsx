@@ -1,5 +1,4 @@
 import {
-  NATIVE_DENOM,
   convertMicroDenomToDenomWithDecimals,
   nativeTokenLabel,
   nativeTokenLogoURI,
@@ -34,17 +33,22 @@ export const UnknownAssetBalanceIcon = () => (
   </div>
 )
 
-export const Balance = ({ denom, amount, decimals, imageUrl }: BalanceProps) => {
+export const Balance = ({
+  denom,
+  amount,
+  decimals,
+  imageUrl,
+}: BalanceProps) => {
   const symbol = nativeTokenLabel(denom)
   const icon = nativeTokenLogoURI(denom)
   const iconUrl = icon || imageUrl
   const formattedAmt = convertMicroDenomToDenomWithDecimals(
-      amount,
-      decimals
-    ).toLocaleString(undefined, {
-      maximumFractionDigits: decimals,
-    })
-  
+    amount,
+    decimals
+  ).toLocaleString(undefined, {
+    maximumFractionDigits: decimals,
+  })
+
   return (
     <span>
       {imageUrl ? (
@@ -53,8 +57,7 @@ export const Balance = ({ denom, amount, decimals, imageUrl }: BalanceProps) => 
         // <UnknownAssetBalanceIcon />
         ''
       )}
-      {formattedAmt}{' '}
-      {symbol}
+      {formattedAmt} {symbol}
     </span>
   )
 }

@@ -77,7 +77,7 @@ export interface Action<O extends {} = any, D extends {} = any> {
   useDecodedCosmosMsg?: UseDecodedCosmosMsg<D>
 }
 
-export interface ChainMetadata extends Chain {
+export interface ChainMetadata {
   brandColor: string
   asset?: Asset
   chain?: Chain
@@ -95,7 +95,6 @@ export interface AccountNetwork {
   network: ChainMetadata
 }
 
-
 /**
  * Cadence & Boundary Types
  */
@@ -108,14 +107,15 @@ export enum Interval {
 
 export type BoundaryType = number | Timestamp
 
-export type BoundaryRange = {
-  start?: number,
-  end?: number,
-} | {
-  start?: Timestamp,
-  end?: Timestamp,
-}
-
+export type BoundaryRange =
+  | {
+      start?: number
+      end?: number
+    }
+  | {
+      start?: Timestamp
+      end?: Timestamp
+    }
 
 /**
  * Duration is a delta of time. You can add it to a BlockInfo or Expiration to move that further in the future. Note that an height-based Duration and a time-based Expiration cannot be combined

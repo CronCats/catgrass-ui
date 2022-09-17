@@ -10,7 +10,7 @@ import { installWarningVisibleAtom, noKeplrAccountAtom } from '@/atoms'
 import { InstallKeplr } from './InstallKeplr'
 import { Nav } from './Nav'
 import { NoKeplrAccountModal } from './NoKeplrAccountModal'
-import { PageHeader } from './PageHeader'
+// import { PageHeader } from './PageHeader'
 
 const PageLayoutInner = ({ children }: PropsWithChildren<{}>) => {
   const router = useRouter()
@@ -42,7 +42,7 @@ const PageLayoutInner = ({ children }: PropsWithChildren<{}>) => {
 
       <div className="w-full h-full">
         <Nav />
-        <PageHeader />
+        {/* <PageHeader /> */}
 
         <main className="min-h-screen">{children}</main>
       </div>

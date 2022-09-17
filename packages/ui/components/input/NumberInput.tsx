@@ -63,7 +63,7 @@ export const NumberInput = <
       className={clsx(
         'flex flex-row gap-1 items-center text-sm',
         containerClassName,
-        'py-3 px-3 rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default',
+        'py-3 px-3 bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default',
         {
           'ring-2 ring-error': error,
           'w-28': sizing === 'sm',

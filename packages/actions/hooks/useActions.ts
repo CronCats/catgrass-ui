@@ -10,7 +10,7 @@ export const useActions = (additionalActions?: Action[]): Action[] =>
         .concat(additionalActions ?? [])
         // Sort alphabetically.
         .sort((a, b) =>
-          a.label.toLowerCase().localeCompare(b.label.toLowerCase())
+          a.title.toLowerCase().localeCompare(b.title.toLowerCase())
         ),
     [additionalActions]
   )

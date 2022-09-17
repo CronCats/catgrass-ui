@@ -1,9 +1,6 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-} from '@heroicons/react/24/outline'
 
 import { Action } from '@croncat-ui/actions'
 
@@ -32,27 +29,34 @@ export const ActionSelector = ({
   return (
     <div>
       <div className="relative">
-        <div onClick={toggleList} className="flex z-10 p-4 rounded-lg bg-gray-800 text-gray-100">
+        <div
+          className="flex z-10 p-4 text-gray-100 bg-gray-800 rounded-lg"
+          onClick={toggleList}
+        >
           <ActionItem action={selectedAction} />
 
           <div className="flex my-auto w-6">
-            {toggleActive ? (
-              <ChevronUpIcon />
-            ) : (
-              <ChevronDownIcon />
-            )}
+            {toggleActive ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </div>
         </div>
 
-        <div className={clsx(
-          "flex-col absolute top-12 -right-1 -left-1 z-20 p-2 shadow-lg rounded-lg bg-gray-500 text-gray-100",
-          {
-            visible: toggleActive === true,
-            invisible: toggleActive === false,
-          }
-        )}>
+        <div
+          className={clsx(
+            'absolute top-12 -right-1 -left-1 z-20 flex-col p-2 text-gray-100 bg-gray-500 rounded-lg shadow-lg',
+            {
+              visible: toggleActive === true,
+              invisible: toggleActive === false,
+            }
+          )}
+        >
           {actions.map((action, index) => (
-            <div key={index} className="rounded-lg hover:bg-gray-800 active:bg-gray-800 p-1" onClick={() => {selectAction(action)}}>
+            <div
+              key={index}
+              className="p-1 hover:bg-gray-800 active:bg-gray-800 rounded-lg"
+              onClick={() => {
+                selectAction(action)
+              }}
+            >
               <ActionItem action={action} />
             </div>
           ))}
@@ -66,20 +70,14 @@ interface ActionItemProps {
   action: Action
 }
 
-const ActionItem = ({
-  action: { title, subtitle, Icon },
-}: ActionItemProps) => (
-  <div className="flex px-2 cursor-pointer w-full">
+const ActionItem = ({ action: { title, subtitle, Icon } }: ActionItemProps) => (
+  <div className="flex px-2 w-full cursor-pointer">
     <div className="flex py-2 mr-4 w-8">
       <Icon />
     </div>
     <div className="flex-col py-2 m-auto w-full">
-      <h3 className="text-lg font-bold leading-4">
-        {title}
-      </h3>
-      <small className="text-xs text-gray-400">
-        {subtitle}
-      </small>
+      <h3 className="text-lg font-bold leading-4">{title}</h3>
+      <small className="text-xs text-gray-400">{subtitle}</small>
     </div>
   </div>
 )

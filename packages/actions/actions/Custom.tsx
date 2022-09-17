@@ -51,8 +51,8 @@ const useDecodedCosmosMsg: UseDecodedCosmosMsg<CustomData> = (
 
 export const customAction: Action<CustomData> = {
   Icon: CustomIcon,
-  label: 'Custom',
-  description: 'Perform any custom action a wallet can.',
+  title: 'Custom',
+  subtitle: 'Perform any custom action a wallet can.',
   Component,
   useDefaults,
   useTransformToCosmos,

@@ -1,15 +1,11 @@
-import { useTranslation } from 'react-i18next'
-import { assets, chains } from 'chain-registry'
 import { Chain } from '@chain-registry/types'
-import {
-  AccountSelector,
-  InputLabel,
-  Loader,
-} from '@croncat-ui/ui'
-import {
-  chainColors,
-} from '@croncat-ui/utils'
+import { assets, chains } from 'chain-registry'
+import { useTranslation } from 'react-i18next'
+
 import { SuspenseLoader } from '@croncat-ui/common'
+import { AccountSelector, InputLabel, Loader } from '@croncat-ui/ui'
+import { chainColors } from '@croncat-ui/utils'
+
 import { Account, CustomComponent } from '..'
 
 // TODO: fake data, remove once wallet finished
@@ -42,13 +38,13 @@ export const CustomMessageComponent = () => {
       title: 'Main Account 1',
       address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
       balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
+      chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
     },
     {
       title: 'Dev Main Account',
       address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
       balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='juno')
+      chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
     },
   ]
 
@@ -57,24 +53,27 @@ export const CustomMessageComponent = () => {
   }
 
   return (
-    <div aria-details='custom message fields' className="my-8 w-full min-h-24">
-      <InputLabel name={t('form.from_account')} className="mb-2" />
-      <AccountSelector accounts={accounts} onSelectedAccount={accountCallback} />
+    <div aria-details="custom message fields" className="my-8 w-full min-h-24">
+      <InputLabel className="mb-2" name={t('form.from_account')} />
+      <AccountSelector
+        accounts={accounts}
+        onSelectedAccount={accountCallback}
+      />
 
       <br />
-      <InputLabel name={t('form.custom_message')} className="mb-2" />
+      <InputLabel className="mb-2" name={t('form.custom_message')} />
       <SuspenseLoader>
         <CustomComponent
-          coreAddress={''}
-          allActionsWithData={[]}
-          index={0}
-          data={[]}
-          Logo={Loader}
-          fieldNamePrefix={fieldNamePrefix}
-          onRemove={() => {}}
-          errors={[]}
-          isCreating={true}
           Loader={Loader}
+          Logo={Loader}
+          allActionsWithData={[]}
+          coreAddress={''}
+          data={[]}
+          errors={[]}
+          fieldNamePrefix={fieldNamePrefix}
+          index={0}
+          isCreating={true}
+          onRemove={() => {}}
         />
       </SuspenseLoader>
     </div>

@@ -1,6 +1,8 @@
 import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'react-i18next'
+
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
+
 import { PageHeader } from '@/components/PageHeader'
 
 const ExplorePage: NextPage = () => {

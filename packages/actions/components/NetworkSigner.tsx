@@ -1,31 +1,13 @@
-import { useState, useMemo } from 'react'
-import {
-  useFormContext,
-} from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
+import { Asset, Chain } from '@chain-registry/types'
 import { assets, chains } from 'chain-registry'
-import { Chain, Asset } from '@chain-registry/types'
-import {
-  PlusIcon,
-} from '@heroicons/react/24/outline'
-import {
-  AccountSelector,
-  AddressInput,
-  Balance,
-  Button,
-  SelectInput,
-  InputLabel,
-  NumberInput,
-  TokenSelector,
-} from '@croncat-ui/ui'
-import {
-  NATIVE_DECIMALS,
-  chainColors,
-  validateAddress,
-  validatePositive,
-  validateRequired,
-} from '@croncat-ui/utils'
-import { Account } from '..'
+import { useMemo, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+
+import { Button, InputLabel, LogoFromImage } from '@croncat-ui/ui'
+import { NATIVE_DECIMALS, chainColors } from '@croncat-ui/utils'
+
+import { ChainMetadata } from '..'
 
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain: Chain) => {
@@ -34,7 +16,7 @@ const getChainData = (chain: Chain) => {
   )
   const asset = assetList?.assets[0]
   return {
-    ...chain,
+    chain,
     asset,
     brandColor: chainColors[chain.chain_id],
   }
@@ -52,20 +34,7 @@ export const NetworkSignerComponent = () => {
     .filter((c) => supportedChainIds.includes(c.chain_id))
     .map(getChainData)
 
-  const accounts: Account[] = [
-    {
-      title: 'Dev Main Account',
-      address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='juno')
-    },
-    {
-      title: 'Main Account 1',
-      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
-    },
-  ]
+  const chainItems = [supportedChains[0]]
 
   const stakeActions: { type: string; name: string }[] = [
     {
@@ -86,7 +55,7 @@ export const NetworkSignerComponent = () => {
     },
   ]
 
-  const assetList = assets.find(({chain_name})=>chain_name==='juno')
+  const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
 
   const fieldNamePrefix = 'form.'
@@ -95,10 +64,6 @@ export const NetworkSignerComponent = () => {
   const spendEachAmount = watch(fieldNamePrefix + 'amount_to_swap_each')
   const spendEachDenom = watch(fieldNamePrefix + 'amount_to_swap_each_denom')
   const [selectedToken, setSelectedToken] = useState(tokens[0])
-
-  const accountCallback = (account: Account) => {
-    console.log('accountCallback', account)
-  }
 
   const tokenCallback = (token: Asset) => {
     console.log('tokenCallback', token)
@@ -111,16 +76,49 @@ export const NetworkSignerComponent = () => {
   )
 
   return (
-    <div aria-details='dca fields' className="my-8">
-      <h3 className="text-xl mb-2">{t('form.signer_sign_txns')}</h3>
+    <div aria-details="dca fields" className="my-8">
+      <h3 className="mb-2 text-xl">{t('form.signer_sign_txns')}</h3>
 
+      <div className="my-12">
+        {chainItems.map((item) => (
+          <div key={item.chain.chain_id}>
+            <ChainItem {...item} />
+          </div>
+        ))}
+      </div>
 
-      <br />
-      <InputLabel name={t('form.note')} className="mb-2" />
+      <hr className="my-8 mx-auto w-1/2 border-2 border-gray-100" />
+
+      <InputLabel className="mb-2" name={t('form.note')} />
       <small className="text-gray-400">{t('form.signer_note_full')}</small>
 
       <br />
-
     </div>
   )
 }
+
+const ChainItem = ({ asset, brandColor, chain }: ChainMetadata) => (
+  <div className="flex justify-between p-2 w-full cursor-pointer">
+    <div className="flex my-auto w-full">
+      <div className="flex-col py-2 mr-2" style={{ minWidth: '40px' }}>
+        <LogoFromImage
+          className="block mr-4"
+          rounded={true}
+          size="40"
+          src={asset?.logo_URIs?.png || ''}
+        />
+      </div>
+      <div className="flex-col py-2 m-auto w-full">
+        <h3 className="text-lg font-bold leading-4">{chain?.pretty_name}</h3>
+        <small className="text-xs text-gray-400 lowercase">
+          {chain?.chain_id}
+        </small>
+      </div>
+      <div className="flex-col py-2 m-auto w-auto">
+        <Button className="min-w-[110px] bg-green-600 hover:bg-green-800">
+          <span>Sign</span>
+        </Button>
+      </div>
+    </div>
+  </div>
+)

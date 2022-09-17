@@ -22,7 +22,7 @@ import {
 import {
   Action,
   ActionComponent,
-  ActionKey,
+  // ActionKey,
   UseDecodedCosmosMsg,
   UseDefaults,
   UseTransformToCosmos,
@@ -138,10 +138,7 @@ const Component: ActionComponent = (props) => {
     // All instantiate actions' data that instantiate the same code ID.
     const instantiateActionsData = props.allActionsWithData
       .filter(
-        ({ key, data }) =>
-          key === ActionKey.Instantiate &&
-          'codeId' in data &&
-          data.codeId === codeId
+        ({ data }) => data.codeId === codeId
       )
       .map(({ data }) => data) as InstantiateData[]
     // Index of this action in the list of all instantiation actions.

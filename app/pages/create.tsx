@@ -1,53 +1,28 @@
-import { useState, useMemo } from 'react'
-import clsx from 'clsx'
+import {
+  CadenceBoundaryComponent,
+  CustomMessageComponent,
+  DCAComponent,
+  NetworkSignerComponent,
+  PayrollComponent,
+  RecipeSummaryComponent,
+} from '@/../packages/actions'
+import { ActionSelector, Button } from '@/../packages/ui'
 import {
   ArrowPathRoundedSquareIcon,
   BanknotesIcon,
   DocumentTextIcon,
 } from '@heroicons/react/24/outline'
-
+import { assets, chains } from 'chain-registry'
+import clsx from 'clsx'
 import { GetStaticProps, NextPage } from 'next'
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form'
+import { useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
-import { assets, chains, ibc } from 'chain-registry'
+import { chainColors } from '@croncat-ui/utils'
+
 import { PageHeader } from '@/components/PageHeader'
-import {
-  AccountSelector,
-  ActionSelector,
-  AddressInput,
-  Balance,
-  Button,
-  InputLabel,
-  Loader,
-  NumberInput,
-  SubmitButton,
-  TokenSelector,
-} from '@/../packages/ui'
-import {
-  NATIVE_DECIMALS,
-  NATIVE_DENOM,
-  chainColors,
-  validateAddress,
-  validatePositive,
-  validateRequired,
-} from '@croncat-ui/utils'
-import {
-  CadenceBoundaryComponent,
-  CustomMessageComponent,
-  DCAComponent,
-  PayrollComponent,
-  NetworkSignerComponent,
-  RecipeSummaryComponent,
-} from '@/../packages/actions'
-import { SuspenseLoader } from '@/../packages/common'
 
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain) => {
@@ -75,13 +50,13 @@ const accounts = [
     title: 'Dev Main Account',
     address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
     balance: { amount: '13370000', denom: 'ujuno' },
-    chain: supportedChains.find(({chain_name})=>chain_name==='juno')
+    chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
   },
   {
     title: 'Main Account 1',
     address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
     balance: { amount: '420690000', denom: 'uosmo' },
-    chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
+    chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
   },
 ]
 
@@ -109,12 +84,12 @@ const CreatePage: NextPage = () => {
   ]
 
   // const { register, control } = useFormContext()
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(1)
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(2)
   const [selectedAction, setSelectedAction] = useState(actions[0])
 
-  const assetList = assets.find(({chain_name})=>chain_name==='juno')
+  const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
-  
+
   const formMethods = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
@@ -175,48 +150,67 @@ const CreatePage: NextPage = () => {
 
   return (
     <>
-      <PageHeader title={t('title.create')} backgroundColor="#008F58" />
+      <PageHeader backgroundColor="#008F58" title={t('title.create')} />
 
       <div className="py-8 md:py-12">
         <div className="px-2 mx-auto max-w-xl md:px-0">
           <FormProvider {...formMethods}>
             <form
-              // onSubmit={handleSubmit(onSubmitForm, onSubmitError)}
+            // onSubmit={handleSubmit(onSubmitForm, onSubmitError)}
             >
+              <section
+                className={clsx({
+                  hidden: currentSectionIndex !== 0,
+                })}
+                id="0"
+              >
+                <h3 className="mb-2 text-xl">I want to…</h3>
 
-              <section id="0" className={clsx({
-                'hidden': currentSectionIndex != 0,
-              })}>
-                <h3 className="text-xl mb-2">I want to…</h3>
-
-                <ActionSelector actions={actions} onSelectedAction={actionCallback} />
+                <ActionSelector
+                  actions={actions}
+                  onSelectedAction={actionCallback}
+                />
 
                 <selectedAction.Component />
               </section>
 
-              <section id="1" className={clsx({
-                'hidden': currentSectionIndex != 1,
-              })}>
-                <CadenceBoundaryComponent />  
+              <section
+                className={clsx({
+                  hidden: currentSectionIndex !== 1,
+                })}
+                id="1"
+              >
+                <CadenceBoundaryComponent />
               </section>
 
-              <section id="2" className={clsx({
-                'hidden': currentSectionIndex != 2,
-              })}>
+              <section
+                className={clsx({
+                  hidden: currentSectionIndex !== 2,
+                })}
+                id="2"
+              >
                 <RecipeSummaryComponent />
               </section>
 
-              <section id="3" className={clsx({
-                'hidden': currentSectionIndex != 3,
-              })}>
+              <section
+                className={clsx({
+                  hidden: currentSectionIndex !== 3,
+                })}
+                id="3"
+              >
                 <NetworkSignerComponent />
               </section>
 
-              <section id="4" className={clsx({
-                'hidden': currentSectionIndex != 4,
-              })}>
+              <section
+                className={clsx({
+                  hidden: currentSectionIndex !== 4,
+                })}
+                id="4"
+              >
                 <div className="text-center">
-                  <h3 className="text-xl mb-2">{t('form.recipe_success_title')}</h3>
+                  <h3 className="mb-2 text-xl">
+                    {t('form.recipe_success_title')}
+                  </h3>
                   <p>{t('form.recipe_success_subtitle')}</p>
                 </div>
 
@@ -226,23 +220,26 @@ const CreatePage: NextPage = () => {
               </section>
 
               <footer className="flex justify-between">
-                <Button variant="secondary" size='2xl' onClick={prevSection} className={clsx({
-                  'invisible': currentSectionIndex === 0,
-                })}>
+                <Button
+                  className={clsx({
+                    invisible: currentSectionIndex === 0,
+                  })}
+                  onClick={prevSection}
+                  size="2xl"
+                  variant="secondary"
+                >
                   <span>Back</span>
                 </Button>
-                <Button variant="primary" size='2xl' onClick={nextSection}>
+                <Button onClick={nextSection} size="2xl" variant="primary">
                   <span>Next</span>
                 </Button>
-                
+
                 {/* <div className="flex">
                   <SubmitButton label="Submit" variant="primary" className="ml-auto" />
                 </div> */}
               </footer>
-
             </form>
           </FormProvider>
-
         </div>
       </div>
     </>

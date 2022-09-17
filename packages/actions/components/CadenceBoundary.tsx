@@ -1,41 +1,22 @@
-import { useState, useMemo } from 'react'
-import clsx from 'clsx'
-import {
-  useFormContext,
-} from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
-import { assets, chains } from 'chain-registry'
-import { Chain, Asset } from '@chain-registry/types'
+import { Chain } from '@chain-registry/types'
 import {
   AdjustmentsVerticalIcon,
-  ArrowLeftOnRectangleIcon,
-  ArrowRightOnRectangleIcon,
-  ArrowDownTrayIcon,
-  ArrowUpTrayIcon,
-  ArrowUturnDownIcon,
   ArrowTrendingDownIcon,
   ArrowTrendingUpIcon,
+  ArrowUturnDownIcon,
   BoltIcon,
   CalendarDaysIcon,
   ClockIcon,
   RectangleStackIcon,
 } from '@heroicons/react/24/outline'
-import {
-  SelectList,
-  SelectListItem,
-} from '@croncat-ui/ui'
-import {
-  NATIVE_DECIMALS,
-  chainColors,
-  validateAddress,
-  validatePositive,
-  validateRequired,
-} from '@croncat-ui/utils'
-import {
-  Interval,
-  BoundaryType,
-} from '@croncat-ui/actions'
-import { Account } from '..'
+import { assets, chains } from 'chain-registry'
+import { useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+
+import { Interval } from '@croncat-ui/actions'
+import { SelectList, SelectListItem } from '@croncat-ui/ui'
+import { chainColors } from '@croncat-ui/utils'
 
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain: Chain) => {
@@ -62,7 +43,7 @@ export const CadenceBoundaryComponent = () => {
     .filter((c) => supportedChainIds.includes(c.chain_id))
     .map(getChainData)
 
-  const assetList = assets.find(({chain_name})=>chain_name==='juno')
+  const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
 
   const fieldNamePrefix = 'form.'
@@ -96,7 +77,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Cron,
         intervalValue: '',
-      }
+      },
     },
     {
       sort: 10,
@@ -106,7 +87,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Cron,
         intervalValue: '',
-      }
+      },
     },
     {
       sort: 10,
@@ -116,7 +97,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Cron,
         intervalValue: '',
-      }
+      },
     },
     {
       sort: 10,
@@ -126,7 +107,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Block,
         intervalValue: 1000,
-      }
+      },
     },
     {
       sort: 10,
@@ -136,7 +117,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Immediate,
         intervalValue: null,
-      }
+      },
     },
     {
       sort: 10,
@@ -146,7 +127,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Immediate,
         intervalValue: null,
-      }
+      },
     },
     {
       sort: 10,
@@ -156,7 +137,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: null,
         intervalValue: null,
-      }
+      },
     },
   ]
 
@@ -170,7 +151,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Cron,
         intervalValue: '',
-      }
+      },
     },
     {
       sort: 10,
@@ -180,7 +161,7 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Block,
         intervalValue: 0, // TODO: Get current block + 1000
-      }
+      },
     },
   ]
   const boundaryStartOptions = [
@@ -192,9 +173,9 @@ export const CadenceBoundaryComponent = () => {
       data: {
         intervalType: Interval.Immediate,
         intervalValue: '',
-      }
+      },
     },
-  ].concat(boundaryOptions)
+  ]//.concat(boundaryOptions)
   const boundaryEndOptions = [
     {
       sort: 10,
@@ -207,7 +188,7 @@ export const CadenceBoundaryComponent = () => {
       },
       // rules: [] // TODO:
     },
-  ].concat(boundaryOptions)
+  ]//.concat(boundaryOptions)
 
   // TODO: Add for custom
   // const intervalOptions = [
@@ -236,21 +217,30 @@ export const CadenceBoundaryComponent = () => {
   const [selected, setSelected] = useState(intervalUxOptions[0])
 
   return (
-    <div aria-details='dca fields' className="my-8 mb-24">
-      <h3 className="text-xl mb-2">{t('form.cadence_how_often')}</h3>
-      <SelectList items={intervalUxOptions} onSelectedItem={intervalUxCallback} />
+    <div aria-details="dca fields" className="my-8 mb-24">
+      <h3 className="mb-2 text-xl">{t('form.cadence_how_often')}</h3>
+      <SelectList
+        items={intervalUxOptions}
+        onSelectedItem={intervalUxCallback}
+      />
 
       <br />
       <br />
-      
-      <h3 className="text-xl mb-2">{t('form.cadence_when_start')}</h3>
-      <SelectList items={boundaryStartOptions} onSelectedItem={boundaryStartCallback} />
+
+      <h3 className="mb-2 text-xl">{t('form.cadence_when_start')}</h3>
+      <SelectList
+        items={boundaryStartOptions}
+        onSelectedItem={boundaryStartCallback}
+      />
 
       <br />
       <br />
-      
-      <h3 className="text-xl mb-2">{t('form.cadence_when_end')}</h3>
-      <SelectList items={boundaryEndOptions} onSelectedItem={boundaryEndCallback} />
+
+      <h3 className="mb-2 text-xl">{t('form.cadence_when_end')}</h3>
+      <SelectList
+        items={boundaryEndOptions}
+        onSelectedItem={boundaryEndCallback}
+      />
     </div>
   )
 }

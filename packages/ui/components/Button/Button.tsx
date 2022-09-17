@@ -42,7 +42,7 @@ function ButtonComponent(
   return variant === 'primary' || variant === 'secondary' ? (
     <button
       className={clsx(
-        'relative py-[6px] px-[16px] rounded-full transition text-center',
+        'relative py-[6px] px-[16px] text-center rounded-full transition',
         {
           // Primary
           'text-light bg-btn link-text': variant === 'primary',
@@ -55,7 +55,8 @@ function ButtonComponent(
           'bg-btn-secondary-hover': variant === 'secondary' && active,
           // Shared
           'bg-btn-disabled': isDisabled,
-          'py-[18px] px-10 min-w-[110px] md:min-w-[190px] text-lg': size === '2xl',
+          'py-[18px] px-10 min-w-[110px] text-lg md:min-w-[190px]':
+            size === '2xl',
           'py-[12px] px-[24px]': size === 'xl',
           'py-[10px] px-[16px]': size === 'lg',
           'py-[4px] px-[8px]': size === 'sm',
@@ -78,7 +79,7 @@ function ButtonComponent(
       </div> */}
       <div
         className={clsx(
-          'flex flex-row gap-2 items-center justify-center',
+          'flex flex-row gap-2 justify-center items-center',
           {
             invisible: loading,
           },

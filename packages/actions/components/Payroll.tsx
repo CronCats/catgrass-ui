@@ -1,13 +1,10 @@
-import { useState, useMemo } from 'react'
-import {
-  useFormContext,
-} from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
+import { Asset, Chain } from '@chain-registry/types'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import { assets, chains } from 'chain-registry'
-import { Chain, Asset } from '@chain-registry/types'
-import {
-  PlusIcon,
-} from '@heroicons/react/24/outline'
+import { useMemo, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+
 import {
   AccountSelector,
   AddressInput,
@@ -24,6 +21,7 @@ import {
   validatePositive,
   validateRequired,
 } from '@croncat-ui/utils'
+
 import { Account } from '..'
 
 // TODO: fake data, remove once wallet finished
@@ -56,24 +54,24 @@ export const PayrollComponent = () => {
       title: 'Dev Main Account',
       address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
       balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='juno')
+      chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
     },
     {
       title: 'Main Account 1',
       address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
       balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(({chain_name})=>chain_name==='osmosis')
+      chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
     },
   ]
 
   const recipients = [
     {
       address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '13370000', denom: 'ujuno' }
+      balance: { amount: '13370000', denom: 'ujuno' },
     },
   ]
 
-  const assetList = assets.find(({chain_name})=>chain_name==='juno')
+  const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
 
   const fieldNamePrefix = 'form.'
@@ -98,21 +96,25 @@ export const PayrollComponent = () => {
   )
 
   return (
-    <div aria-details='dca fields' className="my-8">
-      <InputLabel name={t('form.from_account')} className="mb-2" />
-      <AccountSelector accounts={accounts} onSelectedAccount={accountCallback} />
+    <div aria-details="dca fields" className="my-8">
+      <InputLabel className="mb-2" name={t('form.from_account')} />
+      <AccountSelector
+        accounts={accounts}
+        onSelectedAccount={accountCallback}
+      />
 
       <br />
 
-      <InputLabel name={t('form.token')} className="mb-2" />
-      <TokenSelector tokens={tokens} onSelectedToken={tokenCallback} />
+      <InputLabel className="mb-2" name={t('form.token')} />
+      <TokenSelector onSelectedToken={tokenCallback} tokens={tokens} />
 
       <br />
 
-      <InputLabel name={t('form.amount_total')} className="mb-2" />
+      <InputLabel className="mb-2" name={t('form.amount_total')} />
       <NumberInput
         // disabled={!isCreating}
         // error={errors?.amount}
+        defaultValue={10}
         fieldName={fieldNamePrefix + 'amount_total'}
         onMinus={() =>
           setValue(
@@ -135,17 +137,15 @@ export const PayrollComponent = () => {
         register={register}
         sizing="full"
         step={1 / 10 ** amountDecimals}
-        defaultValue={10}
         validation={[validateRequired, validatePositive]}
       />
 
-      <hr className="my-8 w-1/2 mx-auto border-2 border-gray-50" />
+      <hr className="my-8 mx-auto w-1/2 border-2 border-gray-100" />
 
-      <h3 className="text-xl mb-2">Recipients</h3>
+      <h3 className="mb-2 text-xl">Recipients</h3>
 
-      <div className="bg-gray-50 rounded-lg p-2 pb-0 -mx-2 md:p-4 md:pb-0 md:-mx-4 mt-4">
-
-        <InputLabel name={t('form.recipientAddress')} className="mb-2" />
+      <div className="p-2 pb-0 -mx-2 mt-4 bg-gray-50 rounded-lg md:p-4 md:pb-0 md:-mx-4">
+        <InputLabel className="mb-2" name={t('form.recipientAddress')} />
         <AddressInput
           containerClassName="grow bg-white"
           disabled={false}
@@ -157,10 +157,12 @@ export const PayrollComponent = () => {
 
         <br />
 
-        <InputLabel name={t('form.amount_to_receive_each')} className="mb-2" />
+        <InputLabel className="mb-2" name={t('form.amount_to_receive_each')} />
         <NumberInput
           // disabled={!isCreating}
           // error={errors?.amount}
+          containerClassName="bg-white"
+          defaultValue={1}
           fieldName={fieldNamePrefix + 'amount_to_swap_each'}
           onMinus={() =>
             setValue(
@@ -183,19 +185,17 @@ export const PayrollComponent = () => {
           register={register}
           sizing="full"
           step={1 / 10 ** amountDecimals}
-          defaultValue={1}
           validation={[validateRequired, validatePositive]}
-          containerClassName="bg-white"
         />
 
-        <Button variant="primary" className="btn-success mt-6">
+        <Button className="mt-6 btn-success" variant="primary">
           <PlusIcon className="w-4" />
           <span>Add Recipient</span>
         </Button>
 
-        <div className="bg-gray-100 rounded-lg p-2 mt-8 -mx-2 md:p-4 md:-mx-4">
+        <div className="p-2 -mx-2 mt-8 bg-gray-100 rounded-lg md:p-4 md:-mx-4">
           <div className="overflow-x-auto">
-            <table className="table table-compact w-full">
+            <table className="table w-full table-compact">
               <thead>
                 <tr>
                   <th></th>
@@ -204,24 +204,20 @@ export const PayrollComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {recipients.map((r, index) => 
-                  (
-                    <tr key={index}>
-                      <th>{index + 1}</th>
-                      <td>{r.address}</td>
-                      <td>
-                        <Balance {...r.balance} decimals={6} />
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody> 
+                {recipients.map((r, index) => (
+                  <tr key={index}>
+                    <th>{index + 1}</th>
+                    <td>{r.address}</td>
+                    <td>
+                      <Balance {...r.balance} decimals={6} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>
-
       </div>
-
     </div>
   )
 }

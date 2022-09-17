@@ -12,12 +12,8 @@ import {
   Validate,
 } from 'react-hook-form'
 
-import { useThemeContext } from '../../theme'
-
 // This check is to prevent this import to be server side rendered.
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
-  console.log('HERREEEEE');
-  
   require('codemirror/mode/javascript/javascript.js')
 }
 

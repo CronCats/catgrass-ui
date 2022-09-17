@@ -1,13 +1,13 @@
 import {
   ArrowRightOnRectangleIcon,
-  ChevronUpIcon,
   ChevronDownIcon,
+  ChevronUpIcon,
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Account, AccountNetwork } from '@croncat-ui/actions'
-import { LogoFromImage, Balance } from '@croncat-ui/ui'
+import { Balance, LogoFromImage } from '@croncat-ui/ui'
 
 export interface NetworkAccountSelectorProps {
   accountNetworks: AccountNetwork[]
@@ -34,7 +34,7 @@ export const NetworkAccountSelector = ({
         <div key={index} className="relative">
           <div
             className={clsx(
-              'flex z-10 px-2 mb-2 rounded-lg border-2 cursor-pointer',
+              'flex z-10 px-2 mb-2 bg-white rounded-lg border-2 cursor-pointer',
               { 'opacity-30': disabled }
             )}
             style={{ borderColor: network.network.brandColor }}
@@ -80,7 +80,8 @@ export const NetworkAccountSelector = ({
                 hidden: disabled || network.accounts.length < 1,
               })}
             >
-              {selectedNetworkIndex === index && selectedNetworkActive === true ? (
+              {selectedNetworkIndex === index &&
+              selectedNetworkActive === true ? (
                 <ChevronUpIcon />
               ) : (
                 <ChevronDownIcon />

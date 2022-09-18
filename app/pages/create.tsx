@@ -84,7 +84,7 @@ const CreatePage: NextPage = () => {
   ]
 
   // const { register, control } = useFormContext()
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(2)
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(1)
   const [selectedAction, setSelectedAction] = useState(actions[0])
 
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')

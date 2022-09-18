@@ -20,8 +20,13 @@ export interface SelectListProps {
 export const SelectList = ({ items, onSelectedItem }: SelectListProps) => {
   const [selected, setSelected] = useState(items[0])
 
+  const select = (item: SelectListItem) => {
+    setSelected(item)
+    onSelectedItem(item)
+  }
+
   return (
-    <Listbox onChange={setSelected} value={selected}>
+    <Listbox onChange={select} value={selected}>
       {({ open }) => (
         <>
           <div className="relative mt-1">

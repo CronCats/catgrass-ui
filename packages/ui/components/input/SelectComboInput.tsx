@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ComponentProps, ComponentType, useState } from 'react'
+import { ComponentProps, ComponentType, ChangeEvent, useState } from 'react'
 import {
   FieldError,
   FieldPathValue,
@@ -12,6 +12,7 @@ import {
 export interface SelectComboItem {
   type: string
   title: string
+  defaultValue?: string
 }
 
 export interface SelectComboInputProps<
@@ -28,7 +29,7 @@ export interface SelectComboInputProps<
   required?: boolean
   Icon?: ComponentType
   options: SelectComboItem[]
-  onChange: (option: SelectComboItem, value: string | number) => void
+  onUpdate: (option: SelectComboItem, value: number | string) => void
   setValueAs?: (value: any) => any
 }
 
@@ -49,7 +50,7 @@ export const SelectComboInput = <
   required,
   Icon,
   options,
-  onChange,
+  onUpdate,
   setValueAs,
   ...props
 }: SelectComboInputProps<FV, FieldNameInput, FieldNameSelect>) => {
@@ -58,21 +59,24 @@ export const SelectComboInput = <
     {}
   )
 
-  const [selectedValue, setSelectedValue] = useState('')
+  const [selectedValue, setSelectedValue] = useState(options[0].defaultValue ? options[0].defaultValue : '')
   const [selectedOption, setSelectedOption] = useState(options[0])
 
-  const updateValue = (value: any) => {
-    console.log('updateValue', value)
+  const updateValue = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
     
     setSelectedValue(value as string)
-    onChange(selectedOption, value)
+    onUpdate(selectedOption, value)
   }
 
-  const updateOption = (option: any) => {
-    console.log('updateOption', option)
+  const updateOption = (e: ChangeEvent<HTMLSelectElement>) => {
+    const v = e.target.value
+    const item = options.filter(({ type }) => type === v)
+    const option = item[0]
     
+    if (option.type !== selectedOption.type && option.defaultValue) setSelectedValue(option.defaultValue as string)
     setSelectedOption(option)
-    onChange(option as SelectComboItem, selectedValue)
+    onUpdate(option as SelectComboItem, option.defaultValue as string)
   }
 
   return (
@@ -86,9 +90,11 @@ export const SelectComboInput = <
           className
         )}
         disabled={disabled}
-        type="number"
-        onChange={updateValue}
+        value={selectedValue}
+        name={fieldNameInput}
+        type="text"
         {...props}
+        onChange={updateValue}
         {...register && fieldNameInput && register(fieldNameInput, {
           required: required && 'Required',
           validate,
@@ -99,10 +105,10 @@ export const SelectComboInput = <
         className={clsx(
           'py-[14px] px-3 w-1/3 text-body bg-transparent focus:outline-none focus:ring-none border-default border-l-2',
         )}
+        name={fieldNameSelect}
         defaultValue={options[0].type}
-        onSelect={updateOption}
-        onChange={updateOption}
         {...props}
+        onChange={updateOption}
         {...(register &&
           fieldNameSelect &&
           register(fieldNameSelect, { required: required && 'Required', validate }))}

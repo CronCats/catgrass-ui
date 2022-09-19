@@ -43,7 +43,7 @@ export const TokenSelector = ({
 
         <div
           className={clsx(
-            'absolute top-12 -right-1 -left-1 z-20 flex-col p-1 bg-white rounded-lg border-2 shadow-lg',
+            'absolute top-12 -right-1 -left-1 z-20 overflow-y-scroll max-h-[200px] flex-col p-1 bg-white rounded-lg border-2 shadow-lg',
             {
               visible: toggleActive === true,
               invisible: toggleActive === false,

@@ -201,17 +201,28 @@ export const CadenceBoundaryComponent = () => {
     // },
     {
       type: Interval.Block,
-      title: 'Block Height',
+      title: t('form.block_interval'),
+      defaultValue: '100',
     },
     {
       type: Interval.Cron,
-      title: 'CronTab Spec',
+      title: t('form.cron_spec'),
+      defaultValue: '0 0 * * *', // daily
+    },
+  ]
+
+  // TODO: Add for custom
+  const balanceLogicOptions = [
+    {
+      type: selectedToken.name,
+      title: selectedToken.symbol,
+      defaultValue: '1',
     },
   ]
 
   const [selected, setSelected] = useState(intervalUxOptions[0])
   const [custom, setCustom] = useState(customUxOptions[0])
-  const [customValue, setCustomValue] = useState(customUxOptions[0])
+  const [customValue, setCustomValue] = useState(customUxOptions[0].defaultValue)
   const [selectedStart, setSelectedStart] = useState(boundaryStartOptions[0])
   const [selectedEnd, setSelectedEnd] = useState(boundaryEndOptions[0])
 
@@ -240,7 +251,6 @@ export const CadenceBoundaryComponent = () => {
   // - Get current block height for selected networks
   // - set block/timestamp as defaults for start/end inputs
   // - Balance Gt/Lt input, address
-  // - Custom input (choose cron, block interval)
 
   return (
     <div aria-details="dca fields" className="my-8 mb-24">
@@ -253,23 +263,28 @@ export const CadenceBoundaryComponent = () => {
       {selected.type === 'custom' ? (
         <div className="mt-4">
           {custom.type === Interval.Block ? (
-            <InputLabel className="mb-2" name={t('form.block_height')} />
+            <InputLabel className="mb-2" name={t('form.block_interval')} />
           ) : ''}
           {custom.type === Interval.Cron ? (
-            <InputLabel className="mb-2" name={t('form.timestamp')} />
+            <InputLabel className="mb-2" name={t('form.cron_spec')} />
           ) : ''}
           <SelectComboInput
             // disabled={!isCreating}
             // error={errors?.amount}
             options={customUxOptions}
-            onChange={customUxCallback}
-            defaultValue={+new Date()}
+            onUpdate={customUxCallback}
             fieldNameInput={fieldNamePrefix + 'cadence_interval_input'}
             fieldNameSelect={fieldNamePrefix + 'cadence_interval_select'}
-            register={register}
             sizing="full"
             validation={[validateRequired, validatePositive]}
           />
+
+          {custom.type === Interval.Block ? (
+            <small>{t('form.every') + ' ' + customValue + ' ' + t('form.blocks')} </small>
+          ) : ''}
+          {custom.type === Interval.Cron ? (
+            <small>{t('info.crontab_validator')} <a className="underline text-blue-600" target="_blank" href="https://crontab.guru/">{t('info.crontab_guru')}</a></small>
+          ) : ''}
         </div>
       ) : ''}
 
@@ -278,7 +293,7 @@ export const CadenceBoundaryComponent = () => {
           <InputLabel className="mb-2" name={
             t('form.balance') + ' ' + (selected.type === 'balance_gt' ? t('form.gt') : t('form.lt'))
           } />
-          <NumberInput
+          {/* <NumberInput
             // disabled={!isCreating}
             // error={errors?.amount}
             defaultValue={+new Date()}
@@ -286,9 +301,19 @@ export const CadenceBoundaryComponent = () => {
             register={register}
             sizing="full"
             validation={[validateRequired, validatePositive]}
+          /> */}
+          <SelectComboInput
+            // disabled={!isCreating}
+            // error={errors?.amount}
+            options={balanceLogicOptions}
+            onUpdate={customUxCallback}
+            fieldNameInput={fieldNamePrefix + 'cadence_interval_input'}
+            fieldNameSelect={fieldNamePrefix + 'cadence_interval_select'}
+            sizing="full"
+            validation={[validateRequired, validatePositive]}
           />
 
-          <InputLabel className="mb-2 mt-4" name={t('form.wallet_address')} />
+          <InputLabel className="mb-2 mt-4" name={t('form.wallet_address_watch')} />
           <AddressInput
             containerClassName="grow"
             disabled={false}
@@ -320,12 +345,16 @@ export const CadenceBoundaryComponent = () => {
           <NumberInput
             // disabled={!isCreating}
             // error={errors?.amount}
-            defaultValue={+new Date()}
+            // defaultValue={+new Date()}
             fieldName={fieldNamePrefix + 'cadence_start_number'}
             register={register}
             sizing="full"
             validation={[validateRequired, validatePositive]}
           />
+
+          {selectedStart.type === 'blocks_custom' ? (
+            <small>{t('form.current')} {t('form.block_height')} 5,132,868</small>
+          ) : ''}
         </div>
       ) : ''}
 
@@ -349,12 +378,16 @@ export const CadenceBoundaryComponent = () => {
           <NumberInput
             // disabled={!isCreating}
             // error={errors?.amount}
-            defaultValue={+new Date()}
+            // defaultValue={}
             fieldName={fieldNamePrefix + 'cadence_end_number'}
             register={register}
             sizing="full"
             validation={[validateRequired, validatePositive]}
           />
+
+          {selectedEnd.type === 'blocks_custom' ? (
+            <small>{t('form.current')} {t('form.block_height')} 5,132,868</small>
+          ) : ''}
         </div>
       ) : ''}
     </div>

@@ -1,30 +1,43 @@
-import { Asset } from '@chain-registry/types'
-import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
-
+import { Asset } from '@chain-registry/types'
 import { LogoFromImage } from '@croncat-ui/ui'
+import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
+
+export interface TokenSelectorValue {
+  value: any
+}
+
+export interface TokenSelectorOption {
+  key: string
+  value: any
+}
 
 export interface TokenSelectorProps {
-  tokens: Asset[]
-  onSelectedToken: (token: Asset) => void
+  options: TokenSelectorOption[]
+  onChange: (value: any) => void
+  containerClassName?: string
+  className?: string
 }
 
 export const TokenSelector = ({
-  tokens,
-  onSelectedToken,
+  options,
+  onChange,
+  containerClassName,
+  className,
+  ...props
 }: TokenSelectorProps) => {
   const [toggleActive, setToggleActive] = useState(false)
-  const [selectedToken, setSelectedToken] = useState(tokens[0])
+  const [state, setState] = useState(options[0])
 
   const toggleList = () => {
     setToggleActive(!toggleActive)
   }
 
-  const selectToken = (token: Asset) => {
+  const updateSelect = (item: any) => {
+    setState({ ...item })
     toggleList()
-    setSelectedToken(token)
-    onSelectedToken(token)
+    onChange(state)
   }
 
   return (
@@ -34,7 +47,7 @@ export const TokenSelector = ({
           className="flex z-10 bg-white rounded-lg border-2"
           onClick={toggleList}
         >
-          <TokenItem token={selectedToken} />
+          <TokenItem value={state.value} />
 
           <div className="flex my-auto mr-3 w-8">
             <ChevronUpDownIcon />
@@ -50,15 +63,15 @@ export const TokenSelector = ({
             }
           )}
         >
-          {tokens.map((token, index) => (
+          {options.map((item, index) => (
             <div
               key={index}
               className="bg-white hover:bg-gray-200 active:bg-gray-200 rounded-lg"
               onClick={() => {
-                selectToken(token)
+                updateSelect(item)
               }}
             >
-              <TokenItem token={token} />
+              <TokenItem value={item.value} />
             </div>
           ))}
         </div>
@@ -68,21 +81,21 @@ export const TokenSelector = ({
 }
 
 interface TokenItemProps {
-  token: Asset
+  value: Asset
 }
 
-const TokenItem = ({ token }: TokenItemProps) => (
+const TokenItem = ({ value }: TokenItemProps) => (
   <div className="flex px-2 w-full cursor-pointer">
     <div className="flex py-2 mr-2" style={{ minWidth: '42px' }}>
       <LogoFromImage
         className="block"
         rounded={true}
         size="42"
-        src={token?.logo_URIs?.png || ''}
+        src={value?.logo_URIs?.png || ''}
       />
     </div>
     <div className="flex-col py-2 m-auto w-full">
-      <h3 className="text-lg font-bold leading-4">{token.symbol}</h3>
+      <h3 className="text-lg font-bold leading-4">{value.symbol}</h3>
     </div>
   </div>
 )

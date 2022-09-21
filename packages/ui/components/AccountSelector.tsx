@@ -5,46 +5,59 @@ import { useState } from 'react'
 import { Account } from '@croncat-ui/actions'
 import { Balance, LogoFromImage } from '@croncat-ui/ui'
 
+export interface AccountSelectorValue {
+  value: any
+}
+
+export interface AccountSelectorOption {
+  key: string
+  value: any
+}
+
 export interface AccountSelectorProps {
-  accounts: Account[]
-  onSelectedAccount: (account: Account) => void
+  options: AccountSelectorOption[]
+  onChange: (value: any) => void
+  containerClassName?: string
+  className?: string
 }
 
 export const AccountSelector = ({
-  accounts,
-  onSelectedAccount,
+  options,
+  onChange,
+  containerClassName,
+  className,
+  ...props
 }: AccountSelectorProps) => {
   const [toggleActive, setToggleActive] = useState(false)
-  const [selectedAccount, setSelectedAccount] = useState(accounts[0])
+  const [state, setState] = useState(options[0])
 
   const toggleList = () => {
     setToggleActive(!toggleActive)
   }
 
-  const selectAccount = (account: Account) => {
-    toggleList()
-    setSelectedAccount(account)
-    onSelectedAccount(account)
-  }
-
+  // TODO: Hook in wallet connector modal
   const onConnectAccount = (account: Account) => {
     toggleList()
-    setSelectedAccount(account)
-    onSelectedAccount(account)
+  }
+
+  const updateSelect = (item: any) => {
+    setState({ ...item })
+    toggleList()
+    onChange(state)
   }
 
   return (
     <div className="relative">
       <div
         className="flex z-10 mb-2 bg-white rounded-lg border-2 cursor-pointer"
-        style={{ borderColor: selectedAccount.chain?.brandColor }}
+        style={{ borderColor: state.value.chain?.brandColor }}
       >
         <div
           className="flex-col mr-2 w-full"
           onClick={toggleList}
           style={{ minWidth: '42px' }}
         >
-          <AccountItem account={selectedAccount} hideBalance={true} />
+          <AccountItem account={state.value} hideBalance={true} />
         </div>
         <div className="flex my-auto mr-4 w-6">
           {toggleActive ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -60,22 +73,22 @@ export const AccountSelector = ({
           }
         )}
       >
-        {accounts.map((account) => (
+        {options.map((item) => (
           <div
-            key={account.address}
+            key={item.value.address}
             className="hover:bg-gray-200 active:bg-gray-200 rounded-lg"
             onClick={() => {
-              selectAccount(account)
+              updateSelect(item)
             }}
           >
-            <AccountItem account={account} hideBalance={false} />
+            <AccountItem account={item.value} hideBalance={false} />
           </div>
         ))}
         <div>
           <div className="p-2">
             <button
               className="py-0 px-5 w-full text-xs tracking-widest text-black bg-primary hover:bg-secondary rounded-full border-0 btn"
-              onClick={() => onConnectAccount(selectedAccount)}
+              onClick={() => onConnectAccount(state.value)}
             >
               Connect Account
             </button>

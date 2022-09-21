@@ -22,12 +22,17 @@ import { useTranslation } from 'react-i18next'
 
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
 import { chainColors } from '@croncat-ui/utils'
-import { RecipeCardComponent, ComboInputSelectValue } from '@croncat-ui/ui'
+import {
+  RecipeCardComponent,
+  ComboInputSelectValue,
+  SelectListValue,
+} from '@croncat-ui/ui'
 
 import { PageHeader } from '@/components/PageHeader'
 
 interface FormState {
-  combo: ComboInputSelectValue;
+  combo: ComboInputSelectValue
+  interval: SelectListValue
 }
 
 // TODO: fake data, remove once wallet finished
@@ -89,7 +94,7 @@ const CreatePage: NextPage = () => {
     },
   ]
 
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(1)
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
   const [selectedAction, setSelectedAction] = useState(actions[0])
 
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
@@ -224,6 +229,8 @@ const CreatePage: NextPage = () => {
                     {t('form.recipe_success_title')}
                   </h3>
                   <p className="text-gray-500">{t('form.recipe_success_subtitle')}</p>
+
+                  {/* TODO: Add transaction links to explorers */}
                 </div>
 
                 <div className="my-12">

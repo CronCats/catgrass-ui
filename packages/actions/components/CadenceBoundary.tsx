@@ -10,8 +10,8 @@ import {
   RectangleStackIcon,
 } from '@heroicons/react/24/outline'
 import { assets, chains } from 'chain-registry'
-import { useState } from 'react'
-import { useFormContext, useForm, Controller } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { useFormContext, Controller, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { Interval } from '@croncat-ui/actions'
@@ -20,9 +20,7 @@ import {
   InputLabel,
   NumberInput,
   SelectList,
-  SelectListItem,
-  SelectComboInput,
-  SelectComboItem,
+  SelectListOption,
   ComboInputSelect,
   ComboInputSelectValue,
 } from '@croncat-ui/ui'
@@ -47,13 +45,9 @@ const getChainData = (chain: Chain) => {
   }
 }
 
-interface FormState {
-  combo: ComboInputSelectValue;
-}
-
 export const CadenceBoundaryComponent = () => {
-  const { register, watch, setValue } = useFormContext()
-  const { control } = useForm<FormState>()
+  const { register, watch, control, formState } = useFormContext()
+  // const { control } = useForm<FormState>()
   const { t } = useTranslation()
 
   const unsupportedChainIds = ['cosmoshub-4']
@@ -68,7 +62,7 @@ export const CadenceBoundaryComponent = () => {
   const tokens = assetList?.assets || []
 
   const fieldNamePrefix = ''
-  const combo = watch(fieldNamePrefix + 'combo')
+  // const combo = watch(fieldNamePrefix + 'combo')
   const spendTotalAmount = watch(fieldNamePrefix + 'amount_total')
   const spendTotalDenom = watch(fieldNamePrefix + 'amount_total_denom')
   const spendEachAmount = watch(fieldNamePrefix + 'amount_to_swap_each')
@@ -77,73 +71,94 @@ export const CadenceBoundaryComponent = () => {
 
   const intervalUxOptions = [
     {
-      sort: 1,
-      Icon: CalendarDaysIcon,
-      title: 'Every Day',
-      type: 'cron_daily',
-      data: {
-        intervalType: Interval.Cron,
-        intervalValue: '0 0 * * *',
+      key: 'cron_daily',
+      value: {
+        sort: 1,
+        Icon: CalendarDaysIcon,
+        title: 'Every Day',
+        type: 'cron_daily',
+        data: {
+          intervalType: Interval.Cron,
+          intervalValue: '0 0 * * *',
+        },
       },
     },
     {
-      sort: 2,
-      Icon: ClockIcon,
-      title: 'Every Hour',
-      type: 'cron_hourly',
-      data: {
-        intervalType: Interval.Cron,
-        intervalValue: '0 * * * *',
+      key: 'cron_hourly',
+      value: {
+        sort: 2,
+        Icon: ClockIcon,
+        title: 'Every Hour',
+        type: 'cron_hourly',
+        data: {
+          intervalType: Interval.Cron,
+          intervalValue: '0 * * * *',
+        },
       },
     },
     {
-      sort: 3,
-      Icon: ClockIcon,
-      title: 'Every Minute',
-      type: 'cron_minutely',
-      data: {
-        intervalType: Interval.Cron,
-        intervalValue: '* * * * *',
+      key: 'cron_minutely',
+      value: {
+        sort: 3,
+        Icon: ClockIcon,
+        title: 'Every Minute',
+        type: 'cron_minutely',
+        data: {
+          intervalType: Interval.Cron,
+          intervalValue: '* * * * *',
+        },
       },
     },
     {
-      sort: 4,
-      Icon: RectangleStackIcon,
-      title: 'Every 1000 Blocks',
-      type: 'blocks_1000',
-      data: {
-        intervalType: Interval.Block,
-        intervalValue: 1000,
+      key: 'blocks_1000',
+      value: {
+        sort: 4,
+        Icon: RectangleStackIcon,
+        title: 'Every 1000 Blocks',
+        type: 'blocks_1000',
+        data: {
+          intervalType: Interval.Block,
+          intervalValue: 1000,
+        },
       },
     },
     {
-      sort: 5,
-      Icon: ArrowTrendingUpIcon,
-      title: 'When balance above',
-      type: 'balance_gt',
-      data: {
-        intervalType: Interval.Immediate,
-        intervalValue: null,
+      key: 'balance_gt',
+      value: {
+        sort: 5,
+        Icon: ArrowTrendingUpIcon,
+        title: 'When balance above',
+        type: 'balance_gt',
+        data: {
+          intervalType: Interval.Immediate,
+          intervalValue: null,
+        },
       },
     },
     {
-      sort: 6,
-      Icon: ArrowTrendingDownIcon,
-      title: 'When balance below',
-      type: 'balance_lt',
-      data: {
-        intervalType: Interval.Immediate,
-        intervalValue: null,
+      key: 'balance_lt',
+      value: {
+        sort: 6,
+        Icon: ArrowTrendingDownIcon,
+        title: 'When balance below',
+        type: 'balance_lt',
+        data: {
+          intervalType: Interval.Immediate,
+          intervalValue: null,
+        },
       },
     },
     {
-      sort: 10,
-      Icon: AdjustmentsVerticalIcon,
-      title: 'Custom',
-      type: 'custom',
-      data: {
-        intervalType: null,
-        intervalValue: null,
+      key: 'custom',
+      value: {
+        sort: 10,
+        Icon: AdjustmentsVerticalIcon,
+        title: 'Custom',
+        type: 'custom',
+        data: {
+          intervalType: null,
+          intervalValue: null,
+        },
       },
     },
   ]
@@ -151,49 +166,61 @@ export const CadenceBoundaryComponent = () => {
   // immediately, pick a time, pick a block, Funds run out
   const boundaryOptions = [
     {
-      sort: 9,
-      Icon: ClockIcon,
-      title: 'Pick a time',
-      type: 'cron_custom',
-      data: {
-        intervalType: Interval.Cron,
-        intervalValue: '',
+      key: 'cron_custom',
+      value: {
+        sort: 9,
+        Icon: ClockIcon,
+        title: 'Pick a time',
+        type: 'cron_custom',
+        data: {
+          intervalType: Interval.Cron,
+          intervalValue: '',
+        },
       },
     },
     {
-      sort: 11,
-      Icon: RectangleStackIcon,
-      title: 'Pick a block',
-      type: 'blocks_custom',
-      data: {
-        intervalType: Interval.Block,
-        intervalValue: 0, // TODO: Get current block + 1000
+      key: 'blocks_custom',
+      value: {
+        sort: 11,
+        Icon: RectangleStackIcon,
+        title: 'Pick a block',
+        type: 'blocks_custom',
+        data: {
+          intervalType: Interval.Block,
+          intervalValue: 0, // TODO: Get current block + 1000
+        },
       },
     },
   ]
   const boundaryStartOptions = [
     {
-      sort: 1,
-      Icon: BoltIcon,
-      title: 'Immediately',
-      type: 'immediate',
-      data: {
-        intervalType: Interval.Immediate,
-        intervalValue: '',
+      key: 'immediate',
+      value: {
+        sort: 1,
+        Icon: BoltIcon,
+        title: 'Immediately',
+        type: 'immediate',
+        data: {
+          intervalType: Interval.Immediate,
+          intervalValue: '',
+        },
       },
     },
   ].concat(boundaryOptions)
   const boundaryEndOptions = [
     {
-      sort: 1,
-      Icon: ArrowUturnDownIcon,
-      title: 'When funds run out',
-      type: 'event_funds_lt',
-      data: {
-        intervalType: Interval.Immediate,
-        intervalValue: '',
+      key: 'event_funds_lt',
+      value: {
+        sort: 1,
+        Icon: ArrowUturnDownIcon,
+        title: 'When funds run out',
+        type: 'event_funds_lt',
+        data: {
+          intervalType: Interval.Immediate,
+          intervalValue: '',
+        },
+        // rules: [] // TODO:
       },
-      // rules: [] // TODO:
     },
   ].concat(boundaryOptions)
 
@@ -208,52 +235,66 @@ export const CadenceBoundaryComponent = () => {
     //   title: 'Immediately',
     // },
     {
-      type: Interval.Block,
-      title: t('form.block_interval'),
-      defaultValue: '100',
+      key: t('form.block_interval'),
+      value: Interval.Block,
+      default: '100',
     },
     {
-      type: Interval.Cron,
-      title: t('form.cron_spec'),
-      defaultValue: '0 0 * * *', // daily
+      key: t('form.cron_spec'),
+      value: Interval.Cron,
+      default: '0 0 * * *', // daily
     },
   ]
 
   // TODO: Add for custom
   const balanceLogicOptions = [
     {
-      type: selectedToken.name,
-      title: selectedToken.symbol,
-      defaultValue: '1',
+      key: selectedToken.symbol,
+      value: selectedToken.name,
+      default: '1',
+    },
+    {
+      key: tokens[1].symbol,
+      value: tokens[1].name,
+      default: '1',
     },
   ]
 
   const [selected, setSelected] = useState(intervalUxOptions[0])
+  const [selectedInterval, setSelectedInterval] = useState(intervalUxOptions[0])
   const [custom, setCustom] = useState(customUxOptions[0])
-  const [customValue, setCustomValue] = useState(customUxOptions[0].defaultValue)
+  const [customValue, setCustomValue] = useState(customUxOptions[0].default)
   const [selectedStart, setSelectedStart] = useState(boundaryStartOptions[0])
   const [selectedEnd, setSelectedEnd] = useState(boundaryEndOptions[0])
 
-  const intervalUxCallback = (item: SelectListItem) => {
-    console.log('intervalUxCallback', item)
-    setSelected(item as any)
-  }
+  // const selectedInterval = watch('interval', intervalUxOptions[0])
+  // const interval = watch('interval', intervalUxOptions[0])
+  const interval = useWatch({ control, name: 'interval' })
 
-  const customUxCallback = (option: SelectComboItem, value: number | string) => {
-    console.log('customUxCallback', option, value)
-    setCustom(option as any)
-    setCustomValue(value as any)
-  }
+  // useEffect(() => {
+  //   setSelectedInterval()
+  // }, [control])
 
-  const boundaryStartCallback = (start: SelectListItem) => {
-    console.log('boundaryStartCallback', start)
-    setSelectedStart(start as any)
-  }
+  // const intervalUxCallback = (item: SelectListItem) => {
+  //   console.log('intervalUxCallback', item)
+  //   setSelected(item as any)
+  // }
 
-  const boundaryEndCallback = (end: SelectListItem) => {
-    console.log('boundaryEndCallback', end)
-    setSelectedEnd(end as any)
-  }
+  // const customUxCallback = (option: SelectComboItem, value: number | string) => {
+  //   console.log('customUxCallback', option, value)
+  //   setCustom(option as any)
+  //   setCustomValue(value as any)
+  // }
+
+  // const boundaryStartCallback = (start: SelectListItem) => {
+  //   console.log('boundaryStartCallback', start)
+  //   setSelectedStart(start as any)
+  // }
+
+  // const boundaryEndCallback = (end: SelectListItem) => {
+  //   console.log('boundaryEndCallback', end)
+  //   setSelectedEnd(end as any)
+  // }
 
   // const validate = validation?.reduce(
   //   (a, v) => ({ ...a, [v.toString()]: v }),
@@ -268,17 +309,30 @@ export const CadenceBoundaryComponent = () => {
   return (
     <div aria-details="dca fields" className="my-8 mb-24">
       <h3 className="mb-2 text-xl">{t('form.cadence_how_often')}</h3>
-      <SelectList
-        items={intervalUxOptions}
-        onSelectedItem={intervalUxCallback}
+      <Controller
+        name="interval"
+        control={control}
+        defaultValue={intervalUxOptions[0]}
+        rules={{ required: true }}
+        render={({ field: { onChange } }) => {
+          return (
+            <SelectList
+              onChange={onChange}
+              options={intervalUxOptions}
+            // disabled={!isCreating}
+            // error={errors?.amount}
+            // validation={[validateRequired, validatePositive]}
+            />
+          );
+        }}
       />
 
-      {selected.type === 'custom' ? (
+      {formState.interval?.type === 'custom' ? (
         <div className="mt-4">
-          {custom.type === Interval.Block ? (
+          {custom.key === Interval.Block ? (
             <InputLabel className="mb-2" name={t('form.block_interval')} />
           ) : ''}
-          {custom.type === Interval.Cron ? (
+          {custom.key === Interval.Cron ? (
             <InputLabel className="mb-2" name={t('form.cron_spec')} />
           ) : ''}
           <Controller
@@ -289,71 +343,42 @@ export const CadenceBoundaryComponent = () => {
               return (
                 <ComboInputSelect
                   onChange={onChange}
-                  options={[
-                    { key: "Option 1", value: "option_1", default: "Hello" },
-                    { key: "Option 2", value: "option_2", default: "my" },
-                    { key: "Option 3", value: "option_3", default: "dude" }
-                  ]}
+                  options={customUxOptions}
+                // disabled={!isCreating}
+                // error={errors?.amount}
+                // validation={[validateRequired, validatePositive]}
                 />
               );
             }}
           />
-          {/* <SelectComboInput
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // {...register}
-            // {...register(fieldNamePrefix + 'cadence_interval_custom', {
-            //   required: true && 'Required',
-            //   // validate: validateRequired,
-            //   //...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
-            // })}
-            options={customUxOptions}
 
-            // onChange={customUxCallback}
-            fieldNameInput={fieldNamePrefix + 'cadence_interval_input'}
-            fieldNameSelect={fieldNamePrefix + 'cadence_interval_select'}
-            sizing="full"
-            // validation={[validateRequired, validatePositive]}
-          /> */}
-
-          {custom.type === Interval.Block ? (
+          {custom.key === Interval.Block ? (
             <small>{t('form.every') + ' ' + customValue + ' ' + t('form.blocks')} </small>
           ) : ''}
-          {custom.type === Interval.Cron ? (
+          {custom.key === Interval.Cron ? (
             <small>{t('info.crontab_validator')} <a className="underline text-blue-600" target="_blank" href="https://crontab.guru/">{t('info.crontab_guru')}</a></small>
           ) : ''}
         </div>
       ) : ''}
 
-      {selected.type === 'balance_gt' || selected.type === 'balance_lt' ? (
+      {interval?.type === 'balance_gt' || selected.value.type === 'balance_lt' ? (
         <div className="mt-4">
           <InputLabel className="mb-2" name={
-            t('form.balance') + ' ' + (selected.type === 'balance_gt' ? t('form.gt') : t('form.lt'))
+            t('form.balance') + ' ' + (selected.value.type === 'balance_gt' ? t('form.gt') : t('form.lt'))
           } />
-          {/* <NumberInput
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            defaultValue={+new Date()}
-            fieldName={fieldNamePrefix + 'cadence_interval'}
-            register={register}
-            sizing="full"
-            validation={[validateRequired, validatePositive]}
-          /> */}
-          {/* <SelectComboInput
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            {...register(fieldNamePrefix + 'cadence_interval_balance', {
-              required: true && 'Required',
-              // validate: validateRequired,
-              //...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
-            })}
-            options={balanceLogicOptions}
-            // onChange={customUxCallback}
-            fieldNameInput={fieldNamePrefix + 'cadence_interval_input'}
-            fieldNameSelect={fieldNamePrefix + 'cadence_interval_select'}
-            sizing="full"
-            // validation={[validateRequired, validatePositive]}
-          /> */}
+          <Controller
+            name="balance_rule"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange } }) => {
+              return (
+                <ComboInputSelect
+                  onChange={onChange}
+                  options={balanceLogicOptions}
+                />
+              );
+            }}
+          />
 
           <InputLabel className="mb-2 mt-4" name={t('form.wallet_address_watch')} />
           <AddressInput
@@ -362,7 +387,7 @@ export const CadenceBoundaryComponent = () => {
             // error={errors?.to}
             fieldName={fieldNamePrefix + 'to'}
             register={register}
-            validation={[validateRequired, validateAddress]}
+            // validation={[validateRequired, validateAddress]}
           />
         </div>
       ) : ''}
@@ -371,17 +396,30 @@ export const CadenceBoundaryComponent = () => {
       <br />
 
       <h3 className="mb-2 text-xl">{t('form.cadence_when_start')}</h3>
-      <SelectList
-        items={boundaryStartOptions}
-        onSelectedItem={boundaryStartCallback}
+      <Controller
+        name="boundary_start"
+        control={control}
+        defaultValue={boundaryStartOptions[0]}
+        rules={{ required: true }}
+        render={({ field: { onChange } }) => {
+          return (
+            <SelectList
+              onChange={onChange}
+              options={boundaryStartOptions}
+            // disabled={!isCreating}
+            // error={errors?.amount}
+            // validation={[validateRequired, validatePositive]}
+            />
+          );
+        }}
       />
 
-      {selectedStart.type === 'cron_custom' || selectedStart.type === 'blocks_custom' ? (
+      {selectedStart.value.type === 'cron_custom' || selectedStart.value.type === 'blocks_custom' ? (
         <div className="mt-4">
-          {selectedStart.type === 'blocks_custom' ? (
+          {selectedStart.value.type === 'blocks_custom' ? (
             <InputLabel className="mb-2" name={t('form.block_height')} />
           ) : ''}
-          {selectedStart.type === 'cron_custom' ? (
+          {selectedStart.value.type === 'cron_custom' ? (
             <InputLabel className="mb-2" name={t('form.timestamp')} />
           ) : ''}
           <NumberInput
@@ -394,7 +432,7 @@ export const CadenceBoundaryComponent = () => {
             validation={[validateRequired, validatePositive]}
           />
 
-          {selectedStart.type === 'blocks_custom' ? (
+          {selectedStart.value.type === 'blocks_custom' ? (
             <small>{t('form.current')} {t('form.block_height')} 5,132,868</small>
           ) : ''}
         </div>
@@ -404,17 +442,30 @@ export const CadenceBoundaryComponent = () => {
       <br />
 
       <h3 className="mb-2 text-xl">{t('form.cadence_when_end')}</h3>
-      <SelectList
-        items={boundaryEndOptions}
-        onSelectedItem={boundaryEndCallback}
+      <Controller
+        name="boundary_start"
+        control={control}
+        defaultValue={boundaryEndOptions[0]}
+        rules={{ required: true }}
+        render={({ field: { onChange } }) => {
+          return (
+            <SelectList
+              onChange={onChange}
+              options={boundaryEndOptions}
+            // disabled={!isCreating}
+            // error={errors?.amount}
+            // validation={[validateRequired, validatePositive]}
+            />
+          );
+        }}
       />
 
-      {selectedEnd.type === 'cron_custom' || selectedEnd.type === 'blocks_custom' ? (
+      {selectedEnd.value.type === 'cron_custom' || selectedEnd.value.type === 'blocks_custom' ? (
         <div className="mt-4">
-          {selectedEnd.type === 'blocks_custom' ? (
+          {selectedEnd.value.type === 'blocks_custom' ? (
             <InputLabel className="mb-2" name={t('form.block_height')} />
           ) : ''}
-          {selectedEnd.type === 'cron_custom' ? (
+          {selectedEnd.value.type === 'cron_custom' ? (
             <InputLabel className="mb-2" name={t('form.timestamp')} />
           ) : ''}
           <NumberInput
@@ -427,7 +478,7 @@ export const CadenceBoundaryComponent = () => {
             validation={[validateRequired, validatePositive]}
           />
 
-          {selectedEnd.type === 'blocks_custom' ? (
+          {selectedEnd.value.type === 'blocks_custom' ? (
             <small>{t('form.current')} {t('form.block_height')} 5,132,868</small>
           ) : ''}
         </div>

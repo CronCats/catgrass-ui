@@ -5,10 +5,14 @@ import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { InputLabel } from '@croncat-ui/ui'
+import {
+  ActionItem,
+  ActionItemProps,
+  InputLabel,
+} from '@croncat-ui/ui'
 import { NATIVE_DECIMALS, chainColors } from '@croncat-ui/utils'
 
-import { Account } from '..'
+import { Account, Action } from '..'
 
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain: Chain) => {
@@ -123,6 +127,12 @@ export const RecipeSummaryComponent = () => {
       <h3 className="mb-2 text-xl">Confirm Details</h3>
 
       <InputLabel className="mb-2" name={t('form.actions')} />
+
+      {actions.map((action: Action, id) => (
+        <div key={id} className="p-2 text-gray-100 bg-gray-800 rounded-lg shadow-lg">
+          <ActionItem action={action} />
+        </div>
+      ))}
 
       <br />
 

@@ -66,11 +66,11 @@ export const ActionSelector = ({
   )
 }
 
-interface ActionItemProps {
+export interface ActionItemProps {
   action: Action
 }
 
-const ActionItem = ({ action: { title, subtitle, Icon } }: ActionItemProps) => (
+export const ActionItem = ({ action: { title, subtitle, Icon } }: ActionItemProps) => (
   <div className="flex px-2 w-full cursor-pointer">
     <div className="flex py-2 mr-4 w-8">
       <Icon />

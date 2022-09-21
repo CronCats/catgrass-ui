@@ -11,7 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { assets, chains } from 'chain-registry'
 import { useState } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { Interval } from '@croncat-ui/actions'
@@ -23,6 +23,8 @@ import {
   SelectListItem,
   SelectComboInput,
   SelectComboItem,
+  ComboInputSelect,
+  ComboInputSelectValue,
 } from '@croncat-ui/ui'
 import {
   NATIVE_DECIMALS,
@@ -45,8 +47,13 @@ const getChainData = (chain: Chain) => {
   }
 }
 
+interface FormState {
+  combo: ComboInputSelectValue;
+}
+
 export const CadenceBoundaryComponent = () => {
   const { register, watch, setValue } = useFormContext()
+  const { control } = useForm<FormState>()
   const { t } = useTranslation()
 
   const unsupportedChainIds = ['cosmoshub-4']
@@ -60,7 +67,8 @@ export const CadenceBoundaryComponent = () => {
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
 
-  const fieldNamePrefix = 'form.'
+  const fieldNamePrefix = ''
+  const combo = watch(fieldNamePrefix + 'combo')
   const spendTotalAmount = watch(fieldNamePrefix + 'amount_total')
   const spendTotalDenom = watch(fieldNamePrefix + 'amount_total_denom')
   const spendEachAmount = watch(fieldNamePrefix + 'amount_to_swap_each')
@@ -247,6 +255,11 @@ export const CadenceBoundaryComponent = () => {
     setSelectedEnd(end as any)
   }
 
+  // const validate = validation?.reduce(
+  //   (a, v) => ({ ...a, [v.toString()]: v }),
+  //   {}
+  // )
+
   // TODO:
   // - Get current block height for selected networks
   // - set block/timestamp as defaults for start/end inputs
@@ -268,16 +281,40 @@ export const CadenceBoundaryComponent = () => {
           {custom.type === Interval.Cron ? (
             <InputLabel className="mb-2" name={t('form.cron_spec')} />
           ) : ''}
-          <SelectComboInput
+          <Controller
+            name="combo"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange } }) => {
+              return (
+                <ComboInputSelect
+                  onChange={onChange}
+                  options={[
+                    { key: "Option 1", value: "option_1", default: "Hello" },
+                    { key: "Option 2", value: "option_2", default: "my" },
+                    { key: "Option 3", value: "option_3", default: "dude" }
+                  ]}
+                />
+              );
+            }}
+          />
+          {/* <SelectComboInput
             // disabled={!isCreating}
             // error={errors?.amount}
+            // {...register}
+            // {...register(fieldNamePrefix + 'cadence_interval_custom', {
+            //   required: true && 'Required',
+            //   // validate: validateRequired,
+            //   //...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
+            // })}
             options={customUxOptions}
-            onUpdate={customUxCallback}
+
+            // onChange={customUxCallback}
             fieldNameInput={fieldNamePrefix + 'cadence_interval_input'}
             fieldNameSelect={fieldNamePrefix + 'cadence_interval_select'}
             sizing="full"
-            validation={[validateRequired, validatePositive]}
-          />
+            // validation={[validateRequired, validatePositive]}
+          /> */}
 
           {custom.type === Interval.Block ? (
             <small>{t('form.every') + ' ' + customValue + ' ' + t('form.blocks')} </small>
@@ -302,16 +339,21 @@ export const CadenceBoundaryComponent = () => {
             sizing="full"
             validation={[validateRequired, validatePositive]}
           /> */}
-          <SelectComboInput
+          {/* <SelectComboInput
             // disabled={!isCreating}
             // error={errors?.amount}
+            {...register(fieldNamePrefix + 'cadence_interval_balance', {
+              required: true && 'Required',
+              // validate: validateRequired,
+              //...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
+            })}
             options={balanceLogicOptions}
-            onUpdate={customUxCallback}
+            // onChange={customUxCallback}
             fieldNameInput={fieldNamePrefix + 'cadence_interval_input'}
             fieldNameSelect={fieldNamePrefix + 'cadence_interval_select'}
             sizing="full"
-            validation={[validateRequired, validatePositive]}
-          />
+            // validation={[validateRequired, validatePositive]}
+          /> */}
 
           <InputLabel className="mb-2 mt-4" name={t('form.wallet_address_watch')} />
           <AddressInput

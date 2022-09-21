@@ -62,7 +62,7 @@ export const DCAComponent = () => {
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
 
-  const fieldNamePrefix = 'form.'
+  const fieldNamePrefix = ''
   const spendTotalAmount = watch(fieldNamePrefix + 'amount_total')
   const spendTotalDenom = watch(fieldNamePrefix + 'amount_total_denom')
   const spendEachAmount = watch(fieldNamePrefix + 'amount_to_swap_each')

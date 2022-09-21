@@ -131,10 +131,11 @@ export const Nav = () => {
           </div>
         </div>
         <div className="flex">
-          <Link href="/">
-            <a className="w-9 h-9 md:w-10 md:h-10">
+          <Link href="/" className="w-9 h-9 md:w-10 md:h-10">
+            <div className="flex">
               <Logo size={42} />
-            </a>
+              <div className="badge badge-md my-auto ml-4">ALPHA</div>
+            </div>
           </Link>
         </div>
         <div className="flex-none md:hidden">

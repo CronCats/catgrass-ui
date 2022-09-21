@@ -1,5 +1,6 @@
 export * from './Button'
 export * from './input'
+export * from './Recipe'
 export * from './toasts'
 
 export * from './AccountSelector'

@@ -6,23 +6,29 @@ import {
   PayrollComponent,
   RecipeSummaryComponent,
 } from '@/../packages/actions'
-import { ActionSelector, Button } from '@/../packages/ui'
+import { ActionSelector, Button, SubmitButton } from '@/../packages/ui'
 import {
   ArrowPathRoundedSquareIcon,
   BanknotesIcon,
   DocumentTextIcon,
+  CakeIcon,
 } from '@heroicons/react/24/outline'
 import { assets, chains } from 'chain-registry'
 import clsx from 'clsx'
 import { GetStaticProps, NextPage } from 'next'
 import { useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
 import { chainColors } from '@croncat-ui/utils'
+import { RecipeCardComponent, ComboInputSelectValue } from '@croncat-ui/ui'
 
 import { PageHeader } from '@/components/PageHeader'
+
+interface FormState {
+  combo: ComboInputSelectValue;
+}
 
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain) => {
@@ -83,14 +89,13 @@ const CreatePage: NextPage = () => {
     },
   ]
 
-  // const { register, control } = useFormContext()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(1)
   const [selectedAction, setSelectedAction] = useState(actions[0])
 
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
 
-  const formMethods = useForm<FormData>({
+  const formMethods = useForm<FormState>({
     mode: 'onChange',
     defaultValues: {
       // title: '',
@@ -148,6 +153,10 @@ const CreatePage: NextPage = () => {
   //   [setShowSubmitErrorNote]
   // )
 
+  // const onSubmit = data => console.log(data)
+  const onSubmit: SubmitHandler<FormState> = (data) =>
+    console.log(JSON.stringify(data))
+
   return (
     <>
       <PageHeader backgroundColor="#008F58" title={t('title.create')} />
@@ -157,6 +166,7 @@ const CreatePage: NextPage = () => {
           <FormProvider {...formMethods}>
             <form
             // onSubmit={handleSubmit(onSubmitForm, onSubmitError)}
+            onSubmit={formMethods.handleSubmit(onSubmit)}
             >
               <section
                 className={clsx({
@@ -208,21 +218,23 @@ const CreatePage: NextPage = () => {
                 id="4"
               >
                 <div className="text-center">
+                  <CakeIcon className="w-24 mx-auto mb-4 text-gray-700" />
+
                   <h3 className="mb-2 text-xl">
                     {t('form.recipe_success_title')}
                   </h3>
-                  <p>{t('form.recipe_success_subtitle')}</p>
+                  <p className="text-gray-500">{t('form.recipe_success_subtitle')}</p>
                 </div>
 
-                <div className="my-24">
-                  TODO: Recipe card, link to users recipes
+                <div className="my-12">
+                  <RecipeCardComponent />
                 </div>
               </section>
 
               <footer className="flex justify-between">
                 <Button
                   className={clsx({
-                    invisible: currentSectionIndex === 0,
+                    hidden: currentSectionIndex === 0 || currentSectionIndex > 3,
                   })}
                   onClick={prevSection}
                   size="2xl"
@@ -230,13 +242,32 @@ const CreatePage: NextPage = () => {
                 >
                   <span>Back</span>
                 </Button>
-                <Button onClick={nextSection} size="2xl" variant="primary">
+                <Button
+                  className={clsx({
+                    hidden: currentSectionIndex > 3,
+                    'ml-auto': true,
+                  })}
+                  onClick={nextSection}
+                  size="2xl"
+                  variant="primary"
+                >
                   <span>Next</span>
                 </Button>
 
-                {/* <div className="flex">
+                <Button
+                  className={clsx({
+                    hidden: currentSectionIndex < 3,
+                    'mx-auto': true,
+                  })}
+                  size="2xl"
+                  variant="secondary"
+                >
+                  <span>View Recipes</span>
+                </Button>
+
+                <div className="flex">
                   <SubmitButton label="Submit" variant="primary" className="ml-auto" />
-                </div> */}
+                </div>
               </footer>
             </form>
           </FormProvider>

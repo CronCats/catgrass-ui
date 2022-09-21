@@ -108,7 +108,7 @@ export const PayrollComponent = () => {
       <InputLabel className="mb-2" name={t('form.token')} />
       <TokenSelector onSelectedToken={tokenCallback} tokens={tokens} />
 
-      <br />
+      {/* <br />
 
       <InputLabel className="mb-2" name={t('form.amount_total')} />
       <NumberInput
@@ -138,7 +138,7 @@ export const PayrollComponent = () => {
         sizing="full"
         step={1 / 10 ** amountDecimals}
         validation={[validateRequired, validatePositive]}
-      />
+      /> */}
 
       <hr className="my-8 mx-auto w-1/2 border-2 border-gray-100" />
 

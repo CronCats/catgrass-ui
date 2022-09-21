@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ComponentProps, ComponentType, ChangeEvent, useState } from 'react'
+import { ComponentProps, ComponentType, ChangeEvent, useState, useEffect } from 'react'
 import {
   FieldError,
   FieldPathValue,
@@ -20,6 +20,7 @@ export interface SelectComboInputProps<
   FieldNameInput extends Path<FV>,
   FieldNameSelect extends Path<FV>
 > extends Omit<ComponentProps<any>, 'type' | 'required'> {
+  name?: string
   fieldNameInput?: FieldNameInput
   fieldNameSelect?: FieldNameSelect
   register?: UseFormRegister<FV>
@@ -29,7 +30,8 @@ export interface SelectComboInputProps<
   required?: boolean
   Icon?: ComponentType
   options: SelectComboItem[]
-  onUpdate: (option: SelectComboItem, value: number | string) => void
+  // onChange: (option: SelectComboItem, value: number | string) => void
+  onChange: (value: any) => any
   setValueAs?: (value: any) => any
 }
 
@@ -38,9 +40,10 @@ export const SelectComboInput = <
   FieldNameInput extends Path<FV>,
   FieldNameSelect extends Path<FV>
 >({
+  name,
   fieldNameInput,
   fieldNameSelect,
-  register,
+  // register,
   error,
   disabled,
   validation,
@@ -50,7 +53,7 @@ export const SelectComboInput = <
   required,
   Icon,
   options,
-  onUpdate,
+  onChange,
   setValueAs,
   ...props
 }: SelectComboInputProps<FV, FieldNameInput, FieldNameSelect>) => {
@@ -59,15 +62,23 @@ export const SelectComboInput = <
     {}
   )
 
+  console.log('onChange', onChange);
+  
+
   const [selectedValue, setSelectedValue] = useState(options[0].defaultValue ? options[0].defaultValue : '')
   const [selectedOption, setSelectedOption] = useState(options[0])
 
   const updateValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
+    console.log('value', value);
+    
     
     setSelectedValue(value as string)
-    onUpdate(selectedOption, value)
+    // onChange(selectedOption, value)
   }
+
+  // const updateOption = (e: ChangeEvent<HTMLSelectElement>) => {
+  //   const v = e.target.value
 
   const updateOption = (e: ChangeEvent<HTMLSelectElement>) => {
     const v = e.target.value
@@ -76,8 +87,25 @@ export const SelectComboInput = <
     
     if (option.type !== selectedOption.type && option.defaultValue) setSelectedValue(option.defaultValue as string)
     setSelectedOption(option)
-    onUpdate(option as SelectComboItem, option.defaultValue as string)
+    // onChange(option as SelectComboItem, option.defaultValue as string)
   }
+
+  useEffect(() => {
+    onChange({type: "hello", target: {value: {selectedValue, selectedOption}}})
+  }, [selectedValue, selectedOption])
+
+  //  const comboRegister: any = register && fieldNameInput ? register(fieldNameInput, {
+  //     required: required && 'Required',
+  //     validate,
+  //     ...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
+  //   }) : {};
+
+  //   const c = comboRegister.onChange;
+  //   comboRegister.onChange = (data: ChangeEvent<HTMLInputElement>) => {
+  //   console.log('onChange', data);
+  //     updateValue(data);
+  //     c(data);
+  //   };
 
   return (
     <div className={clsx(
@@ -91,15 +119,24 @@ export const SelectComboInput = <
         )}
         disabled={disabled}
         value={selectedValue}
+        // defaultValue={selectedValue}
+        onChange={updateValue}
         name={fieldNameInput}
         type="text"
         {...props}
-        onChange={updateValue}
-        {...register && fieldNameInput && register(fieldNameInput, {
-          required: required && 'Required',
-          validate,
-          ...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
-        })}
+        // onChange={updateValue}
+        // {...register && fieldNameInput ? ...register(fieldNameInput, {
+        //   required: required && 'Required',
+        //   validate,
+        //   ...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
+        // }) : ''}
+
+        // {...(register && fieldNameInput ? register(fieldNameInput, {
+        //   required: required && 'Required',
+        //   validate,
+        //   ...(setValueAs ? { setValueAs } : { valueAsNumber: true }),
+        // }) : {})}
+        // {...comboRegister}
       />
       <select
         className={clsx(
@@ -107,11 +144,12 @@ export const SelectComboInput = <
         )}
         name={fieldNameSelect}
         defaultValue={options[0].type}
-        {...props}
         onChange={updateOption}
-        {...(register &&
-          fieldNameSelect &&
-          register(fieldNameSelect, { required: required && 'Required', validate }))}
+        {...props}
+        // {...(register &&
+        //   fieldNameSelect &&
+        //   register(fieldNameSelect, { required: required && 'Required', validate }))}
+          
       >
         {options ? options.map((option: SelectComboItem, index) => (
           <option key={index} value={option.type}>{option.title}</option>

@@ -260,41 +260,25 @@ export const CadenceBoundaryComponent = () => {
     },
   ]
 
-  const [selected, setSelected] = useState(intervalUxOptions[0])
-  const [selectedInterval, setSelectedInterval] = useState(intervalUxOptions[0])
-  const [custom, setCustom] = useState(customUxOptions[0])
-  const [customValue, setCustomValue] = useState(customUxOptions[0].default)
+  const [intervalOption, setIntervalOption] = useState(intervalUxOptions[0])
+  const [intervalCustom, setIntervalCustom] = useState(customUxOptions[0])
+  const [intervalCustomValue, setintervalCustomValue] = useState(customUxOptions[0].default)
   const [selectedStart, setSelectedStart] = useState(boundaryStartOptions[0])
   const [selectedEnd, setSelectedEnd] = useState(boundaryEndOptions[0])
 
-  // const selectedInterval = watch('interval', intervalUxOptions[0])
-  // const interval = watch('interval', intervalUxOptions[0])
-  const interval = useWatch({ control, name: 'interval' })
-
-  // useEffect(() => {
-  //   setSelectedInterval()
-  // }, [control])
-
-  // const intervalUxCallback = (item: SelectListItem) => {
-  //   console.log('intervalUxCallback', item)
-  //   setSelected(item as any)
-  // }
-
-  // const customUxCallback = (option: SelectComboItem, value: number | string) => {
-  //   console.log('customUxCallback', option, value)
-  //   setCustom(option as any)
-  //   setCustomValue(value as any)
-  // }
-
-  // const boundaryStartCallback = (start: SelectListItem) => {
-  //   console.log('boundaryStartCallback', start)
-  //   setSelectedStart(start as any)
-  // }
-
-  // const boundaryEndCallback = (end: SelectListItem) => {
-  //   console.log('boundaryEndCallback', end)
-  //   setSelectedEnd(end as any)
-  // }
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log('watcher:', name, type, name ? value[name] : null)
+      if (name === 'interval' && type === 'change') setIntervalOption(value[name])
+      if (name === 'interval_custom' && type === 'change') {
+        setIntervalCustom(value[name])
+        setintervalCustomValue(value[name].value)
+      }
+      if (name === 'boundary_start' && type === 'change') setSelectedStart(value[name])
+      if (name === 'boundary_end' && type === 'change') setSelectedEnd(value[name])
+    })
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   // const validate = validation?.reduce(
   //   (a, v) => ({ ...a, [v.toString()]: v }),
@@ -327,16 +311,16 @@ export const CadenceBoundaryComponent = () => {
         }}
       />
 
-      {formState.interval?.type === 'custom' ? (
+      {intervalOption.value?.type === 'custom' ? (
         <div className="mt-4">
-          {custom.key === Interval.Block ? (
+          {intervalCustom.key === Interval.Block ? (
             <InputLabel className="mb-2" name={t('form.block_interval')} />
           ) : ''}
-          {custom.key === Interval.Cron ? (
+          {intervalCustom.key === Interval.Cron ? (
             <InputLabel className="mb-2" name={t('form.cron_spec')} />
           ) : ''}
           <Controller
-            name="combo"
+            name="interval_custom"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange } }) => {
@@ -352,22 +336,22 @@ export const CadenceBoundaryComponent = () => {
             }}
           />
 
-          {custom.key === Interval.Block ? (
-            <small>{t('form.every') + ' ' + customValue + ' ' + t('form.blocks')} </small>
+          {intervalCustom.key === Interval.Block ? (
+            <small>{t('form.every') + ' ' + intervalCustomValue + ' ' + t('form.blocks')} </small>
           ) : ''}
-          {custom.key === Interval.Cron ? (
+          {intervalCustom.key === Interval.Cron ? (
             <small>{t('info.crontab_validator')} <a className="underline text-blue-600" target="_blank" href="https://crontab.guru/">{t('info.crontab_guru')}</a></small>
           ) : ''}
         </div>
       ) : ''}
 
-      {interval?.type === 'balance_gt' || selected.value.type === 'balance_lt' ? (
+      {intervalOption.value.type === 'balance_gt' || intervalOption.value.type === 'balance_lt' ? (
         <div className="mt-4">
           <InputLabel className="mb-2" name={
-            t('form.balance') + ' ' + (selected.value.type === 'balance_gt' ? t('form.gt') : t('form.lt'))
+            t('form.balance') + ' ' + (intervalOption.value.type === 'balance_gt' ? t('form.gt') : t('form.lt'))
           } />
           <Controller
-            name="balance_rule"
+            name="rule_balance"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange } }) => {
@@ -385,7 +369,7 @@ export const CadenceBoundaryComponent = () => {
             containerClassName="grow"
             disabled={false}
             // error={errors?.to}
-            fieldName={fieldNamePrefix + 'to'}
+            fieldName={fieldNamePrefix + 'rule_balance_address'}
             register={register}
             // validation={[validateRequired, validateAddress]}
           />

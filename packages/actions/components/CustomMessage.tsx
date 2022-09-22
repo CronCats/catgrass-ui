@@ -1,7 +1,7 @@
 import { Chain } from '@chain-registry/types'
 import { assets, chains } from 'chain-registry'
+import { Controller, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useFormContext, Controller } from 'react-hook-form'
 
 import { SuspenseLoader } from '@croncat-ui/common'
 import { AccountSelector, InputLabel, Loader } from '@croncat-ui/ui'
@@ -51,7 +51,9 @@ export const CustomMessageComponent = () => {
         title: 'Main Account 1',
         address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
         balance: { amount: '420690000', denom: 'uosmo' },
-        chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
+        chain: supportedChains.find(
+          ({ chain_name }) => chain_name === 'osmosis'
+        ),
       },
     },
   ]
@@ -64,21 +66,20 @@ export const CustomMessageComponent = () => {
     <div aria-details="custom message fields" className="my-8 w-full min-h-24">
       <InputLabel className="mb-2" name={t('form.from_account')} />
       <Controller
-        name="from_account"
         control={control}
         defaultValue={accounts[0]}
-        rules={{ required: true }}
+        name="from_account"
         render={({ field: { onChange } }) => {
           return (
             <AccountSelector
               onChange={onChange}
               options={accounts}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
 
       <br />

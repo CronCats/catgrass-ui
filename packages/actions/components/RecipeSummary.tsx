@@ -5,14 +5,10 @@ import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import {
-  ActionItem,
-  ActionItemProps,
-  InputLabel,
-} from '@croncat-ui/ui'
+import { InputLabel, RecipeCardComponent } from '@croncat-ui/ui'
 import { NATIVE_DECIMALS, chainColors } from '@croncat-ui/utils'
 
-import { Account, Action } from '..'
+import { Account } from '..'
 
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain: Chain) => {
@@ -115,18 +111,23 @@ export const RecipeSummaryComponent = () => {
   }
 
   const summary = {
-    fees: '',
-    funds: '',
-    duration: '',
-    occurances: '',
-    signatures: '',
+    fees: '0.234913 JUNO',
+    funds: '10 JUNO',
+    // duration: '',
+    occurances: '~10',
+    // signatures: '',
   }
 
   return (
     <div aria-details="dca fields" className="my-8">
-      <h3 className="mb-2 text-xl">Confirm Details</h3>
+      <h3 className="mb-8 text-xl">Confirm Details</h3>
 
-      <InputLabel className="mb-2" name={t('form.actions')} />
+      <RecipeCardComponent />
+
+      <br />
+      <br />
+
+      {/* <InputLabel className="mb-2" name={t('form.actions')} />
 
       {actions.map((action: Action, id) => (
         <div key={id} className="p-2 text-gray-100 bg-gray-800 rounded-lg shadow-lg">
@@ -134,7 +135,7 @@ export const RecipeSummaryComponent = () => {
         </div>
       ))}
 
-      <br />
+      <br /> */}
 
       {rules.length > 0 ? (
         <div>

@@ -1,5 +1,7 @@
 import clsx from 'clsx'
-import { ChangeEvent, useEffect, useState, useRef } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { FieldPathValue, FieldValues, Path, Validate } from 'react-hook-form'
+
 import { usePrevious } from '@croncat-ui/utils'
 
 export interface ComboInputSelectValue {
@@ -13,24 +15,40 @@ export interface ComboInputSelectOption {
   default: string
 }
 
-export interface ComboInputSelectProps {
+export interface ComboInputSelectProps<
+  FV extends FieldValues,
+  FieldName extends Path<FV>
+> {
   options: ComboInputSelectOption[]
   onChange: (data: ComboInputSelectValue) => void
   containerClassName?: string
   className?: string
+  error?: boolean
+  validation?: Validate<FieldPathValue<FV, FieldName>>[]
 }
 
-export const ComboInputSelect = ({
+export const ComboInputSelect = <
+  FV extends FieldValues,
+  FieldName extends Path<FV>
+>({
   options,
   onChange,
   containerClassName,
   className,
+  error,
+  validation,
   ...props
-}: ComboInputSelectProps) => {
+}: ComboInputSelectProps<FV, FieldName>) => {
   const [state, setState] = useState(() => {
     const first = options[0]
     return { input: first.default, select: first.value }
   })
+
+  // TOOD: Finish!
+  const validate = validation?.reduce(
+    (a, v) => ({ ...a, [v.toString()]: v }),
+    {}
+  )
 
   const lastState = usePrevious(state)
 
@@ -50,24 +68,30 @@ export const ComboInputSelect = ({
   }, [state])
 
   return (
-    <div className={clsx(
-        'flex w-full text-right bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default text-lg',
+    <div
+      className={clsx(
+        'flex w-full text-lg text-right bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default',
+        {
+          'ring-2 ring-red-700 shadow-md shadow-red-400': error,
+          'ring-transparent': !error,
+        },
         containerClassName
-      )}>
+      )}
+    >
       <input
         className={clsx(
-          'py-[14px] px-3 w-2/3 bg-transparent border-none outline-none ring-none text-lg',
+          'py-[14px] px-3 w-2/3 text-lg bg-transparent border-none outline-none ring-none',
           className
         )}
         name="input"
-        type="text"
         onChange={updateInput}
+        type="text"
         value={state.input}
         {...props}
       />
       <select
         className={clsx(
-          'py-[14px] px-3 w-1/3 text-body bg-transparent focus:outline-none focus:ring-none border-default border-l-2',
+          'py-[14px] px-3 w-1/3 text-body bg-transparent border-l-2 focus:outline-none focus:ring-none border-default'
         )}
         name="select"
         onChange={updateSelect}

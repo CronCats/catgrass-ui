@@ -325,4 +325,9 @@ input[type='number']::-webkit-outer-spin-button {
   input[type='number'] {
     -moz-appearance: textfield;
   }
+
+  .cm-scroller {
+    overflow: auto;
+    min-height: 350px;
+  }
 }

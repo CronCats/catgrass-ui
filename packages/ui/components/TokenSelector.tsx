@@ -1,8 +1,9 @@
+import { Asset } from '@chain-registry/types'
+import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { Asset } from '@chain-registry/types'
+
 import { LogoFromImage } from '@croncat-ui/ui'
-import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 
 export interface TokenSelectorValue {
   value: any
@@ -56,7 +57,7 @@ export const TokenSelector = ({
 
         <div
           className={clsx(
-            'absolute top-12 -right-1 -left-1 z-20 overflow-y-scroll max-h-[200px] flex-col p-1 bg-white rounded-lg border-2 shadow-lg',
+            'overflow-y-scroll absolute top-12 -right-1 -left-1 z-20 flex-col p-1 max-h-[200px] bg-white rounded-lg border-2 shadow-lg',
             {
               visible: toggleActive === true,
               invisible: toggleActive === false,

@@ -10,8 +10,8 @@ import { ActionSelector, Button, SubmitButton } from '@/../packages/ui'
 import {
   ArrowPathRoundedSquareIcon,
   BanknotesIcon,
-  DocumentTextIcon,
   CakeIcon,
+  DocumentTextIcon,
 } from '@heroicons/react/24/outline'
 import { assets, chains } from 'chain-registry'
 import clsx from 'clsx'
@@ -21,12 +21,12 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { serverSideTranslations } from '@croncat-ui/i18n/serverSideTranslations'
-import { chainColors } from '@croncat-ui/utils'
 import {
-  RecipeCardComponent,
   ComboInputSelectValue,
+  RecipeCardComponent,
   SelectListValue,
 } from '@croncat-ui/ui'
+import { chainColors } from '@croncat-ui/utils'
 
 import { PageHeader } from '@/components/PageHeader'
 
@@ -170,8 +170,8 @@ const CreatePage: NextPage = () => {
         <div className="px-2 mx-auto max-w-xl md:px-0">
           <FormProvider {...formMethods}>
             <form
-            // onSubmit={handleSubmit(onSubmitForm, onSubmitError)}
-            onSubmit={formMethods.handleSubmit(onSubmit)}
+              // onSubmit={handleSubmit(onSubmitForm, onSubmitError)}
+              onSubmit={formMethods.handleSubmit(onSubmit)}
             >
               <section
                 className={clsx({
@@ -223,12 +223,14 @@ const CreatePage: NextPage = () => {
                 id="4"
               >
                 <div className="text-center">
-                  <CakeIcon className="w-24 mx-auto mb-4 text-gray-700" />
+                  <CakeIcon className="mx-auto mb-4 w-24 text-gray-700" />
 
                   <h3 className="mb-2 text-xl">
                     {t('form.recipe_success_title')}
                   </h3>
-                  <p className="text-gray-500">{t('form.recipe_success_subtitle')}</p>
+                  <p className="text-gray-500">
+                    {t('form.recipe_success_subtitle')}
+                  </p>
 
                   {/* TODO: Add transaction links to explorers */}
                 </div>
@@ -241,7 +243,8 @@ const CreatePage: NextPage = () => {
               <footer className="flex justify-between">
                 <Button
                   className={clsx({
-                    hidden: currentSectionIndex === 0 || currentSectionIndex > 3,
+                    hidden:
+                      currentSectionIndex === 0 || currentSectionIndex > 3,
                   })}
                   onClick={prevSection}
                   size="2xl"
@@ -251,7 +254,7 @@ const CreatePage: NextPage = () => {
                 </Button>
                 <Button
                   className={clsx({
-                    hidden: currentSectionIndex > 2,
+                    hidden: currentSectionIndex > 1,
                     'ml-auto': true,
                   })}
                   onClick={nextSection}
@@ -274,12 +277,12 @@ const CreatePage: NextPage = () => {
 
                 <div className="flex">
                   <SubmitButton
-                    label="Confirm"
-                    variant="primary"
                     className={clsx({
-                      // hidden: currentSectionIndex !== 2,
+                      hidden: currentSectionIndex !== 2,
                       'ml-auto': true,
                     })}
+                    label="Confirm"
+                    variant="primary"
                   />
                 </div>
               </footer>

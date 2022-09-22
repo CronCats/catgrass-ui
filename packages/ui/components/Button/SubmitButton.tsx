@@ -24,7 +24,7 @@ function Submit(
   return (
     <input
       className={clsx(
-        'block py-6 px-10 min-w-[110px] rounded-full transition cursor-pointer md:min-w-[190px]',
+        'block py-[6px] px-[16px] min-w-[110px] rounded-full transition cursor-pointer md:min-w-[190px]',
         {
           // Primary
           'text-lg text-light bg-btn': variant === SubmitVariant.Primary,

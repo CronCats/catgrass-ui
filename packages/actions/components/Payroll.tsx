@@ -2,7 +2,7 @@ import { Asset, Chain } from '@chain-registry/types'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import { assets, chains } from 'chain-registry'
 import { useMemo, useState } from 'react'
-import { useFormContext, Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -14,13 +14,7 @@ import {
   NumberInput,
   TokenSelector,
 } from '@croncat-ui/ui'
-import {
-  NATIVE_DECIMALS,
-  chainColors,
-  validateAddress,
-  validatePositive,
-  validateRequired,
-} from '@croncat-ui/utils'
+import { NATIVE_DECIMALS, chainColors } from '@croncat-ui/utils'
 
 import { Account } from '..'
 
@@ -38,7 +32,13 @@ const getChainData = (chain: Chain) => {
 }
 
 export const PayrollComponent = () => {
-  const { register, watch, setValue, control } = useFormContext()
+  const {
+    register,
+    watch,
+    setValue,
+    control,
+    formState: { errors },
+  } = useFormContext()
   const { t } = useTranslation()
 
   const unsupportedChainIds = ['cosmoshub-4']
@@ -65,7 +65,9 @@ export const PayrollComponent = () => {
         title: 'Main Account 1',
         address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
         balance: { amount: '420690000', denom: 'uosmo' },
-        chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
+        chain: supportedChains.find(
+          ({ chain_name }) => chain_name === 'osmosis'
+        ),
       },
     },
   ]
@@ -79,7 +81,10 @@ export const PayrollComponent = () => {
 
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
-  const tokenOptions = tokens.map((token) => ({ key: token.symbol, value: token }))
+  const tokenOptions = tokens.map((token) => ({
+    key: token.symbol,
+    value: token,
+  }))
 
   const fieldNamePrefix = 'form.'
   const spendTotalAmount = watch(fieldNamePrefix + 'amount_total')
@@ -106,42 +111,40 @@ export const PayrollComponent = () => {
     <div aria-details="dca fields" className="my-8">
       <InputLabel className="mb-2" name={t('form.from_account')} />
       <Controller
-        name="from_account"
         control={control}
         defaultValue={accounts[0]}
-        rules={{ required: true }}
+        name="from_account"
         render={({ field: { onChange } }) => {
           return (
             <AccountSelector
               onChange={onChange}
               options={accounts}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
 
       <br />
 
       <InputLabel className="mb-2" name={t('form.token')} />
       <Controller
-        name="from_token"
         control={control}
         defaultValue={tokenOptions[0]}
-        rules={{ required: true }}
+        name="from_token"
         render={({ field: { onChange } }) => {
           return (
             <TokenSelector
               onChange={onChange}
               options={tokenOptions}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
 
       {/* <br />
@@ -180,29 +183,27 @@ export const PayrollComponent = () => {
 
       <h3 className="mb-2 text-xl">Recipients</h3>
 
-      <div className="p-2 pb-0 -mx-2 mt-4 bg-gray-50 rounded-lg md:p-4 md:pb-0 md:-mx-4">
+      <div className="p-2 pb-0 -mx-2 mt-4 bg-gray-100 rounded-lg md:p-4 md:pb-0 md:-mx-4">
         <InputLabel className="mb-2" name={t('form.recipientAddress')} />
         <AddressInput
           containerClassName="grow bg-white"
           disabled={false}
-          // error={errors?.to}
-          fieldName={fieldNamePrefix + 'to'}
+          fieldName={fieldNamePrefix + 'recipient_address'}
           register={register}
-          validation={[validateRequired, validateAddress]}
+          error={errors?.recipient_address}
+          // validation={[validateRequired, validateAddress]}
         />
 
         <br />
 
         <InputLabel className="mb-2" name={t('form.amount_to_receive_each')} />
         <NumberInput
-          // disabled={!isCreating}
-          // error={errors?.amount}
           containerClassName="bg-white"
           defaultValue={1}
-          fieldName={fieldNamePrefix + 'amount_to_swap_each'}
+          fieldName={fieldNamePrefix + 'amount_to_receive'}
           onMinus={() =>
             setValue(
-              fieldNamePrefix + 'amount_to_swap_each',
+              fieldNamePrefix + 'amount_to_receive',
               Math.max(
                 Number(spendEachAmount) - 1,
                 1 / 10 ** amountDecimals
@@ -211,7 +212,7 @@ export const PayrollComponent = () => {
           }
           onPlus={() =>
             setValue(
-              fieldNamePrefix + 'amount_to_swap_each',
+              fieldNamePrefix + 'amount_to_receive',
               Math.max(
                 Number(spendEachAmount) + 1,
                 1 / 10 ** amountDecimals
@@ -221,7 +222,8 @@ export const PayrollComponent = () => {
           register={register}
           sizing="full"
           step={1 / 10 ** amountDecimals}
-          validation={[validateRequired, validatePositive]}
+          error={errors?.amount_to_receive}
+          // validation={[validateRequired, validatePositive]}
         />
 
         <Button className="mt-6 btn-success" variant="primary">
@@ -229,7 +231,7 @@ export const PayrollComponent = () => {
           <span>Add Recipient</span>
         </Button>
 
-        <div className="p-2 -mx-2 mt-8 bg-gray-100 rounded-lg md:p-4 md:-mx-4">
+        <div className="p-2 -mx-2 mt-8 bg-white rounded-lg md:p-4 md:-mx-4">
           <div className="overflow-x-auto">
             <table className="table w-full table-compact">
               <thead>

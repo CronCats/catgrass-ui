@@ -1,7 +1,7 @@
 import { Asset, Chain } from '@chain-registry/types'
 import { assets, chains } from 'chain-registry'
 import { useMemo, useState } from 'react'
-import { useFormContext, Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -17,8 +17,6 @@ import {
   validateRequired,
 } from '@croncat-ui/utils'
 
-import { Account } from '..'
-
 // TODO: fake data, remove once wallet finished
 const getChainData = (chain: Chain) => {
   const assetList = assets.find(
@@ -33,10 +31,15 @@ const getChainData = (chain: Chain) => {
 }
 
 export const DCAComponent = () => {
-  const { register, control, watch, setValue, formState: { errors }, } = useFormContext()
+  const {
+    register,
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext()
   const { t } = useTranslation()
-  console.log('errors', errors);
-  
+  console.log('errors', errors)
 
   const unsupportedChainIds = ['cosmoshub-4']
   const supportedChainIds = Object.keys(chainColors).filter(
@@ -62,14 +65,19 @@ export const DCAComponent = () => {
         title: 'Main Account 1',
         address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
         balance: { amount: '420690000', denom: 'uosmo' },
-        chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
+        chain: supportedChains.find(
+          ({ chain_name }) => chain_name === 'osmosis'
+        ),
       },
     },
   ]
 
   const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
   const tokens = assetList?.assets || []
-  const tokenOptions = tokens.map((token) => ({ key: token.symbol, value: token }))
+  const tokenOptions = tokens.map((token) => ({
+    key: token.symbol,
+    value: token,
+  }))
 
   const fieldNamePrefix = ''
   const spendTotalAmount = watch(fieldNamePrefix + 'amount_total')
@@ -92,42 +100,42 @@ export const DCAComponent = () => {
     <div aria-details="dca fields" className="my-8">
       <InputLabel className="mb-2" name={t('form.from_account')} />
       <Controller
-        name="from_account"
         control={control}
         defaultValue={accounts[0]}
-        rules={{ required: true }}
+        name="from_account"
         render={({ field: { onChange } }) => {
           return (
             <AccountSelector
               onChange={onChange}
               options={accounts}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // disabled={!isCreating}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
 
       <br />
 
       <InputLabel className="mb-2" name={t('form.from_token')} />
       <Controller
-        name="from_token"
         control={control}
         defaultValue={tokenOptions[0]}
-        rules={{ required: true }}
+        name="from_token"
         render={({ field: { onChange } }) => {
           return (
             <TokenSelector
               onChange={onChange}
               options={tokenOptions}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // disabled={!isCreating}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
 
       <br />
@@ -167,8 +175,8 @@ export const DCAComponent = () => {
       <InputLabel className="mb-2" name={t('form.amount_to_swap_each')} />
       <NumberInput
         // disabled={!isCreating}
-        error={errors?.amount_to_swap_each}
         defaultValue={1}
+        error={errors?.amount_to_swap_each}
         fieldName={fieldNamePrefix + 'amount_to_swap_each'}
         onMinus={() =>
           setValue(
@@ -200,42 +208,42 @@ export const DCAComponent = () => {
 
       <InputLabel className="mb-2" name={t('form.to_account')} />
       <Controller
-        name="to_account"
         control={control}
         defaultValue={accounts[0]}
-        rules={{ required: true }}
+        name="to_account"
         render={({ field: { onChange } }) => {
           return (
             <AccountSelector
               onChange={onChange}
               options={accounts}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // disabled={!isCreating}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
 
       <br />
 
       <InputLabel className="mb-2" name={t('form.to_token')} />
       <Controller
-        name="to_token"
         control={control}
         defaultValue={tokenOptions[0]}
-        rules={{ required: true }}
+        name="to_token"
         render={({ field: { onChange } }) => {
           return (
             <TokenSelector
               onChange={onChange}
               options={tokenOptions}
-            // disabled={!isCreating}
-            // error={errors?.amount}
-            // validation={[validateRequired, validatePositive]}
+              // disabled={!isCreating}
+              // error={errors?.amount}
+              // validation={[validateRequired, validatePositive]}
             />
-          );
+          )
         }}
+        rules={{ required: true }}
       />
     </div>
   )

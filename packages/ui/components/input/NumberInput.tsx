@@ -101,7 +101,7 @@ export const NumberInput = <
 
       <input
         className={clsx(
-          'w-full text-right bg-white border-none outline-none ring-none text-lg',
+          'w-full text-lg text-right bg-white border-none outline-none ring-none',
           className
         )}
         disabled={disabled}

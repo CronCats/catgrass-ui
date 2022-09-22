@@ -21,9 +21,9 @@ export const ActionSelector = ({
   }
 
   const selectAction = (action: Action) => {
-    toggleList()
     setSelectedAction(action)
     onSelectedAction(action)
+    toggleList()
   }
 
   return (

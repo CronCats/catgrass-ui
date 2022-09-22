@@ -1,6 +1,7 @@
 import { Chain } from '@chain-registry/types'
 import { assets, chains } from 'chain-registry'
 import { useTranslation } from 'react-i18next'
+import { useFormContext, Controller } from 'react-hook-form'
 
 import { SuspenseLoader } from '@croncat-ui/common'
 import { AccountSelector, InputLabel, Loader } from '@croncat-ui/ui'
@@ -23,7 +24,8 @@ const getChainData = (chain: Chain) => {
 
 export const CustomMessageComponent = () => {
   const { t } = useTranslation()
-  const fieldNamePrefix = 'form.'
+  const { register, control, watch, setValue } = useFormContext()
+  const fieldNamePrefix = ''
 
   const unsupportedChainIds = ['cosmoshub-4']
   const supportedChainIds = Object.keys(chainColors).filter(
@@ -33,18 +35,24 @@ export const CustomMessageComponent = () => {
     .filter((c) => supportedChainIds.includes(c.chain_id))
     .map(getChainData)
 
-  const accounts: Account[] = [
+  const accounts = [
     {
-      title: 'Main Account 1',
-      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
+      key: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+      value: {
+        title: 'Dev Main Account',
+        address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+        balance: { amount: '13370000', denom: 'ujuno' },
+        chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
+      },
     },
     {
-      title: 'Dev Main Account',
-      address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
+      key: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+      value: {
+        title: 'Main Account 1',
+        address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
+        balance: { amount: '420690000', denom: 'uosmo' },
+        chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
+      },
     },
   ]
 
@@ -55,9 +63,22 @@ export const CustomMessageComponent = () => {
   return (
     <div aria-details="custom message fields" className="my-8 w-full min-h-24">
       <InputLabel className="mb-2" name={t('form.from_account')} />
-      <AccountSelector
-        accounts={accounts}
-        onSelectedAccount={accountCallback}
+      <Controller
+        name="from_account"
+        control={control}
+        defaultValue={accounts[0]}
+        rules={{ required: true }}
+        render={({ field: { onChange } }) => {
+          return (
+            <AccountSelector
+              onChange={onChange}
+              options={accounts}
+            // disabled={!isCreating}
+            // error={errors?.amount}
+            // validation={[validateRequired, validatePositive]}
+            />
+          );
+        }}
       />
 
       <br />
@@ -70,7 +91,7 @@ export const CustomMessageComponent = () => {
           coreAddress={''}
           data={[]}
           errors={[]}
-          fieldNamePrefix={fieldNamePrefix}
+          fieldNamePrefix={fieldNamePrefix + 'custom_message_json'}
           index={0}
           isCreating={true}
           onRemove={() => {}}

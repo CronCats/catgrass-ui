@@ -21,6 +21,7 @@ export interface SelectListProps {
   onChange: (value: any) => void
   containerClassName?: string
   className?: string
+  name?: string
 }
 
 export const SelectList = ({
@@ -34,11 +35,11 @@ export const SelectList = ({
 
   const updateSelect = (item: any) => {
     setState({ ...item })
-    onChange(state)
+    onChange(item)
   }
 
   return (
-    <Listbox onChange={updateSelect} value={state}>
+    <Listbox {...props} onChange={updateSelect} value={state}>
       {({ open }) => (
         <>
           <div className="relative mt-1">

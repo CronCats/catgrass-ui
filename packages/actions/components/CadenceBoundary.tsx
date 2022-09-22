@@ -21,6 +21,7 @@ import {
   NumberInput,
   SelectList,
   SelectListOption,
+  SelectListValue,
   ComboInputSelect,
   ComboInputSelectValue,
 } from '@croncat-ui/ui'
@@ -46,7 +47,7 @@ const getChainData = (chain: Chain) => {
 }
 
 export const CadenceBoundaryComponent = () => {
-  const { register, watch, control, formState } = useFormContext()
+  const { register, watch, control, formState, setValue, getValues } = useFormContext()
   // const { control } = useForm<FormState>()
   const { t } = useTranslation()
 
@@ -268,7 +269,6 @@ export const CadenceBoundaryComponent = () => {
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      console.log('watcher:', name, type, name ? value[name] : null)
       if (name === 'interval' && type === 'change') setIntervalOption(value[name])
       if (name === 'interval_custom' && type === 'change') {
         setIntervalCustom(value[name])
@@ -301,7 +301,9 @@ export const CadenceBoundaryComponent = () => {
         render={({ field: { onChange } }) => {
           return (
             <SelectList
+              name="interval"
               onChange={onChange}
+              onBlur={onChange}
               options={intervalUxOptions}
             // disabled={!isCreating}
             // error={errors?.amount}
@@ -311,7 +313,7 @@ export const CadenceBoundaryComponent = () => {
         }}
       />
 
-      {intervalOption.value?.type === 'custom' ? (
+      {intervalOption.value.type === 'custom' ? (
         <div className="mt-4">
           {intervalCustom.key === Interval.Block ? (
             <InputLabel className="mb-2" name={t('form.block_interval')} />
@@ -427,7 +429,7 @@ export const CadenceBoundaryComponent = () => {
 
       <h3 className="mb-2 text-xl">{t('form.cadence_when_end')}</h3>
       <Controller
-        name="boundary_start"
+        name="boundary_end"
         control={control}
         defaultValue={boundaryEndOptions[0]}
         rules={{ required: true }}

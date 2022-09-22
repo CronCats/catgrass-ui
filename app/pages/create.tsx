@@ -159,8 +159,8 @@ const CreatePage: NextPage = () => {
   // )
 
   // const onSubmit = data => console.log(data)
-  const onSubmit: SubmitHandler<FormState> = (data) =>
-    console.log(JSON.stringify(data))
+  // const onSubmit: SubmitHandler<FormState> = (data) => console.log(JSON.stringify(data))
+  const onSubmit: SubmitHandler<FormState> = (data) => console.log(data)
 
   return (
     <>
@@ -251,7 +251,7 @@ const CreatePage: NextPage = () => {
                 </Button>
                 <Button
                   className={clsx({
-                    hidden: currentSectionIndex > 3,
+                    hidden: currentSectionIndex > 2,
                     'ml-auto': true,
                   })}
                   onClick={nextSection}
@@ -263,7 +263,7 @@ const CreatePage: NextPage = () => {
 
                 <Button
                   className={clsx({
-                    hidden: currentSectionIndex < 3,
+                    hidden: currentSectionIndex < 4,
                     'mx-auto': true,
                   })}
                   size="2xl"
@@ -273,7 +273,14 @@ const CreatePage: NextPage = () => {
                 </Button>
 
                 <div className="flex">
-                  <SubmitButton label="Submit" variant="primary" className="ml-auto" />
+                  <SubmitButton
+                    label="Confirm"
+                    variant="primary"
+                    className={clsx({
+                      // hidden: currentSectionIndex !== 2,
+                      'ml-auto': true,
+                    })}
+                  />
                 </div>
               </footer>
             </form>

@@ -33,8 +33,10 @@ const getChainData = (chain: Chain) => {
 }
 
 export const DCAComponent = () => {
-  const { register, control, watch, setValue } = useFormContext()
+  const { register, control, watch, setValue, formState: { errors }, } = useFormContext()
   const { t } = useTranslation()
+  console.log('errors', errors);
+  
 
   const unsupportedChainIds = ['cosmoshub-4']
   const supportedChainIds = Object.keys(chainColors).filter(
@@ -75,10 +77,6 @@ export const DCAComponent = () => {
   const spendEachAmount = watch(fieldNamePrefix + 'amount_to_swap_each')
   const spendEachDenom = watch(fieldNamePrefix + 'amount_to_swap_each_denom')
   const [selectedToken, setSelectedToken] = useState(tokens[0])
-
-  const accountCallback = (account: Account) => {
-    console.log('accountCallback', account)
-  }
 
   const tokenCallback = (token: Asset) => {
     console.log('tokenCallback', token)
@@ -134,7 +132,7 @@ export const DCAComponent = () => {
 
       <br />
 
-      <InputLabel className="mb-2" name={t('form.amount_total')} />
+      {/* <InputLabel className="mb-2" name={t('form.amount_total')} />
       <NumberInput
         // disabled={!isCreating}
         // error={errors?.amount}
@@ -164,12 +162,12 @@ export const DCAComponent = () => {
         validation={[validateRequired, validatePositive]}
       />
 
-      <br />
+      <br /> */}
 
       <InputLabel className="mb-2" name={t('form.amount_to_swap_each')} />
       <NumberInput
         // disabled={!isCreating}
-        // error={errors?.amount}
+        error={errors?.amount_to_swap_each}
         defaultValue={1}
         fieldName={fieldNamePrefix + 'amount_to_swap_each'}
         onMinus={() =>
@@ -195,6 +193,8 @@ export const DCAComponent = () => {
         step={1 / 10 ** amountDecimals}
         validation={[validateRequired, validatePositive]}
       />
+
+      {/* {JSON.stringify(errors)} */}
 
       <hr className="my-8 mx-auto w-1/2 border-2 border-gray-100" />
 

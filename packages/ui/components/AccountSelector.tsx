@@ -42,8 +42,8 @@ export const AccountSelector = ({
 
   const updateSelect = (item: any) => {
     setState({ ...item })
+    onChange(item)
     toggleList()
-    onChange(state)
   }
 
   return (

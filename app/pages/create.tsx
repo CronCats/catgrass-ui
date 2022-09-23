@@ -16,6 +16,7 @@ import {
 import { assets, chains } from 'chain-registry'
 import clsx from 'clsx'
 import { GetStaticProps, NextPage } from 'next'
+import Link from 'next/link'
 import { useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -160,7 +161,24 @@ const CreatePage: NextPage = () => {
 
   // const onSubmit = data => console.log(data)
   // const onSubmit: SubmitHandler<FormState> = (data) => console.log(JSON.stringify(data))
-  const onSubmit: SubmitHandler<FormState> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<FormState> = (data) => {
+    console.log(data)
+    nextSection()
+  }
+
+  const successRecipeData = {
+    title: 'Dollar Cost Average from $JUNO to $NETA',
+    // subtitle: '',
+    owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    recipeHash:
+      '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
+    totalBalance: { amount: '10000000', denom: 'ujuno' },
+    actions: [],
+    rules: [],
+    networks: [],
+    bgColor: '#F9226C',
+  }
 
   return (
     <>
@@ -213,7 +231,7 @@ const CreatePage: NextPage = () => {
                 })}
                 id="3"
               >
-                <NetworkSignerComponent />
+                <NetworkSignerComponent onComplete={nextSection} />
               </section>
 
               <section
@@ -236,7 +254,12 @@ const CreatePage: NextPage = () => {
                 </div>
 
                 <div className="my-12">
-                  <RecipeCardComponent />
+                  <a href="/profile/recipes">
+                    <RecipeCardComponent
+                      bgColor={successRecipeData.bgColor}
+                      data={successRecipeData}
+                    />
+                  </a>
                 </div>
               </section>
 
@@ -264,16 +287,18 @@ const CreatePage: NextPage = () => {
                   <span>Next</span>
                 </Button>
 
-                <Button
-                  className={clsx({
-                    hidden: currentSectionIndex < 4,
-                    'mx-auto': true,
-                  })}
-                  size="2xl"
-                  variant="secondary"
-                >
-                  <span>View Recipes</span>
-                </Button>
+                <Link href="/profile/recipes">
+                  <Button
+                    className={clsx({
+                      hidden: currentSectionIndex < 4,
+                      'mx-auto': true,
+                    })}
+                    size="2xl"
+                    variant="secondary"
+                  >
+                    <span>View Recipes</span>
+                  </Button>
+                </Link>
 
                 <div className="flex">
                   <SubmitButton

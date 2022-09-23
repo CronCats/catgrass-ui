@@ -1,97 +1,114 @@
-import { Asset, Chain } from '@chain-registry/types'
+import { Chain } from '@chain-registry/types'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
-import { assets, chains } from 'chain-registry'
-import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { InputLabel, RecipeCardComponent } from '@croncat-ui/ui'
-import { NATIVE_DECIMALS, chainColors } from '@croncat-ui/utils'
+import {
+  InputLabel,
+  RecipeCardComponent,
+  SelectListOption,
+} from '@croncat-ui/ui'
+// import {
+//   NATIVE_DECIMALS,
+//   chainColors,
+// } from '@croncat-ui/utils'
 
-import { Account } from '..'
+const formatInterval = (
+  interval: SelectListOption,
+  custom?: any,
+  rule?: any
+) => {
+  if (!interval || !interval.key) return ''
 
-// TODO: fake data, remove once wallet finished
-const getChainData = (chain: Chain) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain.chain_name
-  )
-  const asset = assetList?.assets[0]
-  return {
-    ...chain,
-    asset,
-    brandColor: chainColors[chain.chain_id],
+  let s = ''
+
+  switch (interval.key) {
+    case 'cron_daily':
+    case 'cron_hourly':
+    case 'cron_minutely':
+    case 'blocks_1000':
+      s = interval.value.title
+      break
+    case 'balance_gt':
+    case 'balance_lt':
+      s = `${interval.value.title} ${rule.input} ${rule.select.toUpperCase()}`
+      break
+    case 'custom':
+      if (custom && custom.select) {
+        if (custom.select === 'block') s = `Every ${custom.input} blocks`
+        if (custom.select === 'cron') s = `Cron Spec: "${custom.input}"`
+      }
+      break
+    default:
+      s = 'N/A'
   }
+
+  return s
+}
+
+// Types:
+// Timestamp: Return Humanized
+// Block: Return CSV number
+// Examples: 'When funds run out' | 'Tuesday, Oct 14th' | '5,134,948' | 'Immediately'
+const formatBoundary = (boundary: SelectListOption, custom?: any) => {
+  if (!boundary || !boundary.key) return ''
+
+  let s = ''
+
+  switch (boundary.key) {
+    case 'immediate':
+    case 'event_funds_lt':
+      s = boundary.value.title
+      break
+    case 'cron_custom':
+      const t = new Date(parseInt(custom))
+      s = t.toLocaleString()
+      break
+    case 'blocks_custom':
+      // TODO: support other locales
+      s = `Block ${parseFloat(`${custom}`).toLocaleString('en-US')}`
+      break
+    default:
+      s = 'N/A'
+  }
+
+  return s
 }
 
 export const RecipeSummaryComponent = () => {
-  const { register, watch, setValue } = useFormContext()
+  const { getValues } = useFormContext()
   const { t } = useTranslation()
 
-  const unsupportedChainIds = ['cosmoshub-4']
-  const supportedChainIds = Object.keys(chainColors).filter(
-    (id) => !unsupportedChainIds.includes(id)
-  )
-  const supportedChains = chains
-    .filter((c) => supportedChainIds.includes(c.chain_id))
-    .map(getChainData)
-
-  const accounts: Account[] = [
-    {
-      title: 'Dev Main Account',
-      address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
-    },
-    {
-      title: 'Main Account 1',
-      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(({ chain_name }) => chain_name === 'osmosis'),
-    },
-  ]
-
-  const stakeActions: { type: string; name: string }[] = [
-    {
-      type: 'StakeType.Delegate',
-      name: 'Delegate',
-    },
-    {
-      type: 'StakeType.Undelegate',
-      name: 'Undelegate',
-    },
-    {
-      type: 'StakeType.Redelegate',
-      name: 'Redelegate',
-    },
-    {
-      type: 'StakeType.WithdrawDelegatorReward',
-      name: 'Claim Rewards',
-    },
-  ]
-
-  const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
-  const tokens = assetList?.assets || []
-
-  const fieldNamePrefix = 'form.'
-  const spendTotalAmount = watch(fieldNamePrefix + 'amount_total')
-  const spendTotalDenom = watch(fieldNamePrefix + 'amount_total_denom')
-  const spendEachAmount = watch(fieldNamePrefix + 'amount_to_swap_each')
-  const spendEachDenom = watch(fieldNamePrefix + 'amount_to_swap_each_denom')
-  const [selectedToken, setSelectedToken] = useState(tokens[0])
-
-  const accountCallback = (account: Account) => {
-    console.log('accountCallback', account)
-  }
-
-  const tokenCallback = (token: Asset) => {
-    console.log('tokenCallback', token)
-    setSelectedToken(token)
-  }
-
-  const amountDecimals = useMemo(
-    () => NATIVE_DECIMALS,
-    [spendTotalDenom, selectedToken]
-  )
+  // TESTING:
+  const [
+    fromAccount,
+    toAccount,
+    fromToken,
+    toToken,
+    amountToSwap,
+    interval,
+    intervalCustom,
+    ruleBalance,
+    ruleBalanceAddress,
+    boundaryStart,
+    boundaryStartNumber,
+    boundaryEnd,
+    boundaryEndNumber,
+  ] = getValues([
+    'from_account',
+    'to_account',
+    'from_token',
+    'to_token',
+    'amount_to_swap_each',
+    'interval',
+    'interval_custom',
+    'rule_balance',
+    'rule_balance_address',
+    'boundary_start',
+    'cadence_start_number',
+    'boundary_end',
+    'cadence_end_number',
+  ])
 
   // DEMO DATA
   const actions = [
@@ -105,24 +122,43 @@ export const RecipeSummaryComponent = () => {
   const rules = []
 
   const schedule = {
-    interval: 'Every Day',
-    start: 'Tuesday, Oct 14th',
-    end: 'When funds run out',
+    interval: formatInterval(interval, intervalCustom, ruleBalance),
+    start: formatBoundary(boundaryStart, boundaryStartNumber),
+    end: formatBoundary(boundaryEnd, boundaryEndNumber),
   }
 
+  // TODO:
   const summary = {
-    fees: '0.234913 JUNO',
+    fees: '0.234913 JUNO', // gasWanted 380622, gasUsed 389326
     funds: '10 JUNO',
     // duration: '',
     occurances: '~10',
     // signatures: '',
   }
 
+  let networks: Chain[] = []
+
+  if (fromAccount?.value?.chain) networks.push(fromAccount.value.chain)
+  // TODO: Filter dups?
+  if (toAccount?.value?.chain) networks.push(toAccount.value.chain)
+
+  const recipeData = {
+    title: 'Dollar Cost Average from $JUNO to $NETA',
+    // subtitle: '',
+    owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    // recipeHash: '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
+    totalBalance: { amount: '10000000', denom: 'ujuno' },
+    actions: [],
+    rules: [],
+    networks,
+  }
+
   return (
     <div aria-details="dca fields" className="my-8">
       <h3 className="mb-8 text-xl">Confirm Details</h3>
 
-      <RecipeCardComponent />
+      <RecipeCardComponent bgColor="#F9226C" data={recipeData} />
 
       <br />
       <br />

@@ -39,6 +39,8 @@ export const Balance = ({
   decimals,
   imageUrl,
 }: BalanceProps) => {
+  console.log('denom, amount, decimals', denom, amount, decimals)
+
   const symbol = nativeTokenLabel(denom)
   const icon = nativeTokenLogoURI(denom)
   const iconUrl = icon || imageUrl

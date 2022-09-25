@@ -12,11 +12,6 @@ import {
   Validate,
 } from 'react-hook-form'
 
-<<<<<<< HEAD
-=======
-import { useThemeContext } from '../../theme'
-
->>>>>>> main
 // This check is to prevent this import to be server side rendered.
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
   require('codemirror/mode/javascript/javascript.js')
@@ -46,13 +41,7 @@ export function CodeMirrorInput<T extends FieldValues, U extends Path<T>>({
     {}
   )
 
-<<<<<<< HEAD
   const editorTheme = 'material-ocean'
-=======
-  const themeContext = useThemeContext()
-  const editorTheme =
-    themeContext.theme !== 'dark' ? 'default' : 'material-ocean'
->>>>>>> main
 
   const cmOptions = {
     mode: {

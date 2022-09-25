@@ -177,7 +177,7 @@ export const Nav = () => {
         </div>
 
         <div
-          className="flex-none xs:hidden sm:hidden md:flex"
+          className="xs:hidden flex-none sm:hidden md:flex"
           data-note="desktop menu"
         >
           <ul className="p-0 menu menu-horizontal">

@@ -24,11 +24,15 @@ export const InputLabel = ({
     {...containerProps}
   >
     <span
+<<<<<<< HEAD
       className={clsx(
         'text-xs tracking-widest text-gray-700 uppercase',
         { 'font-mono': mono },
         className
       )}
+=======
+      className={clsx('caption-text', { 'font-mono': mono }, className)}
+>>>>>>> main
       {...rest}
     >
       {name}

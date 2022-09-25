@@ -18,9 +18,13 @@ const tailwindConfig = {
   ],
   theme: {
     screens: {
+<<<<<<< HEAD
       // xs: '416px',
       // '2xs': '0px',
       xs: { min: '0px', max: '639px' },
+=======
+      xs: '416px',
+>>>>>>> main
       ...defaultTheme.screens,
     },
     extend: {

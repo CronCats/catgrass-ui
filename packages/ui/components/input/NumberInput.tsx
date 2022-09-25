@@ -21,7 +21,11 @@ export interface NumberInputProps<
   onMinus?: () => void
   onPlus?: () => void
   containerClassName?: string
+<<<<<<< HEAD
   sizing?: 'sm' | 'md' | 'full' | 'auto'
+=======
+  sizing?: 'sm' | 'md' | 'auto'
+>>>>>>> main
   required?: boolean
   setValueAs?: (value: any) => any
 }
@@ -62,6 +66,7 @@ export const NumberInput = <
     <div
       className={clsx(
         'flex flex-row gap-1 items-center text-sm',
+<<<<<<< HEAD
         containerClassName,
         'py-3 px-3 bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-gray-400 ring-offset-0 transition border-default',
         {
@@ -71,6 +76,16 @@ export const NumberInput = <
           'w-full': sizing === 'full',
           'w-28 md:w-32 lg:w-40': sizing === 'auto',
         }
+=======
+        'py-2 px-3 bg-transparent rounded-lg border focus-within:outline-none focus-within:ring-1 ring-brand ring-offset-0 transition border-default',
+        {
+          'ring-1 ring-error': error,
+          'w-28': sizing === 'sm',
+          'w-40': sizing === 'md',
+          'w-28 md:w-32 lg:w-40': sizing === 'auto',
+        },
+        containerClassName
+>>>>>>> main
       )}
     >
       {onPlus && (

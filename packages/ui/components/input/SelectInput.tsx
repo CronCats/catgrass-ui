@@ -1,5 +1,9 @@
 import clsx from 'clsx'
+<<<<<<< HEAD
 import { ComponentProps, ComponentType } from 'react'
+=======
+import { ComponentProps } from 'react'
+>>>>>>> main
 import {
   FieldError,
   FieldPathValue,
@@ -18,7 +22,10 @@ export interface SelectInputProps<
   validation?: Validate<FieldPathValue<FV, FieldName>>[]
   error?: FieldError
   required?: boolean
+<<<<<<< HEAD
   Icon?: ComponentType
+=======
+>>>>>>> main
 }
 
 export const SelectInput = <
@@ -31,7 +38,10 @@ export const SelectInput = <
   validation,
   children,
   required,
+<<<<<<< HEAD
   Icon,
+=======
+>>>>>>> main
   ...props
 }: SelectInputProps<FV, FieldName>) => {
   const validate = validation?.reduce(
@@ -42,7 +52,11 @@ export const SelectInput = <
   return (
     <select
       className={clsx(
+<<<<<<< HEAD
         'py-3 px-3 w-full text-body bg-transparent rounded-lg border-2 focus:outline-none focus:ring-2 ring-gray-400 ring-offset-0 transition border-default',
+=======
+        'py-2 px-3 text-body bg-transparent rounded-lg border focus:outline-none focus:ring-1 ring-brand ring-offset-0 transition border-default',
+>>>>>>> main
         { 'ring-1 ring-error': error }
       )}
       {...props}

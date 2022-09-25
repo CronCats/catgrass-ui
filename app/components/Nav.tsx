@@ -21,7 +21,6 @@ import { Logo } from '@croncat-ui/ui'
 
 export const Nav = () => {
   const { t } = useTranslation()
-
   const [menuActive, setMenuActive] = useState(false)
 
   const toggleActive = () => {

@@ -68,7 +68,7 @@ const ExplorePage: NextPage = () => {
         <div className="grid grid-rows-3 gap-4 w-full md:grid-cols-3">
           {recipeData
             ? recipeData.map((recipe: any, index) => (
-                <a href="/create">
+                <a key={index} href="/create">
                   <RecipeCardComponent bgColor={recipe.bgColor} data={recipe} />
                 </a>
               ))

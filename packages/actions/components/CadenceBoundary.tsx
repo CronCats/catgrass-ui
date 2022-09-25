@@ -136,7 +136,7 @@ export const CadenceBoundaryComponent = () => {
   ]
 
   // immediately, pick a time, pick a block, Funds run out
-  const boundaryOptions = [
+  const boundaryOptions: any = [
     {
       key: 'cron_custom',
       value: {

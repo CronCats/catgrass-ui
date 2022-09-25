@@ -45,7 +45,7 @@ export const RecipeCardComponent = ({
 }: RecipeProps) => {
   const recipeChains = data.networks
     .filter(function (item, pos, self) {
-      return self.indexOf(item) == pos
+      return self.indexOf(item) === pos
     })
     .map(getChainMetaData)
 
@@ -87,6 +87,7 @@ export const RecipeCardComponent = ({
             {recipeChains
               ? recipeChains.map((chain: ChainMetadata, index) => (
                   <div
+                    key={index}
                     className={clsx({
                       'ml-[-12px]': index > 0,
                     })}

@@ -6,7 +6,7 @@ import { RecipeCardComponent } from '@croncat-ui/ui'
 
 import { PageHeader } from '@/components/PageHeader'
 
-const ExplorePage: NextPage = () => {
+const RecipesPage: NextPage = () => {
   const { t } = useTranslation()
 
   const recipeData = [
@@ -82,7 +82,7 @@ const ExplorePage: NextPage = () => {
   )
 }
 
-export default ExplorePage
+export default RecipesPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {

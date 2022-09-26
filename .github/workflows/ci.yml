@@ -11,7 +11,7 @@ on:
       - development
 
 env:
-  NEXT_PUBLIC_CHAIN_ID: uni-4
+  NEXT_PUBLIC_CHAIN_ID: juno-1
 jobs:
   ci:
     name: Lint & Test

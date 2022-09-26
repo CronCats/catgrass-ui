@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ComponentProps, ComponentType } from 'react'
+import { ComponentProps } from 'react'
 import {
   FieldError,
   FieldPathValue,
@@ -18,7 +18,6 @@ export interface SelectInputProps<
   validation?: Validate<FieldPathValue<FV, FieldName>>[]
   error?: FieldError
   required?: boolean
-  Icon?: ComponentType
 }
 
 export const SelectInput = <
@@ -31,7 +30,6 @@ export const SelectInput = <
   validation,
   children,
   required,
-  Icon,
   ...props
 }: SelectInputProps<FV, FieldName>) => {
   const validate = validation?.reduce(

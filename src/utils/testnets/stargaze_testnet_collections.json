@@ -1,0 +1,1837 @@
+[
+    {
+        "contractAddress": "stars1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsu9n0cj",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2f8tssqyvcm",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars1wl59k23zngj34l7d42y9yltask7rjlnxgccawc7ltrknp6n52fpsx0u02n",
+        "name": "Agroforestry Journals",
+        "symbol": "AGR"
+    },
+    {
+        "contractAddress": "stars1t3f4zxve6725sf4glrnlar8uku78j0nyfl0ppzgfju9ft9phvqwq47have",
+        "name": "Agroforestry Journals",
+        "symbol": "AGR"
+    },
+    {
+        "contractAddress": "stars1dc34p57spmhguak2ns88u3vxmt73gnu3c0j6phqv5ukfytklkqjsuv9gl6",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars12njsx22ne73swjqxxn5e7xtc2n95y2aw8r73cqdth0g86way24cq98v5q7",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars1y6hjq8yvqzk6al4yrjl7yjkt87ujvhaq32c0qvt7627sk0j63d2qsntjgw",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars1m4ns69zvkk2zv0946mw298tlky5ckvu08rtxggtg29p784kc5sxqwgx4h0",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars19jq6mj84cnt9p7sagjxqf8hxtczwc8wlpuwe4sh62w45aheseues57n420",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars14sa4u42n2a8kmlvj3qcergjhy6g9ps06rzeth94f2y6grlat6u6sv9y4pd",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars1l6ut7ymdzhf38wldp0eu6ccjawgvzku69kmjl6ddjqpcm9f62gkq3h4a6p",
+        "name": "testccw",
+        "symbol": "TCCW"
+    },
+    {
+        "contractAddress": "stars1lj48z799hq4hgzg6ppdzsq55h6cezfe0cmrnnv7cclkpw9qrvf9sdmyvgy",
+        "name": "Regen Grant Recipient - Community",
+        "symbol": "RGRC"
+    },
+    {
+        "contractAddress": "stars1387uc3z2zs3663d06f59vsn5ams2x6e33gqpghjkmhafjqsc9a3qqsffxq",
+        "name": "Regen Grant Recipient - Community",
+        "symbol": "RGRC"
+    },
+    {
+        "contractAddress": "stars1qfwnnm6z7zlgpk2ltwfh9hk8d4vwpu5h5nv2pqxwthve7htygzms74xkcv",
+        "name": "Regen Grant Recipient - Interfaces",
+        "symbol": "RGRI"
+    },
+    {
+        "contractAddress": "stars1cvt7dz7fhhuhh8qrzjnq6uel4wnpswt5uq7d97kg4sh99dlrehdstmkafu",
+        "name": "Regen Grant Recipient - Cosmos SDK",
+        "symbol": "RGRC"
+    },
+    {
+        "contractAddress": "stars17s7emulfygjuk0xn906athk5e5efsdtumsat5n2nad7mtrg4xres3ysf3p",
+        "name": "Regen Grant Recipient - Land Stewards",
+        "symbol": "RGRL"
+    },
+    {
+        "contractAddress": "stars1zvjnc08uy0zz43m0nlh9f5aetpa3amn6a034yqvmsgvzshk9cldsdhqjzg",
+        "name": "Regen Grant Recipient - Land Stewards",
+        "symbol": "RGRL"
+    },
+    {
+        "contractAddress": "stars1r57m20afwdhkwy67520p8vzdchzecesmlmc8k8w2z7t3h9aevjvsxwdluc",
+        "name": "Test Penguins",
+        "symbol": "PEN"
+    },
+    {
+        "contractAddress": "stars1pv56ghmgnt9sv0ry6fg3rqf6wgfnckksppltamwsdnd0e0e0kfmsg5e2hs",
+        "name": "Test Penguins 2",
+        "symbol": "PEN2"
+    },
+    {
+        "contractAddress": "stars12cvr4t3rqdl5d90p3qsdq2ej8dte5k4gdsxs6uccmzq4h2307nfq2lruvz",
+        "name": "Test Penguins 3",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars1pcmlq5cwmy9lxfhynnuhd0r2djm2xn3ff2xc6njncs8sxzlgle3ss5ke6u",
+        "name": "Test Penguins 3",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars1yu6t6vxry85yt052uegp8dyrkk84lxsvact60sj25ns4380g03gsvc9nqf",
+        "name": "Test Penguins 3",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars1fchxlkly99gqymnvpfdyqjw9xc2cx62yplvw3rcfl2t5wurj3j9sa83qke",
+        "name": "Test Penguins 3",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars1kjmzvl2us872qverxre5shu747zsx4rh0xp58l4hx838ck7zcp0qaqka8l",
+        "name": "Test Penguins 4",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars17s8kkfm5lf8lacz704f4fjmfxzuvyqd8cksakrlhnrass4yacvxq6zsl8g",
+        "name": "Test Penguins 5",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars1l2fvuecjpakxxh6k0mhpxzeln2veqpjs7znm8mfavuwx506v0qnsta53tn",
+        "name": "Test Penguins 5",
+        "symbol": "PEN3"
+    },
+    {
+        "contractAddress": "stars1cv5er0wsla3u33w6rkn7ckxpn88huqh9aw0xpu0pagksege7v7ns0w5ena",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1ddstvl38skwpm284gfaqukn3e8c4mlf26mssy5hppeq6ar2nnw0s5a8a9h",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1qnynuzvl2a5nzxtrhjhw20h0mf7u6tarcuqveqd0qzp7322n5rqsgse88s",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1r8td9cjggx9f5ek2gzfh34kguxuz5j9rfjemamvjw2he2y84t3xq7t5pxe",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars10v8m3lglw4vat5g3w4xj7ven7puxudnqkjwwaf9nh3alukxpmh3qm4wzwh",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars18p7lhcxl3ac85ke52u4h7mmzkv5pk5jl6lpgk2sp73a0cw3u0c5qau8wku",
+        "name": "Solar Sasquatch Squad",
+        "symbol": "SSS"
+    },
+    {
+        "contractAddress": "stars1jpdjyc3c973frxkjkmvgr5ececzf9qslzrunxd2xkstem8zr338sd3pljz",
+        "name": "Stargazers First Federation Challenge Coins",
+        "symbol": "SGZCOIN"
+    },
+    {
+        "contractAddress": "stars1dhmd8lredr9psu4afk8j3lstdg896pme49mje6maxucuuugmmpts7q7xhz",
+        "name": "Insaan Art",
+        "symbol": "INS"
+    },
+    {
+        "contractAddress": "stars1379zqdvfjcv3sd0w2zhkvtlc0au5yy4htad6fec92c09rpptd6ls5g094k",
+        "name": "TEST Collection Name",
+        "symbol": "TEST"
+    },
+    {
+        "contractAddress": "stars1yq5rxxt8hm7cqk8fjs03jrsva4c2dlewug9head8uqvm4459ackq0xu50z",
+        "name": "TEST Collection Name",
+        "symbol": "TEST"
+    },
+    {
+        "contractAddress": "stars1sj7zrll8n6rh07hgzqtjemeeane53a68fzqzsmnyntw95w4h7z6skuwn4s",
+        "name": "PRPPG",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1xdmn4ass4fcn64qn45zl4sq3fa3k49s2965a7qxrv0v43hadxatsmnm78j",
+        "name": "Collection Name",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1u6caqa5k0h6wspdaupyrjcmpklk8hfsv3lp24eax0r2fy3l3myxqw68vkc",
+        "name": "TEST Collection Name",
+        "symbol": "TEST"
+    },
+    {
+        "contractAddress": "stars1jeh4eqlsge0w8kcmjlt82rzzwe4vr5yxe69nvqt2jcgg4q4e8ypq66arx4",
+        "name": "Exemple",
+        "symbol": "EXM"
+    },
+    {
+        "contractAddress": "stars138yg570khkg2kehjkw026st73q237jnse6t7sf0uwvjc9mafdk9sfyt7ta",
+        "name": "TEST Collection Name",
+        "symbol": "TEST"
+    },
+    {
+        "contractAddress": "stars1u8z2n5u7whwf4656yxfyh8ssjxy2tuhavds8ddrmdfvvwu84cvuqvvqhtp",
+        "name": "Oika",
+        "symbol": "OIKA"
+    },
+    {
+        "contractAddress": "stars1w23vphvjp0qm4jhche00905admg69pgry74vv88d09c4k7g67n3qg8mjdq",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1exfwrk0t57hn8ffcwjdnh6rkp7mq0n39duhaugttf69znaeq3w3sgs3ere",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars168ctmpyppk90d34p3jjy658zf5a5l3w8wk35wht6ccqj4mr0yv8sqshfkl",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1lvhdnjcq05czd38hy25fzk80cn03hhxens4e2am9468rmpzc82ms6l0k6h",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1w9pht45shvg9p0lpvs37hug0jggplaet56gz44vx4lcw3fuamfcs7wqk8a",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1j9a5fr6rcfq2kuew5n48cc6l6j2wd2jzrw8eea0aj8qypvex02dq568vur",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1gje2etr7mwfefd77lfrd4a9avvru8pkmzypu6d4nu0jxrjkxzdqsddwpgf",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1quce89l8clsn8s5tmq5sylg370h58xfnkwadx72crjv90jmetp4syt4sgr",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars14rs8gv8phhxtwjad096swkdd8sfg2s7c2xe55ses50spkwr585ns5durpl",
+        "name": "Pixel People Test",
+        "symbol": "PPPLT"
+    },
+    {
+        "contractAddress": "stars1zkjgu5pdsswczdjg87v87wtyhavavnq99jnyngmn83x58kly49vsjd06qr",
+        "name": "Test Audio",
+        "symbol": "AUD"
+    },
+    {
+        "contractAddress": "stars1kfem4ue4qn9p689ldye9t4seh077lz3ztr4zhjadxptjsaujxk5sv763m7",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1vvgyl5xndpqn3vgymjlwklv7kjmk3zwzf6r6ukakqk5qnzksktdsgr7x2r",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1pq9fc4ln2zm883hgkn90w4wza9y0cy50tjl52htuhsxsg94tqrgsxnpz40",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1j875gkljknhq7n2g5lsckl3zuj2tyxvqgz5gyku0xxssl0usm5wqc750p3",
+        "name": "Crazy Doodle NFT",
+        "symbol": "CDNF"
+    },
+    {
+        "contractAddress": "stars1crdahcykk3e0nyam2vhudpm2nv0qpd7eutdkhc3658wknr5u5mhqau5t97",
+        "name": "Star Equinox",
+        "symbol": "SEQ"
+    },
+    {
+        "contractAddress": "stars1nwm9pjmfgmxgc4euyfps05p9pfde8vd4sm8pavy93eu9xquz27ds96v2d0",
+        "name": "Testing Collection",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1dzkjd4nn0fqqkua3leyaz96yfsf3aqyhu3wlxrzryzewp02j90tsj6pw0s",
+        "name": "Snake Bikers",
+        "symbol": "SNK"
+    },
+    {
+        "contractAddress": "stars1vlp9crs4jw3m3l3mne5zh4602pyl9lwv6tj3j4x7a8nc0ayrscps9cs2yk",
+        "name": "Snake Bikers",
+        "symbol": "SNK"
+    },
+    {
+        "contractAddress": "stars17v00rapt956mudlfxl3t6gf455t07y708z8vjkjfgar87q8c9vns4n5dcw",
+        "name": "TEST Collection Name",
+        "symbol": "TEST"
+    },
+    {
+        "contractAddress": "stars12k3aacdygvjuran5hz60067pgu2uuuscz3styw2zk3q4aedj0v2sx4409j",
+        "name": "TEST Collection Name",
+        "symbol": "TEST"
+    },
+    {
+        "contractAddress": "stars1k0anackr8h5l5aefm3czs3f8n8mlqgrz53yrmumlmqxmn6xdk5uq5a3wmh",
+        "name": "Denem",
+        "symbol": "DEN"
+    },
+    {
+        "contractAddress": "stars1hlt3ekvlfrn07p38kt3rf9kkr7dl4uf7zrlvxaj6jz5nyelr34dq55mfm8",
+        "name": "Test",
+        "symbol": "TST"
+    },
+    {
+        "contractAddress": "stars13falgv7wf8v3pqcwhr7suvm8e8j0hu03fjmtwrh2vek2589tdazqggmf0l",
+        "name": "War Cats",
+        "symbol": "WARCATS"
+    },
+    {
+        "contractAddress": "stars12qltyf0vmpwlfn2g2ghd26uzjtfpmxu9f4fwjvgwhrk9je0xg73qwhvarf",
+        "name": "Wanderers",
+        "symbol": "WNDRS"
+    },
+    {
+        "contractAddress": "stars1enfv7ek9ut98458v4h7wr69gashr7eta8scgha44ujkm4xue5jes2h8d03",
+        "name": "Wanderers",
+        "symbol": "WNDRS"
+    },
+    {
+        "contractAddress": "stars1rteyn7vnazp9utxtgwdfcu7dxg7ezg9u9kspmt4ua8st8vuh8uvqn6ngkl",
+        "name": "Wanderers",
+        "symbol": "WNDRS"
+    },
+    {
+        "contractAddress": "stars17u493k974uagyay9eh97tudyygfr6qgcgfmxnzle60xerqtsdycs9alpzn",
+        "name": "Wanderers",
+        "symbol": "WNDRS"
+    },
+    {
+        "contractAddress": "stars15cqej6m3wdqkde2h3x896t4e7ln8ru2xefgznvqcrx2c4cv4pljqjg2hh8",
+        "name": "Star Equinox",
+        "symbol": "SEQ"
+    },
+    {
+        "contractAddress": "stars1yr9tdqe6gjyd5rfwwsx2jjcp5szygzzrenpkl0g4xy8unmwv4u0s286mdg",
+        "name": "War Cats",
+        "symbol": "WARCATS"
+    },
+    {
+        "contractAddress": "stars16v9et8644mhs4jwkkkhuvejjzzpuw3tnsw7x7l63sv4rx8ttq4cspwu5yu",
+        "name": "Wanderers",
+        "symbol": "WNDRS"
+    },
+    {
+        "contractAddress": "stars1tzntdhpvlh2dh62wdv4waerd8y9s5sl4n6wj2ejm07gn6yht9nrsx5h40n",
+        "name": "Wanderers",
+        "symbol": "WNDRS"
+    },
+    {
+        "contractAddress": "stars1lrgf6apkar4426v6lhegkpsw9wsazka2nxs8exl6a3fz59vhspfs4qp70z",
+        "name": "Test XXX",
+        "symbol": "XXX"
+    },
+    {
+        "contractAddress": "stars1txmfsh3x38qt3fgsuthmmmqc7d96zh5k6t803fnpkm8dxa52tdhqzlrs0n",
+        "name": "Test XXX",
+        "symbol": "XXX"
+    },
+    {
+        "contractAddress": "stars1nvnyaedrxtvhgxkdwghpr377vlg484asapf9j76pdxczw6y2dxvq05vzxr",
+        "name": "Blood Ritual",
+        "symbol": "BLDRTL"
+    },
+    {
+        "contractAddress": "stars12h8e2a7e4de4ksmyvg2tcv0utgkrrezerghyh3kla3czh6axwaaq74me8w",
+        "name": "Blood Ritual",
+        "symbol": "BLDRTL"
+    },
+    {
+        "contractAddress": "stars1lhgl2n9uq3thss387fphxjrfc90s3knzg9yue9nnx63at8xngyssxf8ser",
+        "name": "Blood Ritual",
+        "symbol": "BLDRTL"
+    },
+    {
+        "contractAddress": "stars1u3hacl3zu5vl7xgq9g6s8k80ava37xd3s08h24h88dmkeeqgf5nsna78t5",
+        "name": "Blood Ritual",
+        "symbol": "BLDRTL"
+    },
+    {
+        "contractAddress": "stars1xzky2mu0xgwff3pg7lalth6z2case9arjtgvtx33meydpjulleyqqusx4s",
+        "name": "Blood Ritual",
+        "symbol": "BLDRTL"
+    },
+    {
+        "contractAddress": "stars1hn6v5yqn4xvv0s9hd70wuy2e2jw6dqux3gr3429lvy538t2zrmasr5g2j4",
+        "name": "Star City",
+        "symbol": "STCTY"
+    },
+    {
+        "contractAddress": "stars1qw4fh0hyd442qutcs570rs5x48nm2495aru4wgf4vd8v8rzpsz3q6xldzu",
+        "name": "Star City",
+        "symbol": "STCTY"
+    },
+    {
+        "contractAddress": "stars18ucqrylqwrcm4s82c6cymf5d3g5funhwjzyrjgehyuvmqpu5kcjssdnuef",
+        "name": "Star City",
+        "symbol": "STCTY"
+    },
+    {
+        "contractAddress": "stars1wt6lll52ywm5a0960sqemfd0jsp9aq867stjdtkg0fjmff0r6d0q288ykx",
+        "name": "Star City",
+        "symbol": "STRST"
+    },
+    {
+        "contractAddress": "stars1e0x2hnhhwyek7eq3kcxu2x6pt77wdnwz0lutz9fespdr9utq963qq4cte2",
+        "name": "StarCity",
+        "symbol": "STRCT"
+    },
+    {
+        "contractAddress": "stars1a50ajhk5vgps9lqeeeaxnm83vk4x8dslwxzm872e7rhcea476qeq0qcd9w",
+        "name": "StarCity",
+        "symbol": "STRCT"
+    },
+    {
+        "contractAddress": "stars1nv0lyvr90tsypcu70ej9dk5vuwpf3j2ptf54474cxuce5uqk6jkqnqjteq",
+        "name": "StarCity First District",
+        "symbol": "STCTY"
+    },
+    {
+        "contractAddress": "stars1wum85ggyljah77sg0nt9xdq746cyss8cfdl2nx3zz68955jgaldq6vu24t",
+        "name": "StarCity First District",
+        "symbol": "STCTY"
+    },
+    {
+        "contractAddress": "stars1w73dekjygm4wwx6d8j6e4ymywzalhys77pw5a4z0gp023yu3a89sujy3zd",
+        "name": "TTRockets",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars194drr5fq7gs5647u3wxrndn23vxvtgknyhd2jlqp5363nj4lhqssydsm7q",
+        "name": "StarCity First District",
+        "symbol": "STCTY"
+    },
+    {
+        "contractAddress": "stars1qxw3fxxtca4s0pl08cercll9kjdu6h827t76nfkewdqy7ndf6xpqv9yy52",
+        "name": "TTFuel",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars13lmlc6k95g80897fufuq98fe2rewcfvpmgvy7egafdkf9tue52nsal8vhd",
+        "name": "TTHumans",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1r8kuj838p5swyc57zahftarhkhmvsr6xmfmjgz3xq8yyvuvy49usq0q232",
+        "name": "Waving Cosmonauts",
+        "symbol": "WAVCSM"
+    },
+    {
+        "contractAddress": "stars10xca2kaca9k6jxhvucjd4kahw9g7z0gkz7rew6qc0n6rarvurlmslr6cj8",
+        "name": "Waving Cosmonauts",
+        "symbol": "WAVCSM"
+    },
+    {
+        "contractAddress": "stars1r2v32rl0kryuvlzd54kgqknjku9klrx27z6fczvwmztdnq3ez3vq4tn8xr",
+        "name": "StarNots",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1fkwhch9yx9adf06z0earyuwv0028h8ps5yth7k6wj9wssudxw0gqyklhly",
+        "name": "Collection Name",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1p7rwluy6yqzreqqq6htaxcksuaweclntw9ur4mtw9r5xe96qq7eqnt0jzx",
+        "name": "SadPug",
+        "symbol": "SADPUG"
+    },
+    {
+        "contractAddress": "stars120e7cul8muua6hdsusq7znru534x0lpmz08ucqj7gn8dw48m4nhs9ny6qw",
+        "name": "SadPug",
+        "symbol": "SADPUG"
+    },
+    {
+        "contractAddress": "stars1s7zx55jcgfluz92e5d7059xg8pnpjff4m5crrzw5cvdvpmqzym9sn2xpe3",
+        "name": "SadPug",
+        "symbol": "SADPUG"
+    },
+    {
+        "contractAddress": "stars1kj0kkvuzhz2tkrmcgn0ffd9lmv4sl3fwwj3xc87a7h9y69lza8lqzgug6n",
+        "name": "SadPug",
+        "symbol": "SADPUG"
+    },
+    {
+        "contractAddress": "stars1q3zv5kx6wtc5wuttey0e3r9gjjtu9sr8r42736rkynazyd265ahszr9ecl",
+        "name": "SadPug",
+        "symbol": "SADPUG"
+    },
+    {
+        "contractAddress": "stars1fl9glyfffr8kewueguj6jsnex3whxrhn44ucsv7djgec6prdp7jqf0r33d",
+        "name": "SadPug",
+        "symbol": "SADPUG"
+    },
+    {
+        "contractAddress": "stars1js5jhh5jgujm5nkkfx0x9hl8lwmt49culdtyjrc5qjajyqvvkvns3k3k5h",
+        "name": "Pocket Snaps",
+        "symbol": "PSNP"
+    },
+    {
+        "contractAddress": "stars1j5e8xxm8xmtqjx7t7qejhrvfcj2cgyjg0nw9xasv3mz6qgsnwuaszv2zfe",
+        "name": "Video Planets",
+        "symbol": "PLNTS"
+    },
+    {
+        "contractAddress": "stars18wpg2d6t2cs5rfyg4nrxe4cuggtdp0yhx785qsz9jpgm3dawmanq753etz",
+        "name": "Waving Cosmonauts",
+        "symbol": "WAVCSM"
+    },
+    {
+        "contractAddress": "stars14wsunfs8nr80tyw826f8kfvx3kr5ljty7ej0jxrpwxe4t8qy5yus2ypvzl",
+        "name": "Collection",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars199q9c5x93465rf73hxsqfsdehwu9fq6kskx3k4wenj3hkhlwrtqqttnhzc",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars1jcjcszj36pxslwudrjq8cstng3v58xvrp7fajyem69vg5tn3j3eq6tq0f0",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars1gwcd4sue79pnkccu4ekmgnl4aaavj2q8dkwn6nc59mrsyt0q8weqq90fnq",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars1tpgj7zh4nyaagcs3aj8u65a3xgx9ej735v27252muy60ywx6a53sqvk5e9",
+        "name": "Testnet Ziggy Super Gifs Collection",
+        "symbol": "TZIG"
+    },
+    {
+        "contractAddress": "stars1fqll0z4sy6aecqfy2gxvnxl69xy7hj4mdt6p4ny7v33jgzu8y87sueah4c",
+        "name": "Testnet Audio Collection",
+        "symbol": "TAudio"
+    },
+    {
+        "contractAddress": "stars1za5jsj92nher9pw8njdngqa6xvnyxse8p8m8d6xmpyee9qatsfeqmy2ny5",
+        "name": "Interchain NFTs",
+        "symbol": "INTCHAIN"
+    },
+    {
+        "contractAddress": "stars1lqyn9ncwkcqj8e0pnugu72tyyfehe2tre98c5qfzjg4d3vdw7n5qh8nefq",
+        "name": "Collection Name",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1ndn2kmht3mf48nzqmm7z0sujt4vl53lmd8al03l2ukahjjq7pqnqc0rhcj",
+        "name": "Interchain NFTs",
+        "symbol": "INTCHAIN"
+    },
+    {
+        "contractAddress": "stars1c7m50h39cgxh0kjcqcaame80rsuxrcjh7npz0m5uzvn7vyqr3wlq4waqd0",
+        "name": "Interchain NFTs",
+        "symbol": "INTCHAIN"
+    },
+    {
+        "contractAddress": "stars19ex92paut4qnkqcjhmzl43fw08dplruuknp3t48f4ueysprlm8psy46es2",
+        "name": "Interchain NFTs",
+        "symbol": "INTCHAIN"
+    },
+    {
+        "contractAddress": "stars1zwyu2xv4e52k4v46r63fvncz5263m0g4gjaecf5ezvr0wkfhs4zsdd5j8y",
+        "name": "StarNots",
+        "symbol": "StarNots"
+    },
+    {
+        "contractAddress": "stars105mgdz7s3p253a302yqylec9t2qzz5fvlsnzkx5tvq7zzurcrw9syt5kwh",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars14xa84vhd9jcre6cv64x87kdmedfn0qlrzcamk4lu7xf8w2knsz9stgk86v",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars18mwrsrswlvktd3hdcnytpfn268keu757m67y79wwad3h6gd3jdgqkrrqtu",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars1j0zg3mfw4t2h9pls6dz3p4ap05j3p6r9sv7gwe5dq2uaeylnss5sp2gudj",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars1qywn4nu0e5yu56asfyy0uvfck9rgzrdksajs65lckdzmd7xvnpkq5lrc7p",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars147v9tqg6qcp8cl8jufdmmf2fkgesmfezmrfrywq7tudr84wwk3qsljcvdu",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars1j9t7adu5gjfc7y4langvc8acnwp50rfashlnefsuhq6xfysn2upsl6er2a",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars15jugk3w42q4a06df4p4tfqx5jnlrk2rg0c3sqj3ch0nhwyhj28ysnfvjf6",
+        "name": "Ramenheads",
+        "symbol": "RAM"
+    },
+    {
+        "contractAddress": "stars1esrh98pprytnka06fn24l3phtccr3900m9fhhsvqnnfkmgq38yxskx23dt",
+        "name": "Women From Cosmos Part II",
+        "symbol": "WFC2"
+    },
+    {
+        "contractAddress": "stars1shht0spq98cas74hskfwml3y6a7hfslttluc4yn5fml2wqr75r0sk24l5y",
+        "name": "Women From Cosmos Part II",
+        "symbol": "WFC2"
+    },
+    {
+        "contractAddress": "stars1xakcgkaj434wtz9rqk99r0u4885sfk2axqly4hcrqprmxdchxpnq95hwkm",
+        "name": "Women From Cosmos Part II",
+        "symbol": "WFC2"
+    },
+    {
+        "contractAddress": "stars1z9906ez24khghewrf06s20hkfavc4frwhp8slss6d0flwjudmajskjrkew",
+        "name": "Women From Cosmos Part II",
+        "symbol": "WFC2"
+    },
+    {
+        "contractAddress": "stars16a7r7vpfpl6c32emewhfgfvyzqq5uw2k6sg9snqeztphqs5j7l5qcgpgj0",
+        "name": "Women From Cosmos Part II",
+        "symbol": "WFC2"
+    },
+    {
+        "contractAddress": "stars1nucztpsc9mc99py75recw2llvwnm08vclyuyllc4z5sywararrksmk7za7",
+        "name": "Stargazers First Federation Challenge Coins",
+        "symbol": "SGZCOIN"
+    },
+    {
+        "contractAddress": "stars1rwfflkzafdemfg6ndeh452hrj9y02ghezsungcdy2u8qxkzxf5hsmnr3dc",
+        "name": "Women From Cosmos Part II",
+        "symbol": "WFC2"
+    },
+    {
+        "contractAddress": "stars1ee8zf3ppjcgy0w7e2akqn0ze4f8qp3x0xz2ffq6dyg9ap4hujrvqwpdwqs",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1rgvnv6jyer0c99xurlcfcs6kyfelx649638hwg9fatectztkzmtst3p9gl",
+        "name": "StarNots",
+        "symbol": "StarNots"
+    },
+    {
+        "contractAddress": "stars12sazu8tula8ea85x90508a32ju0mas4sw8qp4exypxld26dgr23qdk6j49",
+        "name": "dpp drip",
+        "symbol": "dpp"
+    },
+    {
+        "contractAddress": "stars1qg0a77wpzey82fz6syx58h7sc3k3e822ktqgu2z2wkzjhnl4elcs3qfe4f",
+        "name": "dpp dripp",
+        "symbol": "dppp"
+    },
+    {
+        "contractAddress": "stars1z8u5ke7e8ctnjxfsqy9npn2twdjajthvgwuzd5k0sw855f0mfdyqmekau5",
+        "name": "dpp dripp",
+        "symbol": "dppp"
+    },
+    {
+        "contractAddress": "stars1hlt479efr5uhrvrwe0grkn9pqtysqrfg42kgxy0xtkd2mem4y00qu9yvuv",
+        "name": "dpp dripp",
+        "symbol": "dppp"
+    },
+    {
+        "contractAddress": "stars1klwl9llt3ctsnquggzyzjfqzyp4ft2drmx234wfky3wpulvyjw4sdg6p26",
+        "name": "Exquisite Corpse",
+        "symbol": "X-X"
+    },
+    {
+        "contractAddress": "stars193ceyhyy0l2lqn9kl9hcmu9nvqjrpyd72k0c3pscmz029hc8vnzsyy0yty",
+        "name": "Star Equinox Complimentary Airdrop",
+        "symbol": "aSEQ"
+    },
+    {
+        "contractAddress": "stars1tmnrkzzwxgx5nfxt6rzsrjzwz9y46s6awf0a0znjyaz62j2kq8pq3gefm8",
+        "name": "Star Equinox Complimentary Airdrop",
+        "symbol": "aSEQ"
+    },
+    {
+        "contractAddress": "stars1rdcksp79j5d688zze7cwd2dhqtyzf65r6yr9ukmptk9mvtdlj6uqx5elq4",
+        "name": "Waving Cosmonauts",
+        "symbol": "WAVCSM"
+    },
+    {
+        "contractAddress": "stars1mf4kk8kvvq4t7sj5wqvg363zpg9y6wj0jh8s0skesxk8kcczkuuqh7pejp",
+        "name": "Lieflat-PetSeries",
+        "symbol": "LFP"
+    },
+    {
+        "contractAddress": "stars10qa2zwuzj4z55xxath5sg9cj2vm8hqrw340h8twt0q79cvrhhhvs4ra8rm",
+        "name": "Weaver Art Genesis",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars136qremm7qx00j76mmfzpqudyy8x4s8g7gsqs7sezegkheh4t3v9s56827e",
+        "name": "Weaver Art Genesis",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars14zuxsycdr7xeznc5w84ghseu49yvr60kj9k550eaxw8yx2dh874szsy3nu",
+        "name": "Weaver Art Genesis",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1rwup6dxesqv3ngekxj0krwyg6f38rajavnscalzt7pmtfvql5qjqhqkcga",
+        "name": "Weaver Art Genesis",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1umvmhqyz8hf6mypvz2uushx2nvjmtyx3sc43zzuj696qjqv6aktqr3npue",
+        "name": "Weaver Art Genesis",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1az75f0ljcjp2x8m5j0fxhdec3w6jlcqp2yd6r68kjq3d9cx0uj9q38avyj",
+        "name": "Starts test contract",
+        "symbol": "STST"
+    },
+    {
+        "contractAddress": "stars1kyee6se5yn90jddrs2xpes2m4kx00wx8jy59x47jxyvxee29evdst64aj0",
+        "name": "Starts test contract",
+        "symbol": "STST"
+    },
+    {
+        "contractAddress": "stars1p53ap30vuuy9zt63xh89whjy5xqsjzphtanngaaudygc6c3cvmnsw0cupy",
+        "name": "The StartZ OG Club",
+        "symbol": "STRS"
+    },
+    {
+        "contractAddress": "stars1t79vtqynmzmwm9fxq09xjmq3zr3saxur5czm4l9xjc97zhnrq06sgjly50",
+        "name": "Star Equinox Complimentary Airdrop",
+        "symbol": "aSEQ"
+    },
+    {
+        "contractAddress": "stars100pkcs5jdl20s5kh8v0vhclql7frkm4z9uz7hycg92av64v6hyysrjsd0s",
+        "name": "Test Audio",
+        "symbol": "AUD"
+    },
+    {
+        "contractAddress": "stars10jnwpweg0gmzg5n0ws083s7tekphm20xtwu4pzgftqyn8ma6eyzs4syt2k",
+        "name": "ISIM",
+        "symbol": "SEM"
+    },
+    {
+        "contractAddress": "stars195my8tdf37kj0lmqe3tzyht63nyz7u3gpyz9mk4kz0uxp3rkuy8qs0td58",
+        "name": "Example",
+        "symbol": "EXP"
+    },
+    {
+        "contractAddress": "stars104f2ty9peqdf8gy8pw8fzc0pyuzkd6duykezwgec6vg5ne0v602qgcp6kq",
+        "name": "Example",
+        "symbol": "EXP"
+    },
+    {
+        "contractAddress": "stars1ld8fejz9g5lkwyjt9hd084aemqpwjc5yw4gxr83m9q3wz52802eqd44fpg",
+        "name": "Example",
+        "symbol": "EXP"
+    },
+    {
+        "contractAddress": "stars1039h80u06wmyp0j0mqgv0g95vyq8suumdq4tcc2e65k7x0wtqzjqsch2sf",
+        "name": "Example",
+        "symbol": "EXP"
+    },
+    {
+        "contractAddress": "stars1548mjuvlrdarm6gufw2tcchkuhj5jkrz3e8fqc202mlq0s6htsaqe8ltkf",
+        "name": "Example",
+        "symbol": "EXP"
+    },
+    {
+        "contractAddress": "stars1ulezzupctu5xz6qdl97u5rgqzv4fljavvjcs5uw35yhl93z9n9mqazqdw8",
+        "name": "Example",
+        "symbol": "EXP"
+    },
+    {
+        "contractAddress": "stars1g7j0nxegqtyynp054x6m2vgfcw0yr9vqdthrnag6v739cxrjzpgq7vhd89",
+        "name": "OG Starz Test",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars15wt59jxmdh54xd2t40fdegcxsn25hmuse73c0r5e2420kvsy2f0s9g8r3y",
+        "name": "OG Starz Club",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars147hy27tdyvmjn4v22eypcgajf0umqunyyxcnuumdac7uvk7avxwspqd0r6",
+        "name": "OG Starz Club",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars1ymyl0pmrkjztm35qhddpqf8wl8ysu6efpdez8sahvvtw242432pq9cjgg4",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1e6tkud3yk0h68726qnqz8l8lx3dfghtvkdsupq09jgr79xnztves7jug2r",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1rvwvzdg7hzlnhd0mj3fw0r0p3w2hx8ha53za6q6h9jnucun4tfwq9ashfd",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1r7zanqck9hwl8v6qpzet7llalsk0vfy504ehsu8cnf3eq4dzvd6qphtkex",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1w8utct6h9j7l28c0z65j3tp9x64vemzvcy3hnvgayunqg42p9zuq3dl3v0",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1gd4vfydhtyzu98pmez8vfwaetk7rz9743jhxcw4hte2z0633vunq0xtsdt",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars153sv2qq5ytw2c9hhavf33gu069u8cp42t32vu8qtvgfjndra72mshz3av4",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars18a5s28femwggrt9g8kfnf84zyxq6zrgd0q58mvaxa7rpj2fp6htqzf73j9",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1zs3rndsjc8un9c4savwrmsyqnmsnmlfcqskw9v203dxp9mwsz5fqc4p3k4",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1h9h2j7r42tn7aazgvcmchaq2nluynp9lzrfg4j6f87rl3zatlcfq0tgq8n",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1y8ccjaz6c6sv6yarqrd96cufj4rd2plkz6manwh05rd4q57nlf8q6c4jz0",
+        "name": "Existing",
+        "symbol": "EXST"
+    },
+    {
+        "contractAddress": "stars1ypmf9324d8tmqpdyppuqlq4m07758etf740wv9y8yxcxrnyerfts97qyd6",
+        "name": "beep",
+        "symbol": "beep"
+    },
+    {
+        "contractAddress": "stars1qkh7mueqyuvl05zq0j0lgag84408fygevkgfjm0rrmt5ydlf0rfsj7m545",
+        "name": "beep",
+        "symbol": "beep"
+    },
+    {
+        "contractAddress": "stars1kc0q9jtky6lkpggzpdv3cp05df5lejrdn4rftke9nra3hw0nagnsh6qzjj",
+        "name": "beep",
+        "symbol": "beep"
+    },
+    {
+        "contractAddress": "stars15qr3g3f0p0e9mjfnkygycz433d3tc64agahmelvzv4qnz4jw7ulqwsa0gw",
+        "name": "beep",
+        "symbol": "beep"
+    },
+    {
+        "contractAddress": "stars1r9cfw0gvjwuvnygrj89wmh7gua88rm7kad66c46fp2uvqm0q3kxqvd34pq",
+        "name": "beep",
+        "symbol": "beep"
+    },
+    {
+        "contractAddress": "stars1rhq8fvrpvrjdeltutvsuscwnfdvzgnf3pxrfnd3423ewefp0apgstdjvxv",
+        "name": "Purly Cat",
+        "symbol": "PCL"
+    },
+    {
+        "contractAddress": "stars1nlwjllmefeghywj9wun9jq9t4kjpe2gt258s8a9yep9wuaqkrelqp09k35",
+        "name": "Purly Cat Test",
+        "symbol": "PCLT"
+    },
+    {
+        "contractAddress": "stars1rgzmd4ts5cl7l00aks94mkrgh66s0xlnr7hc600962z39k7jt7mqc4jfvk",
+        "name": "Purly Cat Test2",
+        "symbol": "PCLT"
+    },
+    {
+        "contractAddress": "stars1jv95g87rn02qt8w5mhv49zrvytmyjp4fv5dlnc89r8ru2az22a5qklp6ve",
+        "name": "Purly Cat Test2",
+        "symbol": "PCLT"
+    },
+    {
+        "contractAddress": "stars1f32mr6qrdedfj9gnqg8f503c5zuxkueqr3aezvws2tcv495ngexsakwgwc",
+        "name": "Purly Cat Test2",
+        "symbol": "PCLT"
+    },
+    {
+        "contractAddress": "stars1se9xfjqzmx0vpmcxn0vfdhhczh5kk4lmqm4nx6eeq3kul8a2mmnswfetls",
+        "name": "Purly Cat Test 3rd",
+        "symbol": "PCLT"
+    },
+    {
+        "contractAddress": "stars130enuky45d5y3ptyr5ttqsgfxgpkfvqamk65ezhvhfkwu0l2y56szwxhe0",
+        "name": "Cosmogun",
+        "symbol": "CG"
+    },
+    {
+        "contractAddress": "stars1cv2yydt5gjvzwrttr2pqxwsgxe6q3vdnja82v7mrdh4unrph9yws7cn65f",
+        "name": "beep",
+        "symbol": "beep"
+    },
+    {
+        "contractAddress": "stars1vje9gvq8rmm7ktssdnmsucj0yxg3e79hsn3ezcguvg2nqh937alsy0w65l",
+        "name": "Cosmogun",
+        "symbol": "CG"
+    },
+    {
+        "contractAddress": "stars1fhyrr0av897enutfrwef6r2h82svff03lu7c5x3s9swmljdu94fqtcn3jd",
+        "name": "The WadSquad Presents: Chill Vibez Vol. 1",
+        "symbol": "Vibez"
+    },
+    {
+        "contractAddress": "stars19sycsspujvxzhnp74suvfxmsdfaaytsj7gk6ldpjd06k7lkrat7qeq2ue6",
+        "name": "The WadSquad Presents: Chill Vibez Vol. 1",
+        "symbol": "Vibez"
+    },
+    {
+        "contractAddress": "stars1dxuf4mufwtdg4kxk2zl088lt7462vgch0n8f07f8luqkv6axjggqes3q83",
+        "name": "The WadSquad Presents: Chill Vibez Vol. 1",
+        "symbol": "Vibez"
+    },
+    {
+        "contractAddress": "stars1rtlxdfsatpr0n4yzmg5fftdkja2r0cvm4pylkrr42wqmetnlrm0qvwsfz2",
+        "name": "The WadSquad Presents: Chill Vibez Vol. 1",
+        "symbol": "Vibez"
+    },
+    {
+        "contractAddress": "stars18udqf8r56gdca4fgzeyrrvswes4f98llsygfdf08hhjc4xaj0afscya7lu",
+        "name": "ANYO Part 2 - Shape of Time",
+        "symbol": "ANYO2"
+    },
+    {
+        "contractAddress": "stars15jrm3w9ku4ctf8q5kegxm4ppnx6h5uhj0h00n5526sk3ss803lxst7c70t",
+        "name": "ANYO Part 2 - Shape of Time",
+        "symbol": "ANYO2"
+    },
+    {
+        "contractAddress": "stars1wvzuv59qctswmk8qz997x05h5h3y7z95e3hw27jphzl73tl94cls6rlkwj",
+        "name": "ANYO Part 2 -HUGIS NG ORAS-Shape of Time-",
+        "symbol": "ANYO2"
+    },
+    {
+        "contractAddress": "stars1dg2w40cflw2w32jj993tjkdaf6jqt08luxdv45lccx2r2r0wgzxqxctn7q",
+        "name": "ANYO Part 2 -HUGIS NG ORAS-Shape of Time-",
+        "symbol": "ANYO2"
+    },
+    {
+        "contractAddress": "stars14cn7cmgk0yyycrql3tkzugp45d64x9tenv7ev2qn009wxxwq5pwqq6hmjm",
+        "name": "OG Starz Club",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars1g0a4z3uhp6javchsw9seq3nsm7uytlwg30glpcd9fmazwa50nawsu2jj2s",
+        "name": "ANYO Part 2 -HUGIS NG ORAS-Shape of Time-",
+        "symbol": "ANYO2"
+    },
+    {
+        "contractAddress": "stars1m6jz5dw6sz4whez3a66af665p3hdpzctjd5zv8z3rnx4zww20fdq9uehr4",
+        "name": "OG Starz Club",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars1fdmd5cfx9z4wvfsyw5gdcl9s73gzcsp5sgkzffzw8nudfe0f9tnszcvz6a",
+        "name": "OG Starz Club",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars18vrvjf5wlz0pq395w2emksfvwssd0fm897zw7lk3yxqmsk20ke4qu4u6ea",
+        "name": "OG Starz Club",
+        "symbol": "OSTS"
+    },
+    {
+        "contractAddress": "stars1emc7ttp7c3wf0z88fa8ye6tlexzfc7vv2llvn4vukz36u82mzzhsfjae4h",
+        "name": "Stargazers - Honorary 2",
+        "symbol": "STRGZRS"
+    },
+    {
+        "contractAddress": "stars1fems7ad8xyp6fcg5e42fhymkm3wgqkyr6qy44qy7yskkyt2ch54ssmk7pz",
+        "name": "Food For Thought",
+        "symbol": "FFT"
+    },
+    {
+        "contractAddress": "stars17yx5xhmxaccdmp0j82hf33qgx4rd85lvt7mwtfjvva30lw30efyszgzfzn",
+        "name": "Food For Thought",
+        "symbol": "FFT"
+    },
+    {
+        "contractAddress": "stars1mhrr4zs7qczmd06jl7gsx37we9suy6rtx4x46z9zy5lmey9x9ylsf54cqz",
+        "name": "Food For Thought",
+        "symbol": "FFT"
+    },
+    {
+        "contractAddress": "stars1hehpave9k0x3rt545tkphgh4q0pfhlvgyutz050dl3cam9dze6espmarrt",
+        "name": "Food For Thought",
+        "symbol": "FFT"
+    },
+    {
+        "contractAddress": "stars1ey5yveelq7n30dd9dmm74wdcetl5lgcd998m3mnw0wp4n5c2d7rqya0e94",
+        "name": "Boring Robots",
+        "symbol": "Boring Robots"
+    },
+    {
+        "contractAddress": "stars1t7pem6ldg9hnpgfcnsuphc6yszz0c9pqly4pmgc8fzh3q3kxzhgqjyls7s",
+        "name": "Mental Block",
+        "symbol": "MBLK"
+    },
+    {
+        "contractAddress": "stars1pkg42qxmrm6vy24yhl3u456ageyhy0d59e67hcqhuft5wfwacp2s8xqmn7",
+        "name": "Mental Block",
+        "symbol": "MBLK"
+    },
+    {
+        "contractAddress": "stars1nzygllkj7xm4edex7vf6uwyxnt8k66z0rpzfltuhccrgv47waaaqehuc0p",
+        "name": "Mental Block",
+        "symbol": "MBLK"
+    },
+    {
+        "contractAddress": "stars1rv3wy8cxhckne8jn5vaml6ptrl78lqe5fx5wgdsrf07cdrxawutsy92tgv",
+        "name": "Starbotz",
+        "symbol": "BOTZ"
+    },
+    {
+        "contractAddress": "stars14rrxpnuxfch2ym7a3qv9yg5n2up5aksrepy8qu6mfchrctsg7zes936asz",
+        "name": "Starbotz",
+        "symbol": "BOTZ"
+    },
+    {
+        "contractAddress": "stars1mnzxhpdmm0rxjer0rpwmyt84qh3ha48pup0s0kt0ndqktckr0hxs57tcns",
+        "name": "StarNots",
+        "symbol": "StarNots"
+    },
+    {
+        "contractAddress": "stars14rej7p2p4n5ktdkhrauydg4htysh3ckzxs5mw7ej4lr27kr60a6sf7hrrk",
+        "name": "Egg Owlies",
+        "symbol": "Egg"
+    },
+    {
+        "contractAddress": "stars16h3rquehmevl6snrd22q7pac3fw4km0rw6yhme9gcg5zw9mken0sqvxxen",
+        "name": "Egg Owlies",
+        "symbol": "Egg"
+    },
+    {
+        "contractAddress": "stars1a8haea0qc6w84pyerjv3g07lzx9pu4xzktzfm9qu24vm75439wqsdzvj50",
+        "name": "Egg Owlies",
+        "symbol": "Egg"
+    },
+    {
+        "contractAddress": "stars1rdznkaxw65ucfwuhcq2l52wsk7rexwy0cgats9m5390f3609425qk29th8",
+        "name": "Sky Monks",
+        "symbol": "SKYMONKS"
+    },
+    {
+        "contractAddress": "stars1svw75x6ycft7uuhyx8yysgqcmg9nasnp4p9k3te727d0kmld82tqy9lsxp",
+        "name": "Sky Monks",
+        "symbol": "SKYMONKS"
+    },
+    {
+        "contractAddress": "stars1puhfrdag2a0hzlzh0sm4v42sp0adraqaj8sltngu4rf9mg9jfxwsstmh0w",
+        "name": "Sky Monks",
+        "symbol": "SKYMONKS"
+    },
+    {
+        "contractAddress": "stars1v7xmvwmpy3y2aanlkpc6pdn7mlf68rla0rr75jm605dw7lfyxyxq0r69z9",
+        "name": "Hop #1 - 1/1",
+        "symbol": "HOP"
+    },
+    {
+        "contractAddress": "stars1hktxylnelvuph4xyhpj59g4e2r09lv7kt7y8v9j4gtcxnmu00zvq2pup3g",
+        "name": "Journey",
+        "symbol": "Journey"
+    },
+    {
+        "contractAddress": "stars1wspqpkrpw6pfwakp6fmekkunrss20dktfawffrt3f2w6pl8ps7msgfd08p",
+        "name": "Just a Test.",
+        "symbol": "JaT"
+    },
+    {
+        "contractAddress": "stars13z3y0leu0zjkupduqrfgzcthyqcj0h30mt75at63jyjhfvm2mzzqpavj27",
+        "name": "Fractalosis",
+        "symbol": "FCSIS"
+    },
+    {
+        "contractAddress": "stars1a2qc346fq63gchl333z32purtchq8h7qzhm0z5wrc8dn6055kvzs7t6kuk",
+        "name": "Egg Owlies",
+        "symbol": "Egg"
+    },
+    {
+        "contractAddress": "stars19ta6zawxp5md945qy0splz7vmmlru5gkph3tqkc5tpq4xgl9mj9scv50t7",
+        "name": "Journey",
+        "symbol": "Journey"
+    },
+    {
+        "contractAddress": "stars1988m6509pqkje967nz04kdt5qw2mzmgr6t6qr6lzjrpm9h45wlhskqdt5d",
+        "name": "Journey",
+        "symbol": "Journey"
+    },
+    {
+        "contractAddress": "stars1lcjqz5207evdy0xrr29fpjweyp0a4pfgs3kaq9czg24zwcad20aqk30h5q",
+        "name": "test X",
+        "symbol": "TESTX"
+    },
+    {
+        "contractAddress": "stars1ap27ndaxfgyduse7dmunxaea65nq3wcrxhrk8ecpvx956tg7jnysg7jtql",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1p6pehgxrv8saxykajs2udrvatlzlzdxwpjmgu9rnzfd9zkwcz7kssxmmr6",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1q7z0f8kg50207dwml2ckqwa22hnt3wlupxa8azh52km5d4f708gqs3xn2t",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars10zh2kuf4wyww9c20fw7tqskewa88d38l77z708kpwry80mu6wd9q0ssht7",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars12uqc569atckms3u3x4fxsgk30eaw5m2hslxh4fftuht279aevukq3em9x0",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1lxfenlwjhfrh5rk4md6wg3045lxqqql0x0q6s3kynkd5fymmjf2qfpy3kt",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1996gzln6q4vxpvj3chyne8xkkg6fxglurhq4dtctuyfdhvdgpp9qhhq45p",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1yaan7cadlpcz34qn6wfn78awp6fs7afs6p7vqmhwxr5a9z4m0j9qrpzuzt",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1e56ms6705ssh5mf9wwjc42t6zgs7rk348s9mar848q0tt3u94eqqvpku7l",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1ql0jy7tgdgpfjlvlwzquhr7kkj266r2h033rrjn4wjeystvcr4jsrdqz5u",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1q9y8w7pzlltknr9ywz2f7s5df9qj7nmkq8swlfn268yefm8r4n3sme4908",
+        "name": "1. The Creation",
+        "symbol": "VAALI"
+    },
+    {
+        "contractAddress": "stars1j3awr64v8rpzg4jx4pjnajem353wray9xnk4dnkkq0dff9763dpszvp0rn",
+        "name": "Boring Robots",
+        "symbol": "Boring Robots"
+    },
+    {
+        "contractAddress": "stars1x20yu28m5vmghckhhmuv6e62sfna5d59ej364mdyncspv09wvu2qny9ugu",
+        "name": "Boring Robots",
+        "symbol": "Boring Robots"
+    },
+    {
+        "contractAddress": "stars17epece7m6u5derrvy6k2095xv6wfnnmhklkyxajx5r32zfmkg5tq8dedl2",
+        "name": "Boring Robots",
+        "symbol": "Boring Robots"
+    },
+    {
+        "contractAddress": "stars12aq97as9ykku7s5jqaycyztlexd5s8d9kvemptg5jwneuw5cuyjq63ddre",
+        "name": "Boring robot",
+        "symbol": "Boring robot"
+    },
+    {
+        "contractAddress": "stars1gzuts75pxu3nqep6sckngllhsl6g9dxwpj8h3kmzp86u22l6vaws6hr0my",
+        "name": "Boring robot",
+        "symbol": "Boring robot"
+    },
+    {
+        "contractAddress": "stars18pxzmdn3gz2fw0nf9j7au3zp0x8wz79ey7gdu0yy4kn6ken5vvzs9p39hs",
+        "name": "Test Terra X",
+        "symbol": "TESTX"
+    },
+    {
+        "contractAddress": "stars1s9ealreul8er9ypfskun3w7gvudueydchhay8f5thvs0a6llj7lqa6tv6m",
+        "name": "Test Terra X",
+        "symbol": "TESTX"
+    },
+    {
+        "contractAddress": "stars1hquh6hka7s5ptzmmw8n4vphd5ux7upxn470gcdmm8ru4pfgxrl8sd4w8zu",
+        "name": "Test Terra X",
+        "symbol": "TESTX"
+    },
+    {
+        "contractAddress": "stars1fzarp7j99r4lttgrywxesuz0dx9rmz34anz78nh36r5ghfwtg3vsvldmt4",
+        "name": "Test Terra X",
+        "symbol": "TESTX"
+    },
+    {
+        "contractAddress": "stars1l3xx0zrfzja0l7gmvfs349akmn0lwa46a9cuyx7rvyq0uyx9st2qrxnm98",
+        "name": "Wild Collection",
+        "symbol": "WildCollection"
+    },
+    {
+        "contractAddress": "stars1nxxhxs6t5p0rsujk2kxkcte82u070wcm73ev9hlfwevzlsaznauq4xwcsq",
+        "name": "MultiScape Singularity",
+        "symbol": "MULTIS2"
+    },
+    {
+        "contractAddress": "stars17jxzzq53z8j7aaz4dzv6dx6mt79dsvg6q49v78rrc3w2d2e8wwaq9vpp2z",
+        "name": "Fractalosis II",
+        "symbol": "FCSISII"
+    },
+    {
+        "contractAddress": "stars1axdc2rtls2f4f23ly0khj3jv2ee7dskc3rqt34gzvxwf0rhmcuusmcwmj4",
+        "name": "Boring robots",
+        "symbol": "Boring robots"
+    },
+    {
+        "contractAddress": "stars1tgf0a2hykcmmuw603su6rz8q6tyjh2vxlxkkm2u7w7gnmnmuj37smtp9wf",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars12mpwu62ahvt8vftqktav383crn5ujj2h8tn98064g9cl3mcf4mls5e3xuj",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1mg8yc33qpp8s5490njt7ftj9vmu24fzf693whlz8m8v2vun27qvqts25e9",
+        "name": "Boring Robots",
+        "symbol": "Boring Robots"
+    },
+    {
+        "contractAddress": "stars1kk8tsrtjzufwlu84hurkcdv5evup3t5rxfpestfrxy2kze6dhh2sa3cpjp",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1yu2wrjxn47plxjkuppgenqu903lmpf6qyhlvkufw7t7fjhspj2vqdpcezu",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars194wqz6ladhfdfzh5yndxtu2fdeg8j9e62jup0fvks5ka89srwylqpvnp7l",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars16w3nqhepzfwkwm4g9cj8n43f7y980jsddpqg2lw5vkhe798afc2svhh9xx",
+        "name": "Heart Disease",
+        "symbol": "HRTDSE"
+    },
+    {
+        "contractAddress": "stars1hqnj5u7xn77sm8egjnrrad398ymqzq6ddzaxmgs8g55fyzuqytmqgdsja0",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1g9q2k0hny7fqye57clsjx6r3zq8q0d60m6r4scn8xhdjafha3veqawypck",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1s574x7gq73a8my2uzkuapf95xe0dzz2wlqqnvzw7acmmwjmn6tss9hwex8",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1umqytdkpedflx8adztc04pmfp4tcjjfvapc9wryqp8th59hwj6qs09y0ee",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1hm7udlfzlq679wvj3vk4e7wzg35ssfsepxhuxd946ksc8fedzqwqveu88z",
+        "name": "IBC Monkes",
+        "symbol": "MONKE"
+    },
+    {
+        "contractAddress": "stars1elem7uu85x2gytl47leh2wa4ealtjhkntjcwda4whfp06wmzw26qre3f8m",
+        "name": "Angry Ostrichs Test",
+        "symbol": "OSTRICH"
+    },
+    {
+        "contractAddress": "stars1tdvp5erd9nwpvchl7cqc387lw4yuqdg97p5tz0c6dzxcmex9ky6qyqtrz5",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1fsx659dnvwg0s933v6tz044mgyhhvj8nwc6vncmqlfe40fahu52qft75y9",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1nve3zzppnuvdr7ym45vjtm6lqc9t6faeas0wm89kravyzxahfn9q76htpm",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1pg8r5gq6zlmkr3ftrk9qdr5uc2aa8u37yuhfvweltf8yld5jsv5qvpa3ka",
+        "name": "Coffee Drop",
+        "symbol": "COFFEE"
+    },
+    {
+        "contractAddress": "stars1dgn42ysn6yh2sp8445x2f87u4qaepqmucev7rer3wyp8lyt8xaaq7m8u7c",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1znvjtl87wcam9numsq4a3a69pp905llh6r86uzmmgwy5a9xf3m5q2gcvtw",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars1sgrrzv3mhw5zlas2czcgz92xm4e2tuf48jypl9yep7w0w0he3exq9d6nln",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars18v3kspru05g6v7zjp3xeppch9uzh54ette36numupk8rp4rfcy0ssjyfaj",
+        "name": "Skulhedz",
+        "symbol": "SKHDZ"
+    },
+    {
+        "contractAddress": "stars1appunmeauwyj7gk7ju3mulmup6qmwnsn57v4caxhaj2ddhyrtnjs87jtdu",
+        "name": "Bean Stars",
+        "symbol": "BEAN"
+    },
+    {
+        "contractAddress": "stars197lrr2kfqmtsm86qr9fjh8ak7vaquyrdug9f0m006040s5h4pjfqv049wz",
+        "name": "TribalStar",
+        "symbol": "TSTAR"
+    },
+    {
+        "contractAddress": "stars1xdpdt8e0qxnumx0ax5g7mkry6nvhqdkgj90yy98vefctn3z87j8slcnpez",
+        "name": "TribalStar",
+        "symbol": "TSTAR"
+    },
+    {
+        "contractAddress": "stars1pfakjg545tsy0k2cjerektrx24zdx0mlhd76teezs8mjx9mxz6xsp9w77d",
+        "name": "TribalStar",
+        "symbol": "TSTAR"
+    },
+    {
+        "contractAddress": "stars1k3kp3xyc7uv87l4pmhjycaw3d7hy35pehhy3pq9aw0w4gu7xug4qxz6r3e",
+        "name": "TribalStar",
+        "symbol": "TSTAR"
+    },
+    {
+        "contractAddress": "stars1kdssuytqz9lgwm8la52ttpjkydwu87ugmq5m7qx2pcxwgzh6jnasrekv9h",
+        "name": "Charlie",
+        "symbol": "CRL"
+    },
+    {
+        "contractAddress": "stars1kz4yapg9ltr694w0germz7980pltxuvkcfmu5fw0cmtxlj8g0yaq3zvcs6",
+        "name": "Sad Pugs",
+        "symbol": "sadpugs"
+    },
+    {
+        "contractAddress": "stars1qs0azuwwxx6pj2nc8t5js4n2s82vlsjts9tdc2ws8gcggwfwf3gsdsw67k",
+        "name": "Angry Ostrichs Test",
+        "symbol": "OSTRICH"
+    },
+    {
+        "contractAddress": "stars1mtaqsl78estm8d0kshm34s0guma6yxqyl7hsh2p6e42uawp55mysmgrp9p",
+        "name": "Angry Ostrichs Test",
+        "symbol": "OSTRICH"
+    },
+    {
+        "contractAddress": "stars1dnf6fn524z8hp2dff8z3ywkvlxmawpwz0xhjfup53ym77qjx5c4sjzp3ud",
+        "name": "TribalStar",
+        "symbol": "TSTARS"
+    },
+    {
+        "contractAddress": "stars123hwy4j4hpam8yf5wrkc8wn9g9fuuue5l8xvthucnsun2hdx3gfquc6xj6",
+        "name": "HuaNots",
+        "symbol": "HuaNots"
+    },
+    {
+        "contractAddress": "stars1f2ade5a26lxluxs8cu3jhegtwuqcjufzh2xed8npryv9yjhhw0fqjs8l7t",
+        "name": "Mental Block",
+        "symbol": "MBLK"
+    },
+    {
+        "contractAddress": "stars1gg8yxmhptz3yc56mumhya7lupg6hklj0aca6prddhdqrj4lynhuqw0e45s",
+        "name": "Mind Block",
+        "symbol": "MDBLK"
+    },
+    {
+        "contractAddress": "stars18r7zsq98pnx7prky6h4g3meedd2d3cq323qdxm28al6xmaj2lv3srxhlds",
+        "name": "Mind Block",
+        "symbol": "MDBLK"
+    },
+    {
+        "contractAddress": "stars1hd395zl4c5peyjlwj4k6h5d33dwm5v2e4arxqvtde7r7jjd40s8q0rx4ru",
+        "name": "Test Audio",
+        "symbol": "AUD"
+    },
+    {
+        "contractAddress": "stars1mp89868t6vudskdlull4k8t2d7lxttk7pez20e6cv8sc9mtgc44sulfn5a",
+        "name": "Coffee Drop",
+        "symbol": "COF"
+    },
+    {
+        "contractAddress": "stars1l3g227z6v8um0rxvm8kcl2ycqxpjyrw4jmx47s22l6lcytsnmlmqa8mcdp",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1f35uhw0lacfwl6uen6a07lwudxklev3tnuqm0wgen4h6pnahd5nsq8frkp",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1hrn88um8dgvxnq5c9v26zt3ft9tgr00ecaqum4mhxm7hvec25vwq6fgzah",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1p93cjq8m3uv8zjp6eqrxcgkf3sr8xv5exz5vqm3k89p9a242m6wq2e94ml",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1ufsx9svpm8ymj64qsgaz9kuj84vxpcz2kmv894paa2gx6z9vlf8qtsfxnc",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1wh57kws25k7qz235x3u98r7tkgq2saxfl7z8nk7mnhhqtszwptsq59en7p",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars14v4lthnkuedjqmmrfkpeemamxftczzqfhgqmmphrng9armyek4fsutjeh2",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1ta25gf8tq2qc9pvphrtc9nrj79wykvg3yzhfqk48p2ncwzsgxp5qrmwl7p",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1cvl9x5lj9umelt45wgla8m4n68y4t03vhj488p5nlcs7eytjw79sqzd0kr",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1r538zdxg8s8sacjgrfk7tp4j5nhypru82pq7tarfg3qru6th3uwqah99jw",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars126sg7jhk2gn6w6sj2s0w6yxvh0avvyulpsyvfyjs0q90uddpyufsuxz5h2",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars154h28j9qt40rhawmtrzfw2zk8wqj448euwqfzd3u5mnw7rlwgj9sxt4ycf",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1cldz7q5g6jetyn2xy9tphepdwq4xmr3zp5lkkn7th6z0wyj4m8qq736pa8",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars16skzkr3rqwrf3t9ernattfky5azuy7qzyglent5gq0drhcgqzg5sm8vu3j",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1x6l98atjv93fm745q2ks2e674acyrrhf8jnz4wmk5l9n55vtyegqa29cq9",
+        "name": "Nazar NFT",
+        "symbol": "NZR"
+    },
+    {
+        "contractAddress": "stars17e49h75wxalpmv96a3qrhc9p9pv9ra3p9hdrnh33mrejh8zw4qssed0vmz",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1f26n8rrwwhke6pjg9wszmst9vdrczfgtpprp44222qs0q3e5vkjsks4ssf",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1qr8ynwyd0az3tw5xedg0747z7x6kq2mz02ugduzemguehpc3yyfs9d4c82",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1n7ypep58w6l82wulkmzhfe2jcypqr436rp9pl9fxvejhlvwhfvsqxjw9w4",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1684607h07zj63zp3ncvnkns8cg3ptmjy0r96zu85avu95rkvdm2qdjwa0d",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1cg6cvv2eav6wm2x9r6uaaa0pg4hpz823zat82mu2jm9jx5948sysk7wulw",
+        "name": "Coffee Drop",
+        "symbol": "CoFFEE"
+    },
+    {
+        "contractAddress": "stars1y5rhlf68yspzz2389e0sfp0w69de8m0e6n374z2jzh0pd680nl2qrpj0m0",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1v6uzvjc2nxxdpz7h6gvjpcy4wvawpg3ka75z300jxaan267lvqrs0dwv5p",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1pe393l79uxh4txdqul9fez29jng2e7mtcmm39tlzp59agsv28k4q0f5vhk",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1hu54qq2usg2lepre5a9pkg2f9kx5qgv3rmx5c603zw5cj5ku8gsqj2zv8h",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1a6qqr7tcq55lt84lzscgec9jfryacg4zu4ylk55hfe5ryzsw4pmszyre9l",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars17fhkxtujepncx0zuaxs55et6k3hc5vcenlqqrd6e33092azalukq4gl9ah",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars1ye4udjmqpjpkt66sm7kzhdlxwfmyfjaenu02el6mz97k4f6qrzzs22y952",
+        "name": "Mind Block",
+        "symbol": "MINDBLK"
+    },
+    {
+        "contractAddress": "stars15xdx6ghzxmla7803n73a7glxuyqhfwenl9fk06y60thm2lwt3dksafvwkf",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1eq63cxpvm8denm97mz42lghls9md65sr664kf6mmptpe5tsw64gqy8qrye",
+        "name": "Sloth & Bear Cosmo Adventure",
+        "symbol": "S&BCA"
+    },
+    {
+        "contractAddress": "stars1379c3m0lw72c6lw9t5mcj6yj2ed4j478gk3xzckrwd4hfmj5yf9qm67gvj",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1wtmxjayu46l390eue9euxzsrxjalzgsqr7drt530avgt4hkw5twszm9awt",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1kafjf3a6h2yrfmncfdfqahppug5fa43dn8gat30k2x95cl7sxwnqpcv3wr",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars107c4cg2zg6vghhytpxrjaw9a3sqr9r72hq0vns0uzqsunjvra50sfklg6q",
+        "name": "Ghost",
+        "symbol": "Ghost"
+    },
+    {
+        "contractAddress": "stars1jteltwalu5znxzwnxxdq78azcnpjmc3frjll334fa4h4dv0qjnpq5nhd8n",
+        "name": "Skelly Troopies",
+        "symbol": "Troopy"
+    },
+    {
+        "contractAddress": "stars1jffxdw0yyyndzh52ce9tcjcllhjxrylk463tgnldfyw0avadc8lsc6xhgt",
+        "name": "Cosmic Eggs (Common)",
+        "symbol": "CEGGS"
+    },
+    {
+        "contractAddress": "stars1657n5xm834lcmh28x7gmhn92w44c3snca4tt2gu487mrzmsljadsvr2auw",
+        "name": "Cosmogun",
+        "symbol": "CG"
+    },
+    {
+        "contractAddress": "stars120zjnnpca5p42pc5f5fqaj923q8cu9ekr2duw25fd8f9p4gzrhcsy6g44z",
+        "name": "Testing Eyes",
+        "symbol": "EYES"
+    },
+    {
+        "contractAddress": "stars1axng5p8ta52weqa86p0z3ddjs5q7suzvuutgzd89k8nswkdmtk6qg0jngr",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1mcngz5tvpd4jmaa973wrqcydvffjufhdwfkekl03tj8cy0ypxdmqxjaufg",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1ym7v2xk8rtl60c6h83k65lw8emzyuyjwrlls7u6c2mc068f0jgssg54nf3",
+        "name": "Dans Wonderful NFTS",
+        "symbol": "DWNFT"
+    },
+    {
+        "contractAddress": "stars1563tt0tqvd2t4uszc7phl88lm5p2ykd2fqx28msxk47c9yrfncwq873jsm",
+        "name": "Biochar Test",
+        "symbol": "BTEST"
+    },
+    {
+        "contractAddress": "stars1nzzd9pk8mu3vzmdppxwvv5ts5y85332x9jqflyvxh33qesl50rpskfewl9",
+        "name": "Lazy Bears",
+        "symbol": "LBEAR"
+    },
+    {
+        "contractAddress": "stars1jqpjw9hhvqdpu9yj484x58sr5733w3ka52gat76vw8euvsd8rmeq3zn9qv",
+        "name": "Lazy Bears",
+        "symbol": "LBEAR"
+    },
+    {
+        "contractAddress": "stars1lnpulfdf6nmvrg96wz525p4h8q92jx6t35ngku9vsl77u3ur32hqqp33lm",
+        "name": "Sloth & Bears Cosmos Adventure",
+        "symbol": "S&BCA"
+    },
+    {
+        "contractAddress": "stars16xpnry2az9uzd833qcdqgnc8nvc9jgl77qreg5rtcexgsvkx50gq35kumc",
+        "name": "Sky Monks",
+        "symbol": "SKYMONKS"
+    },
+    {
+        "contractAddress": "stars1s9xj0gr9easven0a5nglwv0djz7heczjxq3j3zefdnwzjllg4chq6sawyj",
+        "name": "SadPugs",
+        "symbol": "SADPUGS"
+    },
+    {
+        "contractAddress": "stars1lumvxdxf7ehgagfj4x0ejs7qn4uqcdhxjpx52tss0rjugheqnslqjzyz95",
+        "name": "SadPugs",
+        "symbol": "SADPUGS"
+    },
+    {
+        "contractAddress": "stars16n86m2x9gaukxlmfhnzrxrl6238a9y5tsqnpjvs8vx0ry8wcpd7q37pys7",
+        "name": "SadPugs",
+        "symbol": "SADPUGS"
+    },
+    {
+        "contractAddress": "stars1usdm85qmk9aay43vd4q7q68le4jd32my6zgwuas272777hflap4sjmndcs",
+        "name": "SadPugs",
+        "symbol": "SADPUGS"
+    },
+    {
+        "contractAddress": "stars1tptvehlp590y2t8ag3xs22z6mz5sgkje9qlzrag6fduzjjmq6nusf6qqnw",
+        "name": "sFACES",
+        "symbol": "SFCS"
+    },
+    {
+        "contractAddress": "stars13d4t7maqg58g08hhzyftadvn7mf85mrs55yvzzcst2an5zyfwx5qp4c225",
+        "name": "AM 220525",
+        "symbol": "ANGRY1"
+    },
+    {
+        "contractAddress": "stars1mtwd83574x8pxuujg3x6503k4zd6ykat9n9rt46xlpa7x50t50gsmf4fkn",
+        "name": "Lost Cosmonauts",
+        "symbol": "LOST"
+    },
+    {
+        "contractAddress": "stars1092zhcc36jxj86nlppgs8hv4d32wnwg8lza255v2mdm5eu5spsls4h6dah",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars162qtms25mapln5wd5wfrt7pv870qnfqlsmpadq9a54r0a566na0sshrgtu",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars1yjz33yms9cwu6vut4aukr80h9lxfcpxd9u8u799l0tard8ysfvns3vpdwy",
+        "name": "Testnet Ziggy Super Gifs Collection",
+        "symbol": "TZIG"
+    },
+    {
+        "contractAddress": "stars1w6atw4qjymf4munqhkkx2fjmrv7ekklwpqy4psej9jlhjpaggu6sqd84l9",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars19dh00d5pru3ck24u3vnaxf8ruck2c0d9fcu4ysrjft0mp7e5eets32eyzh",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars1clk60xl7q2a6zymh2valkfxlgfkzkgcje5yfz2f7qtvj8w6rkzyqcvnrhs",
+        "name": "Testnet Moons Collection",
+        "symbol": "MOON"
+    },
+    {
+        "contractAddress": "stars1ls2q3wa70ae23luyz4wlg64q3ycpspg84cdkg50k38x9vuutpr4s3cuaze",
+        "name": "Testnet Ziggy Super Gifs Collection",
+        "symbol": "TZIG"
+    },
+    {
+        "contractAddress": "stars1q7juqp9sw4sjahshanryw2a4qhenlmevygvuam2zyqjfnptpqrssaauszs",
+        "name": "Testnet Audio Collection",
+        "symbol": "TAudio"
+    },
+    {
+        "contractAddress": "stars1gvchuswj7zfj5vn4zyhqqq2emcgxmhe30s73hlryqq4zr0n9u2fsw2sagg",
+        "name": "Cosmos Ball 777",
+        "symbol": "CBALL"
+    },
+    {
+        "contractAddress": "stars1zys0nu2c4h6d0dmfdnk9fxrtl3ceazuevl97kcq2yndmu3m8wh6qvhqcm0",
+        "name": "AI for Elements",
+        "symbol": "AI4ELE"
+    },
+    {
+        "contractAddress": "stars1w85z655t5n4cgq9xgphy7t27pn30xflk6743t4sg0vpel2ufxzpqaucdk6",
+        "name": "Lazy Bears",
+        "symbol": "LBEAR"
+    },
+    {
+        "contractAddress": "stars1rsz8zg3wxhvp0d89fpavdkvglf0m303gkg4zr3xxck8th3kxzjtsrg9kau",
+        "name": "Sky Monks",
+        "symbol": "SKYMONKS"
+    },
+    {
+        "contractAddress": "stars1mxlj9uqhl2jvqpl6j5h6jayxqvcpeyvmfthk287p327wejl4lvjq9zarvd",
+        "name": "Cosmic Eggs (Common)",
+        "symbol": "CEGGS"
+    },
+    {
+        "contractAddress": "stars14h40msn4zescdue8n7xsd4dndqe37rt0ayxek7tl42dr66hhsdps8mkc8e",
+        "name": "Cosmic Eggs (Common)",
+        "symbol": "CEGGS"
+    },
+    {
+        "contractAddress": "stars1h24ekt5hgwamud3kxqwaut09kr9m884dgauv452defr54hp3plyslmwdu2",
+        "name": "Sky Monks",
+        "symbol": "SKYMONKS"
+    },
+    {
+        "contractAddress": "stars14wdrt0u3k7efjwww7wa6jwc3qfy6mq8tl2ez42llggrjemawewrsws62h7",
+        "name": "Collection Name",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars1makade5n6r8yhshhfeg8f867q4jr0nqhca0dtu0s44fkal3t6hzq6g9s09",
+        "name": "Variantz",
+        "symbol": "VZ"
+    },
+    {
+        "contractAddress": "stars1zfs9wr3ml0pv6fp6ez3kl2yyna6n3mh8st0sc4y9nmyk533hrj8q70qkak",
+        "name": "Card test",
+        "symbol": "CRDtst"
+    },
+    {
+        "contractAddress": "stars1txmz9a07j5usuhtejqedz59mplaau2jjcz289p8zvwawg9x6az0szc00gf",
+        "name": "Collection Name",
+        "symbol": "SYM"
+    },
+    {
+        "contractAddress": "stars16p48r6fap7zj9dndpp0kfm8t5d3q23hf6t7u04r6xlnla0nsha0qqnf722",
+        "name": "Card test2",
+        "symbol": "CRDtst2"
+    },
+    {
+        "contractAddress": "stars13ag59u3ffv3jd5uny8r46x6ynfwku7k65quk3srmu3tmlylu5ylsgvzcrk",
+        "name": "TEST PROJECT",
+        "symbol": "TST123"
+    },
+    {
+        "contractAddress": "stars174yz8hsng5f0luyh0wtlpaa6kwee3d2598pkl2lhd0q4fhqcayzs3076fw",
+        "name": "Test Terra X",
+        "symbol": "TESTX"
+    },
+    {
+        "contractAddress": "stars1hfr5mlhperw0hfmx9vqrnx7p83wg6nflvk2ka5uu066t7ekvft3qu20qhy",
+        "name": "TEST PROJECT 2",
+        "symbol": "TST1234"
+    },
+    {
+        "contractAddress": "stars14yzuwdz6yl5f4vts0jzh7w5ue6uz40avzx23lxarxxrqrqtftt2qfgpn4y",
+        "name": "Los Pollos Primos",
+        "symbol": "LPP"
+    },
+    {
+        "contractAddress": "stars1pf2nhqhl9xl04c79z30sryuhvpfrc657c49h5nwrrp4hvc83f75qdp6lyc",
+        "name": "Skulhedz",
+        "symbol": "SKHDZ"
+    },
+    {
+        "contractAddress": "stars148e58wtz2mp53584v474j7gyqerqplst7ph68czesu99ju2hl8as33lsnn",
+        "name": "Los Pollos Primos",
+        "symbol": "LPP"
+    }
+]

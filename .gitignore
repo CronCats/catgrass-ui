@@ -1,29 +1,30 @@
+# Logs
+logs
 *.log
-*.pem
-*.tsbuildinfo
-.DS_Store
-.DS_Store
-.idea/
-.badidea/
-.next/
-.pnp.js
-.turbo/
-.vercel/
-/.pnp
-coverage/
-dist/
-node_modules/
-out/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-.env
-.env.development.local
-.env.local
-.env.production.local
-.env.test.local
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
 
-*.swo
-*.swp
-*.~undo-tree
-*~
-.\#*
-\#*\#
+/cypress/videos/
+/cypress/screenshots/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+bk

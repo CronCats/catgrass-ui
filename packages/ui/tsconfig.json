@@ -1,9 +1,0 @@
-{
-  "extends": "@croncat-ui/tsconfig/react-library.json",
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["build", "dist", "node_modules"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "module": "commonjs"
-  }
-}

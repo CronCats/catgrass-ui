@@ -1,0 +1,40 @@
+<template>
+  <main>
+    <PageHeader title="My Accounts" />
+    
+    <div class="py-8 md:py-12">
+      <div class="px-2 mx-auto max-w-xl md:px-0">
+        <h4 class="mb-2 text-xs tracking-widest text-gray-400 uppercase">
+          Supported Networks
+        </h4>
+    
+        <NetworkAccountSelector :networks="networks" />
+        
+        <h4 class="mt-12 mb-2 text-xs tracking-widest text-gray-400 uppercase">
+          Coming Soon
+        </h4>
+        
+        <NetworkAccountSelector :networks="networks" disabled />
+      </div>
+    </div>
+
+  </main>
+</template>
+
+<script lang="ts">
+import NetworkAccountSelector from '../components/NetworkAccountSelector.vue'
+import PageHeader from '../components/PageHeader.vue'
+
+export default {
+  components: {
+    NetworkAccountSelector,
+    PageHeader,
+  },
+
+  data() {
+    return {
+      networks: []
+    }
+  }
+}
+</script>

@@ -1,142 +1,229 @@
 <template>
-<header class="fixed w-full z-10 bg-gray-50 bg-opacity-20" style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
-  <div class="z-10 w-full">
-    <div class="w-full py-2 px-4">
-      <div class="w-full flex items-center">
-        <div class="flex">
-          <router-link to="/">
-            <img src="@/assets/images/alias_logo.png" alt="Alias" class="hidden md:block h-6 md:h-8 w-auto">
-            <img src="@/assets/images/alias_logo_color.png" alt="Alias" class="md:hidden h-6 md:h-8 w-auto">
-          </router-link>
-          <span class="hidden md:block rounded-3xl px-2 py-1 bg-pink-500 text-white text-xs my-auto mx-4">BETA</span>
-        </div>
-
-        <!-- <Search class=" ml-6 mr-auto" /> -->
-
-        <div @click.prevent="mobileMenuActive = true" class="ml-auto mr-4">
-          <button type="button" class="p-2 inline-flex items-center justify-center text-gray-900 focus:outline-none">
-            <Bars3Icon class="flex-shrink-0 h-6 w-6" />
-          </button>
-        </div>
-
-        <div v-if="isAuthed" class="flex items-center justify-end mr-0">
-          <div class="relative inline-block text-left">
-            <div>
-              <button type="button" @click.prevent="toggleAccountMenu" class="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-2 md:px-4 py-1 bg-gray-100 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-green-500" aria-haspopup="true" aria-expanded="true">
-                <AtSymbolIcon class="hidden md:block -ml-1 mr-2 my-auto h-5 w-5 stroke-current text-gray-800 dark:text-gray-200" />
-                <div class="w-20 md:w-full grow flex-column text-left">
-                  <p class="block truncate text-sm font-bold w-20 md:w-36">{{ account.label }}</p>
-                  <span class="block truncate text-xs w-20 md:w-36">{{ account.address }}</span>
-                </div>
-                <svg class="hidden md:block -mr-1 ml-2 my-auto h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-
-            <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-turquoise-1000 ring-1 ring-black ring-opacity-5" :class="{hidden: !accountMenuActive}">
-              <div @click="accountMenuActive = false" class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <!-- <router-link to="/user/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-turquoise-900 dark:hover:text-gray-50" role="menuitem">Account</router-link> -->
-                <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-turquoise-900 dark:hover:text-gray-50" role="menuitem">
-                  {{balance}} <span class="uppercase">{{config.denom}}</span>
-                </div>
-                <button @click.prevent="logout" type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 dark:text-gray-300 dark:hover:bg-turquoise-900 dark:hover:text-gray-50" role="menuitem">
-                  Sign out
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="!isAuthed" class="flex">
-          <button @click.prevent="loadClient" class="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
-            <BoltIcon class="h-5 w-5 md:mr-4 text-white" />
-            <span class="hidden md:block">Connect Wallet</span>
-          </button>
-        </div>
-      </div>
+<nav class="fixed top-0 right-0 left-0 z-40 justify-between w-full backdrop-blur md:py-2 md:px-6 navbar backdrop-filter">
+  <div class="flex-none md:hidden">
+    <div class="w-6 h-6">
+      <!-- <ArrowSmallLeftIcon :class="w-6 h-6" /> -->
     </div>
-
-    <div :class="{hidden: !mobileMenuActive}" class="absolute top-0 md:right-0 md:w-96 md:left-auto inset-x-0 p-2 transition transform origin-top-right">
-      <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-        <div class="pt-5 pb-6 px-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <img src="@/assets/images/alias_logo.png" alt="Alias" class="h-6 md:h-8 w-auto md:hidden">
-            </div>
-            <div class="-mr-2" @click.prevent="mobileMenuActive = false">
-              <button type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500">
-                <span class="sr-only">Close menu</span>
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div class="mt-6">
-            <nav class="grid gap-y-8">
-              <router-link to="/customizer" @click="mobileMenuActive = false" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                <SparklesIcon class="flex-shrink-0 h-6 w-6" />
-                <span class="ml-3 text-base font-medium text-gray-900">
-                  Customizer
-                </span>
-              </router-link>
-
-              <router-link to="/url-shortener" @click="mobileMenuActive = false" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                <LinkIcon class="flex-shrink-0 h-6 w-6" />
-                <span class="ml-3 text-base font-medium text-gray-900">
-                  URL Shortener
-                </span>
-              </router-link>
-
-              <a href="docs.alias.cat" target="_blank" @click="mobileMenuActive = false" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                <MapPinIcon class="flex-shrink-0 h-6 w-6" />
-                <span class="ml-3 text-base font-medium text-gray-900">
-                  Docs
-                </span>
-              </a>
-            </nav>
-          </div>
-        </div>
-      </div>
+  </div>
+  <div class="flex">
+    <RouterLink class="w-9 h-9 md:w-10 md:h-10" to="/">
+    <div class="flex">
+      <img alt="CronCat" height="42" src="/croncat_color_logo.png" width="42" />
+      <div class="my-auto ml-4 badge badge-md">ALPHA</div>
+    </div>
+    </RouterLink>
+  </div>
+  <div class="flex-none md:hidden">
+    <div @click="toggleActive">
+      <XMarkIcon v-if="menuActive" class="w-6 h-6" />
+      <Bars3BottomRightIcon v-if="!menuActive" class="w-6 h-6" />
     </div>
   </div>
 
-</header>
+  <div
+    :class="{
+      'fixed top-16 right-0 bottom-0 left-0 flex-none w-full h-fit bg-white rounded-t-xl shadow md:hidden': true,
+      'flex-none' : menuActive,
+      hidden: !menuActive
+    }" data-note="mobile menu">
+    <ul class="p-3 w-full list-none">
+      <li v-for="(item, index) in mobileNav" :key="index" class="flex p-2 mb-2 hover:bg-gray-200 active:bg-gray-200 rounded-md">
+        <a :href="item.href">
+          <NavSubItem>
+            <template #icon>
+              <component :is="item.icon"></component>
+            </template>
+            <template #title>
+              {{item.title}}
+            </template>
+            <template #subtitle>
+              {{item.subtitle}}
+            </template>
+          </NavSubItem>
+        </a>
+      </li>
+      <li>
+        <button
+          class="py-0 px-5 my-8 mx-auto w-full text-xs tracking-widest text-gray-50 bg-green-600 hover:bg-green-700 rounded-full border-0 btn">
+          Create Recipe
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex-none xs:hidden sm:hidden md:flex" data-note="desktop menu">
+    <ul class="p-0 menu menu-horizontal">
+      <li v-for="(item, index) in navData" :key="index" class="mr-4" :tabIndex="index">
+        <a class="text-lg font-bold" :href="item.href">
+          <component :is="item.icon" :class=[item.className]></component>
+          <span v-if="item.title" class="-mr-2">{{item.title}}</span>
+          <svg v-if="item.sub && item.sub.length > 0 && !item.hideSubDesktop" class="fill-current" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+          </svg>
+        </a>
+        <ul v-if="item.sub && item.sub.length > 0 && !item.hideSubDesktop" class="right-0 p-2 bg-white shadow">
+          <li v-for="sub in item.sub" :key="sub.title" class="hover:bg-gray-200 rounded-md">
+            <a class="flex" :href="sub.href">
+              <NavSubItem>
+                <template #icon>
+                  <component :is="sub.icon"></component>
+                </template>
+                <template #title>
+                  {{sub.title}}
+                </template>
+                <template #subtitle>
+                  {{sub.subtitle}}
+                </template>
+              </NavSubItem>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
 </template>
 
-<script>
+<script lang="ts">
 // import { mapActions, mapGetters } from 'vuex'
 // import { useKeplr } from '../utils/keplr'
 // import config from '../utils/config'
 // import connection from '../utils/connection'
 // import msgHandler from '../utils/msgHandler'
 // import { fromMicroAmount } from '../utils/helpers'
+// import Search from './Search.vue'
+
 import {
-  MapPinIcon,
-  Bars3Icon,
-  AtSymbolIcon,
-  LinkIcon,
-  BoltIcon,
-  SparklesIcon,
+  // ArrowSmallLeftIcon,
+  Bars3BottomRightIcon,
+  CogIcon,
+  CommandLineIcon,
+  MapIcon,
+  NewspaperIcon,
+  PresentationChartLineIcon,
+  QuestionMarkCircleIcon,
+  Square2StackIcon,
+  WalletIcon,
+  XMarkIcon,
 } from '@heroicons/vue/24/outline'
-import Search from './Search.vue'
+import { UserCircleIcon as UserCircleSolidIcon } from '@heroicons/vue/24/solid'
+import NavSubItem from './NavSubItem.vue'
+
+const navData = [
+  {
+    title: 'Explore',
+    href: '/explore',
+    hideSubDesktop: true,
+    sub: [
+      {
+        icon: NewspaperIcon,
+        title: 'Explore',
+        subtitle: 'Search & automate anything',
+        href: '/explore',
+        sort: 1,
+      },
+    ],
+  },
+  {
+    title: 'Agents',
+    href: '/agents',
+    sub: [
+      {
+        icon: CommandLineIcon,
+        title: 'Agent Setup',
+        subtitle: 'Install & become an agent',
+        href: '/agents/setup',
+        sort: 9,
+      },
+      {
+        icon: QuestionMarkCircleIcon,
+        title: 'FAQs',
+        subtitle: 'Helpful answers & resources',
+        href: '/faqs',
+        sort: 10,
+      },
+    ],
+  },
+  {
+    title: 'More',
+    href: '#',
+    sub: [
+      {
+        icon: PresentationChartLineIcon,
+        title: 'Stats',
+        subtitle: 'Operations & growth analytics',
+        href: '/stats',
+        sort: 8,
+      },
+      {
+        icon: MapIcon,
+        title: 'Docs',
+        subtitle: 'Developer references & SDKs',
+        href: 'https://docs.cron.cat',
+        sort: 7,
+      },
+    ],
+  },
+  {
+    icon: UserCircleSolidIcon,
+    className: 'inline md:-mr-3 md:ml-2 w-8 h-8',
+    href: '#',
+    sub: [
+      {
+        icon: WalletIcon,
+        title: 'My Accounts',
+        subtitle: 'Manage your connected networks & accounts',
+        href: '/profile/accounts',
+        sort: 2,
+      },
+      {
+        icon: Square2StackIcon,
+        title: 'My Recipes',
+        subtitle: 'Watch & manage automated tasks',
+        href: '/profile/recipes',
+        sort: 3,
+      },
+      {
+        icon: CogIcon,
+        title: 'Settings',
+        subtitle: 'Notifications, preferences & more',
+        href: '/profile/settings',
+        sort: 4,
+      },
+    ],
+  },
+]
+
+const mobileNav = navData
+  .map(({ sub }) => {
+    return sub
+  })
+  .reduce((pre, cur) => {
+    return pre.concat(cur)
+  }, [])
+  .sort((a, b) => a.sort - b.sort)
 
 export default {
   components: {
-    MapPinIcon,
-    Bars3Icon,
-    AtSymbolIcon,
-    LinkIcon,
-    BoltIcon,
-    Search,
-    SparklesIcon,
+    // ArrowSmallLeftIcon,
+    Bars3BottomRightIcon,
+    CogIcon,
+    CommandLineIcon,
+    MapIcon,
+    NewspaperIcon,
+    PresentationChartLineIcon,
+    QuestionMarkCircleIcon,
+    Square2StackIcon,
+    WalletIcon,
+    XMarkIcon,
+    NavSubItem,
   },
 
   data() {
     return {
-      mobileMenuActive: false,
-      accountMenuActive: false,
+      menuActive: false,
+      navData,
+      mobileNav,
       timer: null,
     }
   },
@@ -159,20 +246,20 @@ export default {
   //   },
   // },
 
-  // methods: {
+  methods: {
   //   ...mapActions(['update', 'logout']),
-  //   hideAccountMenu() {
-  //     this.accountMenuActive = false
-  //   },
-  //   toggleAccountMenu() {
-  //     if (this.timer) clearTimeout(this.timer)
-  //     if (this.accountMenuActive === false) {
-  //       setTimeout(() => {
-  //         this.accountMenuActive = false
-  //       }, 5000)
-  //     }
-  //     this.accountMenuActive = !this.accountMenuActive
-  //   },
+    hideAccountMenu() {
+      this.menuActive = false
+    },
+    toggleActive() {
+      if (this.timer) clearTimeout(this.timer)
+      if (this.menuActive === false) {
+        setTimeout(() => {
+          this.menuActive = false
+        }, 5000)
+      }
+      this.menuActive = !this.menuActive
+    },
 
   //   async checkBalance() {
   //     const addr = this.account.address
@@ -227,7 +314,7 @@ export default {
   //       this.checkRecursive()
   //     } else this.logout()
   //   },
-  // },
+  },
 
   // async mounted() {
   //   // Auto-login, if had setup already
@@ -235,8 +322,8 @@ export default {
   //   if (keplr === 'true') this.loadClient()
   // },
 
-  // watch: {
-  //   $route: ['hideAccountMenu'],
-  // },
+  watch: {
+    $route: ['hideAccountMenu'],
+  },
 }
 </script>

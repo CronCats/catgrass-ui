@@ -61,7 +61,7 @@
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
         </a>
-        <ul v-if="item.sub && item.sub.length > 0 && !item.hideSubDesktop" class="right-0 p-2 bg-white shadow">
+        <ul v-if="item.sub && item.sub.length > 0 && !item.hideSubDesktop" class="right-0 p-2 bg-white rounded shadow">
           <li v-for="sub in item.sub" :key="sub.title" class="hover:bg-gray-200 rounded-md">
             <a class="flex" :href="sub.href">
               <NavSubItem>

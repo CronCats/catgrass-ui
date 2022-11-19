@@ -6,17 +6,17 @@
           'flex z-10 px-2 mb-2 bg-white rounded-lg border-2 cursor-pointer': true,
           'opacity-30' : disabled
         }"
-        :style="{ borderColor: network.network.brandColor }"
+        :style="{ borderColor: network.brandColor }"
       >
         <div class="flex-col py-2 mr-2" @click="()=> { if (network.accounts.length > 0) { toggleNetwork(index) } }" :style="{ minWidth: '42px' }">
-          <LogoFromImage class="block" :rounded="true" size="42" :src="network.network.asset?.logo_URIs?.png || ''" />
+          <LogoFromImage class="block" :rounded="true" size="42" :src="network.asset?.logo_URIs?.png || ''" />
         </div>
         <div class="flex-col py-2 m-auto w-full" @click="()=> { if (network.accounts.length > 0) { toggleNetwork(index) } }">
           <h3 class="text-lg font-bold leading-4">
-            {{network.network.chain.pretty_name}}
+            {{network.chain.pretty_name}}
           </h3>
           <small class="text-xs text-gray-400 lowercase">
-            {{network.network.chain.chain_id}}
+            {{network.chain.chain_id}}
             {{network.accounts.length > 0 ? `, ${network.accounts.length} account${ network.accounts.length > 1 ? 's' : '' }` : ''}}
           </small>
         </div>
@@ -79,9 +79,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import type { Account, AccountNetwork } from '../utils/types'
+import { storeToRefs } from 'pinia'
+import { useMultiWallet } from '../stores/multiWallet'
+import type { ChainMetadata } from '../utils/types'
 import { getChainMetaData } from '../utils/helpers'
 import Balance from './Balance.vue'
 import LogoFromImage from './LogoFromImage.vue'
@@ -92,12 +94,31 @@ import {
 } from '@heroicons/vue/24/outline'
 
 export default defineComponent({
+  setup() {
+    const store = useMultiWallet()
+    let { networks, accounts } = storeToRefs(store)
+
+    // load the account relevant to the network
+    networks = ref(networks.value.map(n => {
+      n.accounts = accounts.value.filter(a => a.chain?.chain?.chain_id === n.chain?.chain_id)
+
+      return n
+    }))
+
+    return {
+      // you can return the whole store instance to use it in the template
+      store,
+      // networks,
+      accounts,
+    }
+  },
+
   props: {
     networks: {
-      type: Object as PropType<AccountNetwork[]>,
+      type: Object as PropType<ChainMetadata[]>,
       required: true,
     },
-    onConnectAccount: { type: Function, default: () => { } },
+    onConnectAccount: { type: Function, default: () => {} },
     onDisconnectAccount: { type: Function, default: () => {} },
     disabled: { type: Boolean, required: false },
   },
@@ -117,11 +138,18 @@ export default defineComponent({
     }
   },
 
+  computed: {
+    filteredNetworks(networks: ChainMetadata[]) {
+      return networks
+      // return networks.filter(n => this.disabled === true && n.su)
+    },
+  },
+
   methods: {
     toggleNetwork(index: number) {
       this.selectedNetworkActive = !this.selectedNetworkActive
       this.selectedNetworkIndex = index
-    }
+    },
   },
 })
 </script>

@@ -127,6 +127,7 @@ export interface ChainMetadata {
   brandColor: string
   asset?: Asset
   chain?: Chain
+  accounts?: Account[]
 }
 
 export interface Account {

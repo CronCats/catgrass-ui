@@ -1,3 +1,5 @@
+export const unsupportedChainIds = ['cosmoshub-4']
+
 // Lame hardcoding i know... in future, process image and find main theme
 export const chainColors: Record<string, any> = {
   'juno-1': '#F0827D',

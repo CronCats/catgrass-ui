@@ -1,6 +1,6 @@
-import { coin } from '@cosmjs/proto-signing';
-import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
-import { fromMicroDenom } from './helpers';
+import { coin } from "@cosmjs/proto-signing";
+import { encodeSecp256k1Pubkey } from "@cosmjs/amino";
+import { fromMicroDenom } from "./helpers";
 
 const CosmosCoinType = 118;
 let savedKeplr;
@@ -11,25 +11,22 @@ export async function getKeplr() {
     keplr = savedKeplr;
   } else if (window.keplr) {
     keplr = window.keplr;
-  } else if (document.readyState === 'complete') {
+  } else if (document.readyState === "complete") {
     keplr = window.keplr;
   } else {
     keplr = await new Promise((resolve) => {
       const documentStateChange = (event) => {
-        if (
-          event.target &&
-          (event.target).readyState === 'complete'
-        ) {
+        if (event.target && event.target.readyState === "complete") {
           resolve(window.keplr);
-          document.removeEventListener('readystatechange', documentStateChange);
+          document.removeEventListener("readystatechange", documentStateChange);
         }
       };
 
-      document.addEventListener('readystatechange', documentStateChange);
+      document.addEventListener("readystatechange", documentStateChange);
     });
   }
 
-  if (!keplr) throw new Error('Keplr not found');
+  if (!keplr) throw new Error("Keplr not found");
   if (!savedKeplr) savedKeplr = keplr;
 
   return keplr;
@@ -44,31 +41,32 @@ export function useKeplr(config) {
 
   const getAccount = async () => {
     const keplr = await getKeplr();
+    console.log(config);
 
     const { name: label, bech32Address: address } = await keplr.getKey(
-      config['chainId']
+      config["chainId"] || config["chain_id"]
     );
 
     return {
       label,
       address,
-      type: 'Keplr',
-      balance: coin(0, config['microDenom']),
-    }
+      type: "Keplr",
+      balance: coin(0, config["microDenom"]),
+    };
   };
 
   const suggestChain = async () => {
     const keplr = await getKeplr();
 
-    const coinMinimalDenom = config['microDenom'];
-    const coinDecimals = Number.parseInt(config['coinDecimals']);
-    const coinGeckoId = config['coinGeckoId'];
-    const chainId = config['chainId'];
-    const chainName = config['chainName'];
-    const rpcEndpoint = config['rpcEndpoint'];
-    const restEndpoint = config['restEndpoint'];
-    const addrPrefix = config['addressPrefix'];
-    const gasPrice = Number.parseFloat(config['gasPrice']);
+    const coinMinimalDenom = config["microDenom"];
+    const coinDecimals = Number.parseInt(config["coinDecimals"]);
+    const coinGeckoId = config["coinGeckoId"];
+    const chainId = config["chainId"];
+    const chainName = config["chainName"];
+    const rpcEndpoint = config["rpcEndpoint"];
+    const restEndpoint = config["restEndpoint"];
+    const addrPrefix = config["addressPrefix"];
+    const gasPrice = Number.parseFloat(config["gasPrice"]);
     const coin = fromMicroDenom(coinMinimalDenom);
     const coinDenom = coin.toUpperCase();
 

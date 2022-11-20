@@ -4,28 +4,36 @@ import NotFound from "../views/NotFound.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-    { path: "/", name: "home", component: () => import("../views/Home.vue"), },
-    { path: "/explore", name: "explore", component: () => import("../views/Explore.vue"), },
-    { path: "/create", name: "create", component: () => import("../views/Create.vue"), },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
+    { path: "/", name: "home", component: () => import("../views/Home.vue") },
+    {
+      path: "/explore",
+      name: "explore",
+      component: () => import("../views/Explore.vue"),
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: () => import("../views/Create.vue"),
+    },
     {
       path: "/profile",
       name: "profile",
       component: () => import("../views/Profile.vue"),
       children: [
         {
-          path: 'accounts',
+          path: "accounts",
           component: () => import("../views/ProfileAccounts.vue"),
         },
         {
-          path: 'recipes',
+          path: "recipes",
           component: () => import("../views/ProfileRecipes.vue"),
         },
         {
-          path: 'settings',
+          path: "settings",
           component: () => import("../views/ProfileSettings.vue"),
         },
-      ]
+      ],
     },
   ],
 });

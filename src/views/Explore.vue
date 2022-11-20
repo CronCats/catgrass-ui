@@ -1,32 +1,35 @@
 <template>
   <main>
     <PageHeader title="Explore" />
-    
+
     <div class="py-8 md:mx-auto md:max-w-6xl">
       <div class="grid grid-rows-3 gap-4 w-full md:grid-cols-3">
         <!-- <Loader /> -->
         <template v-if="recipeData.length > 0">
-          <a v-for="(recipe, index) in recipeData || []" :key="index" href="/create">
+          <a
+            v-for="(recipe, index) in recipeData || []"
+            :key="index"
+            href="/create"
+          >
             <RecipeCard :bgColor="recipe.bgColor" :data="recipe" />
           </a>
         </template>
       </div>
     </div>
-
   </main>
 </template>
 
 <script lang="ts">
-import PageHeader from '../components/PageHeader.vue'
-import Loader from '../components/Loader.vue'
-import RecipeCard from '../components/RecipeCard.vue'
+import PageHeader from "../components/PageHeader.vue";
+import Loader from "../components/Loader.vue";
+import RecipeCard from "../components/RecipeCard.vue";
 
 const recipeData = [
   {
-    title: 'Dollar Cost Average from $JUNO to $NETA',
-    subtitle: '',
-    owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-    creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    title: "Dollar Cost Average from $JUNO to $NETA",
+    subtitle: "",
+    owner: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
+    creator: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
     // recipeHash: '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
     // totalBalance: { amount: '10000000', denom: 'ujuno' },
     stats: {
@@ -36,13 +39,13 @@ const recipeData = [
     actions: [],
     rules: [],
     networks: [],
-    bgColor: '#F9226C',
+    bgColor: "#F9226C",
   },
   {
-    title: 'Automate Payroll, sending $JUNO to 2 or more accounts',
+    title: "Automate Payroll, sending $JUNO to 2 or more accounts",
     // subtitle: '',
-    owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-    creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    owner: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
+    creator: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
     // recipeHash: '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
     // totalBalance: { amount: '100000000', denom: 'ujuno' },
     stats: {
@@ -52,13 +55,13 @@ const recipeData = [
     actions: [],
     rules: [],
     networks: [],
-    bgColor: '#037099',
+    bgColor: "#037099",
   },
   {
-    title: 'Custom Message, flexible for developer automations',
+    title: "Custom Message, flexible for developer automations",
     // subtitle: '',
-    owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-    creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    owner: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
+    creator: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
     // recipeHash: '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
     // totalBalance: { amount: '1000000', denom: 'ujuno' },
     stats: {
@@ -68,7 +71,7 @@ const recipeData = [
     actions: [],
     rules: [],
     networks: [],
-    bgColor: '#00787B',
+    bgColor: "#00787B",
   },
 ];
 
@@ -82,7 +85,7 @@ export default {
   data() {
     return {
       recipeData,
-    }
+    };
   },
-}
+};
 </script>

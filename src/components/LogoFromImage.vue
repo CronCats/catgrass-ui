@@ -1,9 +1,11 @@
 <template>
-  <img alt=""
+  <img
+    alt=""
     :class="[`${rounded ? 'overflow-hidden rounded-full' : ''}`, className]"
     :height="size"
     :src="src"
-    :width="size" />
+    :width="size"
+  />
 </template>
 
 <script setup lang="ts">

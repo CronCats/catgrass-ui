@@ -1,16 +1,19 @@
-import { CosmWasmClient, SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
-import { GasPrice } from '@cosmjs/stargate';
-import { getKeplr } from './keplr';
+import {
+  CosmWasmClient,
+  SigningCosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { GasPrice } from "@cosmjs/stargate";
+import { getKeplr } from "./keplr";
 
-export const AccountType = ['Basic', 'Keplr', 'Contract']
+export const AccountType = ["Basic", "Keplr", "Contract"];
 
 class ConnectionManager {
   queryingClientConnection;
   signingClientConnections = {};
 
   getQueryClient = async (config, forceRefresh = false) => {
-    const rpcEndpoint = config['rpcEndpoint'];
+    const rpcEndpoint = config["rpcEndpoint"];
     if (
       this.queryingClientConnection === undefined ||
       this.queryingClientConnection.rpcEndpoint !== rpcEndpoint ||
@@ -26,7 +29,7 @@ class ConnectionManager {
   };
 
   getSigningClient = async (account, config) => {
-    const rpcEndpoint = config['rpcEndpoint'];
+    const rpcEndpoint = config["rpcEndpoint"];
     const { address } = account;
     if (
       this.signingClientConnections[address] === undefined ||
@@ -34,17 +37,17 @@ class ConnectionManager {
     ) {
       let signer;
       if (account.type === AccountType[0]) {
-        const prefix = config['addressPrefix'];
+        const prefix = config["addressPrefix"];
         signer = await DirectSecp256k1HdWallet.fromMnemonic(account.mnemonic, {
           prefix,
         });
       } else if (account.type === AccountType[1]) {
         const keplr = await getKeplr();
-        const chainId = config['chainId'];
+        const chainId = config["chainId"];
         await keplr.enable(chainId);
         signer = keplr.getOfflineSigner(chainId);
       } else {
-        throw new Error('Invalid account type');
+        throw new Error("Invalid account type");
       }
       this.signingClientConnections[address] = {
         client: await SigningCosmWasmClient.connectWithSigner(
@@ -52,7 +55,7 @@ class ConnectionManager {
           signer,
           {
             gasPrice: GasPrice.fromString(
-              `${config['gasPrice']}${config['microDenom']}`
+              `${config["gasPrice"]}${config["microDenom"]}`
             ),
           }
         ),

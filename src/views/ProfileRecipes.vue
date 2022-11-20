@@ -1,7 +1,7 @@
 <template>
   <main>
     <PageHeader title="My Recipes" />
-    
+
     <div className="py-8 md:mx-auto md:max-w-6xl">
       <div className="grid grid-rows-3 gap-4 w-full md:grid-cols-3">
         TODO: Recipe cards
@@ -12,23 +12,21 @@
         : ''} -->
       </div>
     </div>
-
   </main>
 </template>
 
 <script lang="ts">
-import PageHeader from '../components/PageHeader.vue'
-
+import PageHeader from "../components/PageHeader.vue";
 
 const recipeData = [
   {
-    title: 'Dollar Cost Average from $JUNO to $NETA',
+    title: "Dollar Cost Average from $JUNO to $NETA",
     // subtitle: '',
-    owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-    creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
+    owner: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
+    creator: "juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n",
     recipeHash:
-      '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
-    totalBalance: { amount: '10000000', denom: 'ujuno' },
+      "8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4",
+    totalBalance: { amount: "10000000", denom: "ujuno" },
     // stats: {
     //   copycats: 139,
     //   runs: 1309,
@@ -36,7 +34,7 @@ const recipeData = [
     actions: [],
     rules: [],
     networks: [],
-    bgColor: '#F9226C',
+    bgColor: "#F9226C",
   },
   // {
   //   title: 'Automate Payroll, sending $JUNO to 2 or more accounts',
@@ -70,7 +68,7 @@ const recipeData = [
   //   networks: [],
   //   bgColor: '#00787B',
   // },
-]
+];
 
 export default {
   components: {
@@ -80,7 +78,7 @@ export default {
   default() {
     return {
       recipeData,
-    }
+    };
   },
-}
+};
 </script>

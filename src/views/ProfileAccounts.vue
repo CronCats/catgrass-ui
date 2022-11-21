@@ -21,11 +21,9 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from "vue";
-import { storeToRefs } from "pinia";
 import { useMultiWallet } from "../stores/multiWallet";
 import NetworkAccountSelector from "../components/NetworkAccountSelector.vue";
-import PageHeader from "../components/PageHeader.vue";
+import PageHeader from "@/components/PageHeader.vue";
 
 export default {
   setup() {

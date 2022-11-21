@@ -1,11 +1,11 @@
 <template>
   <main>
-    <PageHeader title="Create" backgroundColor="#008F58" />
+    <PageHeader title="Create Your Recipe" backgroundColor="#008F58" />
 
     <div class="py-8 md:py-12">
       <div class="px-2 mx-auto max-w-xl md:px-0">
 
-          <form @submit="formMethods.handleSubmionSubmit">
+          <form @submit="handleSubmit">
             <section :class="{ hidden: currentIndex !== 0 }" id="0">
               <h3 class="mb-2 text-xl">I want to…</h3>
     
@@ -14,19 +14,19 @@
               <component :is="selectedAction.Component" />
             </section>
     
-            <section :class="{ hidden: currentIndex !== 1, }" id="1">
+            <!-- <section :class="{ hidden: currentIndex !== 1, }" id="1">
               <CadenceBoundaryComponent />
-            </section>
+            </section> -->
     
-            <section :class="{ hidden: currentIndex !== 2, }" id="2">
+            <!-- <section :class="{ hidden: currentIndex !== 2, }" id="2">
               <RecipeSummaryComponent />
-            </section>
+            </section> -->
     
-            <section :class="{ hidden: currentIndex !== 3, }" id="3">
+            <!-- <section :class="{ hidden: currentIndex !== 3, }" id="3">
               <NetworkSignerComponent onComplete={nextSection} />
-            </section>
+            </section> -->
     
-            <section :class="{ hidden: currentIndex !== 4, }" id="4">
+            <!-- <section :class="{ hidden: currentIndex !== 4, }" id="4">
               <div class="text-center">
                 <CakeIcon class="mx-auto mb-4 w-24 text-gray-700" />
     
@@ -37,7 +37,7 @@
                   {{'form.recipe_success_subtitle')}}
                 </p>
     
-                <!-- {/* TODO: Add transaction links to explorers */} -->
+                {/* TODO: Add transaction links to explorers */}
               </div>
     
               <div class="my-12">
@@ -45,9 +45,9 @@
                   <RecipeCardComponent :bgColor="successRecipeData.bgColor" :data="successRecipeData" />
                 </a>
               </div>
-            </section>
+            </section> -->
     
-            <footer class="flex justify-between">
+            <!-- <footer class="flex justify-between">
               <Button :class="{ hidden: currentIndex === 0 || currentIndex > 3 }"
                 @click="prevSection"
                 size="2xl"
@@ -72,7 +72,7 @@
               <div class="flex">
                 <SubmitButton :class="{ hidden: currentIndex !==2, 'ml-auto' : true, }" label="Confirm" variant="primary" />
               </div>
-            </footer>
+            </footer> -->
           </form>
 
       </div>
@@ -88,26 +88,30 @@ import {
   DocumentTextIcon,
 } from '@heroicons/vue/24/outline'
 import PageHeader from "../components/PageHeader.vue";
+import ActionSelector from "../components/ActionSelector.vue";
+import DollarCostAverage from "../components/forms/DollarCostAverage.vue";
+import PaymentMultiSend from "../components/forms/PaymentMultiSend.vue";
+import CustomMessage from "../components/forms/CustomMessage.vue";
 
 const actions = [
   {
     Icon: ArrowPathRoundedSquareIcon,
-    title: 'form.action_dca_title',
-    subtitle: 'form.action_dca_subtitle',
-    // Component: DCAComponent,
+    title: 'Dollar Cost Average',
+    subtitle: 'Periodically swap a token to another token',
+    Component: DollarCostAverage,
   },
   {
     Icon: BanknotesIcon,
-    title: 'form.action_payroll_title',
-    subtitle: 'form.action_payroll_subtitle',
-    // Component: PayrollComponent,
+    title: 'Payment Multi-Sender',
+    subtitle: 'Send funds to one or many accounts periodically',
+    Component: PaymentMultiSend,
   },
-  {
-    Icon: DocumentTextIcon,
-    title: 'form.action_custom_title',
-    subtitle: 'form.action_custom_subtitle',
-    // Component: CustomMessageComponent,
-  },
+  // {
+  //   Icon: DocumentTextIcon,
+  //   title: 'Custom Message',
+  //   subtitle: 'Freeform json, use caution!',
+  //   // Component: CustomMessage,
+  // },
 ]
 
 // TODO: Change to dynamic
@@ -132,6 +136,7 @@ const successRecipeData = {
 export default {
   components: {
     PageHeader,
+    ActionSelector,
     ArrowPathRoundedSquareIcon,
     BanknotesIcon,
     CakeIcon,
@@ -143,6 +148,7 @@ export default {
       currentIndex: 0,
       selectedAction: actions[0],
       successRecipeData: successRecipeData,
+      actions,
     }
   },
 
@@ -157,15 +163,18 @@ export default {
       console.log(data)
       this.nextSection()
     },
-    actionCallback(action) {
+    actionCallback(action: any) {
       console.log('actionCallback', action)
       this.selectedAction = action
     },
-    accountCallback(account) {
+    accountCallback(account: any) {
       console.log('accountCallback', account)
     },
-    tokenCallback(token) {
+    tokenCallback(token: any) {
       console.log('tokenCallback', token)
+    },
+    handleSubmit() {
+      console.log('handleSubmit')
     },
   },
 };

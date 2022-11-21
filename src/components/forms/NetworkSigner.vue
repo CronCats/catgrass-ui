@@ -1,11 +1,47 @@
-import { Chain } from '@chain-registry/types'
+<template>
+  <div class="my-8">
+    <h3 class="mb-2 text-xl">Sign Transactions</h3>
+  
+    <div class="my-12">
+      <div v-for="item in chainItems" :key="item.chain.chain_id">
+        <div class="flex justify-between p-2 w-full cursor-pointer">
+          <div class="flex my-auto w-full">
+            <div class="flex-col py-2 mr-2" :style="{ minWidth: '40px' }">
+              <LogoFromImage class="block mr-4" :rounded="true" size="40" :src="item.asset?.logo_URIs?.png || ''" />
+            </div>
+            <div class="flex-col py-2 m-auto w-full">
+              <h3 class="text-lg font-bold leading-4">{{item.chain?.pretty_name}}</h3>
+              <small class="text-xs text-gray-400 lowercase">
+                {{item.chain?.chain_id}}
+              </small>
+            </div>
+            <div class="flex-col py-2 m-auto w-auto">
+              <Button class="min-w-[110px] bg-green-600 hover:bg-green-800" @click="onComplete">
+                <span>Sign</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
+  
+    <InputLabel class="mb-2" name="Note:" />
+    <small class="text-gray-400">You will be signing transactions per-network. Depending on how many actions you have, there will more multiple times required to sign. Failure to sign all items could result in a bad state, please proceed carefully!</small>
+  
+    <br />
+  </div>
+</template>
+
+<script lang="ts">
+import type { Chain } from '@chain-registry/types'
 import { assets, chains } from 'chain-registry'
-import { useTranslation } from 'react-i18next'
+import { chainColors } from '@/utils/constants'
+import Label from '../core/display/Label.vue'
+import Balance from '../core/display/Balance.vue'
+import LogoFromImage from '../core/display/LogoFromImage.vue'
 
-import { Button, InputLabel, LogoFromImage } from '@croncat-ui/ui'
-import { chainColors } from '@croncat-ui/utils'
-
-// TODO: fake data, remove once wallet finished
 const getChainData = (chain: Chain) => {
   const assetList = assets.find(
     ({ chain_name }) => chain_name === chain.chain_name
@@ -18,74 +54,39 @@ const getChainData = (chain: Chain) => {
   }
 }
 
-export interface NetworkSignerProps {
-  onComplete: (value: any) => void
-}
-
-export const NetworkSignerComponent = ({
-  onComplete,
-  ...props
-}: NetworkSignerProps) => {
-  // const { register, watch, setValue } = useFormContext()
-  const { t } = useTranslation()
-
-  const unsupportedChainIds = ['cosmoshub-4']
-  const supportedChainIds = Object.keys(chainColors).filter(
-    (id) => !unsupportedChainIds.includes(id)
-  )
-  const supportedChains = chains
-    .filter((c) => supportedChainIds.includes(c.chain_id))
-    .map(getChainData)
-
-  const chainItems = [supportedChains[0]]
-
-  return (
-    <div aria-details="dca fields" className="my-8">
-      <h3 className="mb-2 text-xl">{t('form.signer_sign_txns')}</h3>
-
-      <div className="my-12">
-        {chainItems.map((item) => (
-          <div key={item.chain.chain_id}>
-            <ChainItem {...item} onComplete={onComplete} />
-          </div>
-        ))}
-      </div>
-
-      <hr className="my-8 mx-auto w-1/2 border-2 border-gray-100" />
-
-      <InputLabel className="mb-2" name={t('form.note')} />
-      <small className="text-gray-400">{t('form.signer_note_full')}</small>
-
-      <br />
-    </div>
-  )
-}
-
-const ChainItem = ({ asset, brandColor, chain, onComplete }: any) => (
-  <div className="flex justify-between p-2 w-full cursor-pointer">
-    <div className="flex my-auto w-full">
-      <div className="flex-col py-2 mr-2" style={{ minWidth: '40px' }}>
-        <LogoFromImage
-          className="block mr-4"
-          rounded={true}
-          size="40"
-          src={asset?.logo_URIs?.png || ''}
-        />
-      </div>
-      <div className="flex-col py-2 m-auto w-full">
-        <h3 className="text-lg font-bold leading-4">{chain?.pretty_name}</h3>
-        <small className="text-xs text-gray-400 lowercase">
-          {chain?.chain_id}
-        </small>
-      </div>
-      <div className="flex-col py-2 m-auto w-auto">
-        <Button
-          className="min-w-[110px] bg-green-600 hover:bg-green-800"
-          onClick={onComplete}
-        >
-          <span>Sign</span>
-        </Button>
-      </div>
-    </div>
-  </div>
+const unsupportedChainIds = ['cosmoshub-4']
+const supportedChainIds = Object.keys(chainColors).filter(
+  (id) => !unsupportedChainIds.includes(id)
 )
+const supportedChains = chains
+  .filter((c) => supportedChainIds.includes(c.chain_id))
+  .map(getChainData)
+
+export default {
+  props: ["onComplete"],
+
+  components: {
+    Label,
+    Balance,
+    LogoFromImage,
+  },
+
+  data() {
+    return {
+      chainItems: [supportedChains[0]],
+    }
+  },
+
+  computed: {
+    fn() {
+      // 
+    },
+  },
+
+  methods: {
+    fn() {
+      // 
+    },
+  },
+};
+</script>

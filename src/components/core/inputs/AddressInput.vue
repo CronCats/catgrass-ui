@@ -7,7 +7,7 @@
       ...containerClassName
     }"
   >
-    <WalletIcon class="mr-2" color="currentColor" width="24px" />
+    <WalletIcon class="mr-2 w-6 h-6" color="currentColor" />
     <input
       :class="{
         'w-full bg-transparent border-none outline-none ring-none body-text': true,

@@ -71,7 +71,7 @@ import type { PropType } from "vue";
 import type { Action, Addr, ChainMetadata, Coin, Rule } from "../utils/types";
 import { getChainMetaData } from "../utils/helpers";
 import Balance from "./Balance.vue";
-import LogoFromImage from "./LogoFromImage.vue";
+import LogoFromImage from "./core/display/LogoFromImage.vue";
 
 import { DocumentDuplicateIcon } from "@heroicons/vue/24/outline";
 

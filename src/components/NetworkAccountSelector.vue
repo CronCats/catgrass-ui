@@ -150,8 +150,8 @@ import { useMultiWallet } from "../stores/multiWallet";
 import type { ChainMetadata } from "../utils/types";
 import config from "../utils/config";
 import { useKeplr } from "../utils/keplr";
-import Balance from "./Balance.vue";
-import LogoFromImage from "./LogoFromImage.vue";
+import Balance from "./core/display/Balance.vue";
+import LogoFromImage from "./core/display/LogoFromImage.vue";
 import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,

@@ -10,9 +10,6 @@ export default defineConfig({
   plugins: [vue(), vueJsx()],
   build: {
     target: 'esnext',
-    // commonjsOptions: {
-    //   transformMixedEsModules: true
-    // }
   },
   define: {
     global: {},

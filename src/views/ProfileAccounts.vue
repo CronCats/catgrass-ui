@@ -21,18 +21,18 @@
 </template>
 
 <script lang="ts">
-// import { useMultiWallet } from "../stores/multiWallet";
+import { useMultiWallet } from "../stores/multiWallet";
 import NetworkAccountSelector from "../components/NetworkAccountSelector.vue";
 import PageHeader from "@/components/PageHeader.vue";
 
 export default {
-  // setup() {
-  //   const store = useMultiWallet();
+  setup() {
+    const store = useMultiWallet();
 
-  //   return {
-  //     networks: store.networks,
-  //   };
-  // },
+    return {
+      networks: store.networks,
+    };
+  },
 
   components: {
     NetworkAccountSelector,

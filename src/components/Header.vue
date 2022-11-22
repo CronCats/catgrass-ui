@@ -127,6 +127,18 @@
 // import msgHandler from '../utils/msgHandler'
 // import { fromMicroAmount } from '../utils/helpers'
 // import Search from './Search.vue'
+// import { mapActions } from "pinia";
+// import { useMultiWallet } from "@/stores/multiWallet";
+
+// export default defineComponent({
+//   methods: {
+//     ...mapActions(useMultiWallet, ['init']),
+//   },
+
+//   mounted() {
+//     this.init()
+//   }
+// })
 
 import {
   // ArrowSmallLeftIcon,

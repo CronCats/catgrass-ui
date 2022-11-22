@@ -16,7 +16,7 @@
           class="flex-col py-2 mr-2"
           @click="
             () => {
-              if (network.accounts.length > 0) {
+              if (network && network.accounts && network.accounts.length > 0) {
                 toggleNetwork(index);
               }
             }
@@ -34,7 +34,7 @@
           class="flex-col py-2 m-auto w-full"
           @click="
             () => {
-              if (network.accounts.length > 0) {
+              if (network && network.accounts && network.accounts.length > 0) {
                 toggleNetwork(index);
               }
             }
@@ -45,7 +45,7 @@
           </h3>
           <small class="text-xs text-gray-400 lowercase">
             {{ network.chain.chain_id }}{{
-              network.accounts.length > 0
+              network && network.accounts &&network.accounts.length > 0
                 ? `, ${network.accounts.length} account${
                     network.accounts.length > 1 ? "s" : ""
                   }`
@@ -56,7 +56,7 @@
         <div
           :class="{
             'flex my-auto w-6': true,
-            hidden: disabled || network.accounts.length < 1,
+            hidden: disabled || (!network || !network.accounts || network.accounts.length < 1),
           }"
         >
           <ChevronUpIcon
@@ -69,7 +69,7 @@
         <div
           :class="{
             'flex my-auto': true,
-            hidden: disabled || network.accounts.length > 0,
+            hidden: disabled || (!network || !network.accounts || network.accounts.length < 1),
           }"
         >
           <button
@@ -142,14 +142,10 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from "vue";
 import type { PropType } from "vue";
-// import { wallets, walletNames, KeplrClient } from '@cosmos-kit/keplr'
-import { storeToRefs } from "pinia";
+// import { mapState, mapActions } from "pinia";
 import { useMultiWallet } from "../stores/multiWallet";
 import type { ChainMetadata } from "../utils/types";
-import config from "../utils/config";
-import { useKeplr } from "../utils/keplr";
 import Balance from "./core/display/Balance.vue";
 import LogoFromImage from "./core/display/LogoFromImage.vue";
 import {
@@ -158,36 +154,16 @@ import {
   ChevronUpIcon,
 } from "@heroicons/vue/24/outline";
 
-export default defineComponent({
+export default {
   setup() {
     const store = useMultiWallet();
-    let { networks, accounts } = storeToRefs(store);
-    
-
-    // fake data
-    // const account = {
-    //   title: 'Main Account 1',
-    //   address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    //   balance: { amount: '13370000', denom: 'ujuno' },
-    // }
-
-    // load the account relevant to the network
-    networks = ref(
-      networks.value.map((n) => {
-        n.accounts = accounts.value.filter(
-          (a) => a.chain?.chain?.chain_id === n.chain?.chain_id
-        );
-        // n.accounts.push(account)
-
-        return n;
-      })
-    )
+    const { networks, accounts, walletManager } = store;
 
     return {
-      store,
       networks,
       accounts,
-    };
+      walletManager,
+    }
   },
 
   props: {
@@ -216,23 +192,86 @@ export default defineComponent({
   },
 
   computed: {
+    // ...mapState(useMultiWallet, ['networks', 'accounts', 'walletManager']),
     filteredNetworks() {
+      if (!this.networks || this.networks.length === 0) return;
       return this.networks.filter(n => n.supported != this.disabled)
     },
   },
 
   methods: {
+    // ...mapActions(useMultiWallet, ['addAccount', 'removeAccount']),
     toggleNetwork(index: number) {
       this.selectedNetworkActive = !this.selectedNetworkActive;
       this.selectedNetworkIndex = index;
     },
   },
 
+  // async beforeUnmount() {
+  //   if (!this.walletManager) return
+  //   await this.walletManager.onUnmounted()
+  // },
+
   async mounted() {
-    const c = config.getConfig('juno')
-    const k = useKeplr(c)
-    await k.connect()
-    console.log('wallets, walletNames', c, k, await k.getAccount());
+    if (!this.walletManager) return
+    // const c = config.getConfig('juno')
+    // const k = useKeplr(c)
+    // await k.connect()
+    // console.log('wallets, walletNames', c, k, await k.getAccount());
+    console.log('HEfjdkslfjskalf mounted');
+
+    // const { walletManager } = useMultiWallet();
+    const walletManager = this.walletManager;
+    // let { walletManager } = storeToRefs(store);
+    // console.log('HERE', walletManager);
+
+    const {
+      onMounted,
+      setCurrentWallet,
+      setCurrentChain,
+      enable,
+      connect,
+      disconnect,
+      isWalletDisconnected,
+    } = walletManager;
+    
+    await onMounted()
+    setCurrentWallet(walletManager.walletNames[0])
+    setCurrentChain('juno')
+    // setCurrentChain('junotestnet')
+    enable(['juno-1'])
+    // await enable(['uni-5'])
+    if (!isWalletDisconnected) {
+      await disconnect();
+    }
+    await enable(['juno-1'])
+    await connect()
+
+    const {
+      walletNames,
+      getWallet,
+      currentChainName,
+      walletStatus,
+      address,
+      username,
+      data,
+    } = walletManager;
+    // const st = await getStargateClient()
+    // console.log('st', st);
+    const w = await getWallet(walletNames[0])
+    console.log('ww,',w);
+    
+    
+    
+    // await wallet.client.client.enable('uni-5')
+    console.log('wallet currentChainName', walletStatus, currentChainName);
+    console.log('address, username', address, username);
+    console.log('address:: data', data);
+    if (address && username) this.addAccount({
+      address,
+      title: username,
+      balance: { amount: '0', denom: 'ujuno' }
+    })
   }
-});
+};
 </script>

@@ -30,7 +30,7 @@
         class="hover:bg-gray-200 active:bg-gray-200 rounded-lg"
         @click="updateSelect(item)"
       >
-        <Account :account="item.value" :hideBalance="true" />
+        <Account :account="item.value" :hideBalance="false" />
       </div>
       <div>
         <div class="p-2">

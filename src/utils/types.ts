@@ -135,6 +135,7 @@ export interface Account {
   address: Addr;
   balance: Coin;
   chain?: ChainMetadata;
+  walletName?: string;
 }
 
 export interface AccountNetwork {

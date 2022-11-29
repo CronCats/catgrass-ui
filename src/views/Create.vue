@@ -106,12 +106,12 @@ const actions = [
     subtitle: 'Send funds to one or many accounts periodically',
     Component: PaymentMultiSend,
   },
-  // {
-  //   Icon: DocumentTextIcon,
-  //   title: 'Custom Message',
-  //   subtitle: 'Freeform json, use caution!',
-  //   // Component: CustomMessage,
-  // },
+  {
+    Icon: DocumentTextIcon,
+    title: 'Custom Message',
+    subtitle: 'Freeform json, use caution!',
+    Component: CustomMessage,
+  },
 ]
 
 // TODO: Change to dynamic

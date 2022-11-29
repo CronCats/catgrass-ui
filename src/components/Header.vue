@@ -120,12 +120,6 @@
 </template>
 
 <script lang="ts">
-// import { mapActions, mapGetters } from 'vuex'
-// import { useKeplr } from '../utils/keplr'
-// import config from '../utils/config'
-// import connection from '../utils/connection'
-// import msgHandler from '../utils/msgHandler'
-// import { fromMicroAmount } from '../utils/helpers'
 // import Search from './Search.vue'
 
 import {
@@ -240,7 +234,6 @@ const mobileNav = navData
 
 export default {
   components: {
-    // ArrowSmallLeftIcon,
     Bars3BottomRightIcon,
     CogIcon,
     CommandLineIcon,
@@ -263,26 +256,7 @@ export default {
     };
   },
 
-  // computed: {
-  //   ...mapGetters([
-  //     'isAuthed',
-  //     'account',
-  //     'domain',
-  //     'config',
-  //     'signer',
-  //     'querier',
-  //   ]),
-
-  //   balance() {
-  //     const wallet = this.account.balance
-  //     if (!wallet) return '0'
-  //     const bal = wallet && wallet.amount ? wallet.amount : 0
-  //     return fromMicroAmount(bal, this.config.coinDecimals)
-  //   },
-  // },
-
   methods: {
-    //   ...mapActions(['update', 'logout']),
     hideAccountMenu() {
       this.menuActive = false;
     },
@@ -295,67 +269,7 @@ export default {
       }
       this.menuActive = !this.menuActive;
     },
-
-    //   async checkBalance() {
-    //     const addr = this.account.address
-    //     if (!addr) return;
-    //     try {
-    //       const res = await this.querier.getBalance(addr, this.config.microDenom)
-    //       const acct = { ...this.account, balance: res }
-    //       this.update({ key: 'account', value: acct })
-    //     } catch (e) {
-    //       //
-    //     }
-    //   },
-
-    //   checkRecursive() {
-    //     setInterval(() => {
-    //       if (this.querier) this.checkBalance()
-    //     }, 30000)
-    //   },
-
-    //   async loadConfig() {
-    //     if (!this.config || !this.config.contractAddress) return
-    //     const msg = msgHandler.getConfig()
-    //     try {
-    //       res = await this.querier.queryContractSmart(this.config.contractAddress, msg)
-    //       if (res) this.update({ key: 'contractConfig', value: res })
-    //     } catch (e) {
-    //     }
-    //   },
-
-    //   async loadClient() {
-    //     const _config = config.getConfig('juno_testnet')
-    //     // const _config = config.getConfig('stargaze_testnet')
-    //     this.update({ key: 'config', value: _config })
-    //     this.update({ key: 'domain', value: `.${_config.addressPrefix || 'juno'}` })
-    //     const { connect, getAccount } = useKeplr(_config)
-    //     await connect()
-    //     let acct = await getAccount()
-
-    //     // check if real account
-    //     if (acct && acct.address) {
-    //       this.update({ key: 'isAuthed', value: true })
-    //       this.update({ key: 'account', value: { ...acct } })
-    //       const signer = await connection.getSigningClient(acct, _config)
-    //       this.update({ key: 'signer', value: signer })
-    //       const querier = await connection.getQueryClient(_config)
-    //       this.update({ key: 'querier', value: querier })
-    //       localStorage.setItem('keplr_login', 'true')
-
-    //       // load contract config
-    //       await this.loadConfig()
-    //       await this.checkBalance()
-    //       this.checkRecursive()
-    //     } else this.logout()
-    //   },
   },
-
-  // async mounted() {
-  //   // Auto-login, if had setup already
-  //   const keplr = localStorage.getItem('keplr_login')
-  //   if (keplr === 'true') this.loadClient()
-  // },
 
   watch: {
     $route: ["hideAccountMenu"],

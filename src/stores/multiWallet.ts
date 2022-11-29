@@ -17,7 +17,6 @@ import type {
   SignerOptions,
   StorageOptions,
   ViewOptions,
-  // WalletManager,
 } from '@cosmos-kit/core';
 import { WalletManager } from '@cosmos-kit/core';
 
@@ -115,19 +114,31 @@ export const useMultiWallet = defineStore(
   "litterbox", // so you're too disgusted to inspect it
   {
     state: () => ({
+      _walletPickerOpen: false as boolean,
+      _walletPickerState: 0 as number,
+      _walletPickerStatus: 'Empty' as string,
+      _walletPickerChainId: 'Empty' as string,
       _walletManager: null as any,
       _networks: [] as ChainMetadata[],
       _accounts: [] as Account[],
     }),
     getters: {
-      walletManager: (state) => state._walletManager,
-      networks: (state) => state._networks,
-      accounts: (state) => state._accounts,
+      walletPickerOpen: (state: any) => state._walletPickerOpen,
+      walletPickerState: (state: any) => state._walletPickerState,
+      walletPickerStatus: (state: any) => state._walletPickerStatus,
+      walletPickerChainId: (state: any) => state._walletPickerChainId,
+      walletManager: (state: any) => state._walletManager,
+      currentWallet: (state: any) => state._walletManager.currentWallet,
+      networks: (state: any) => state._networks,
+      accounts: (state: any) => state._accounts,
     },
     actions: {
       async init() {
+        // RESETS
+        this.closeWalletPicker()
+
         // TODO: Filter chains based on deployed contracts available!
-        // TODO: Lock to testnet/mainnets
+        // TODO: Lock to only testnet OR mainnet
         // Filters to only known colors, because we don't yet support ALL chains out the gate
         // NOTE: In the future, this list will start by the factory registries
         const filteredChains: Chain[] = chains.filter((c) => Object.keys(chainColors).includes(c.chain_id));
@@ -158,7 +169,8 @@ export const useMultiWallet = defineStore(
         })
         this._walletManager = walletManager;
       },
-      async connectChainAccount(chainId: string) {
+      async connectChainAccount(walletName: string, chain_id: string | null) {
+        const chainId = chain_id || this.walletPickerChainId
         const {
           onMounted,
           setCurrentWallet,
@@ -171,16 +183,21 @@ export const useMultiWallet = defineStore(
         const connectChain = connectChains[0]
 
         await onMounted()
-        setCurrentWallet(this.walletManager.walletNames[0])
+        setCurrentWallet(walletName)
         setCurrentChain(connectChain.name)
         await enable(chainId)
         if (isWalletDisconnected) await connect()
 
         const { address, username, } = this.walletManager;
-        if (address && username) this.addAccount({ address, title: username, balance: getDefaultBalance() })
         const microDenom = getFeeDenomFromChain(connectChain);
+        if (address && username) this.addAccount({ address, title: username, balance: getDefaultBalance(microDenom) })
+        else return;
+
+        // separate call to lazy load the balance
         const balance = await this.checkNativeBalance(address, microDenom)
-        if (balance) this.addAccount({ address, title: username, balance })
+        const connectedAccount = { address, title: username, balance, walletName }
+        if (balance) this.addAccount(connectedAccount)
+        return connectedAccount
       },
       async checkNativeBalance(address: string, microDenom: string): Promise<Coin> {
         const addr = address
@@ -237,9 +254,30 @@ export const useMultiWallet = defineStore(
 
       getNetworkForAccount(account: Account) {
         const { prefix } = fromBech32(account.address);
-        const prefixes = this._networks.map((n) => n.chain?.bech32_prefix);
-        const n = chains.filter((c) => prefixes.includes(prefix));
-        return n && n[0] ? n[0] : {};
+        const n = this._networks.filter((n: Chain) => n.chain?.bech32_prefix === prefix);
+        return n && n[0] ? n[0].chain : {};
+      },
+
+      getChainMetadataForAccount(account: Account) {
+        const chain = this.getNetworkForAccount(account)
+        const assetList = assets.find(
+          ({ chain_name }: any) => chain_name === chain.chain_name
+        )
+        const asset = assetList?.assets[0]
+        return {
+          ...chain,
+          asset,
+          brandColor: chainColors[chain.chain_id],
+        }
+      },
+
+      // Wallet picker thangs
+      openWalletPicker(chainId: string) {
+        this._walletPickerChainId = chainId
+        this._walletPickerOpen = true
+      },
+      closeWalletPicker() {
+        this._walletPickerOpen = false
       },
     },
   }

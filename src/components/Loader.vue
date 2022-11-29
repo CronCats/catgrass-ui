@@ -1,11 +1,11 @@
 <template>
-  <div class="">
+  <div :class="[className]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       style="margin: auto; background: transparent; display: block"
-      width="200px"
-      height="200px"
+      :height="size"
+      :width="size"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
     >
@@ -147,3 +147,10 @@
     </svg>
   </div>
 </template>
+
+<script setup lang="ts">
+defineProps<{
+  size?: number | string;
+  className?: string;
+}>();
+</script>

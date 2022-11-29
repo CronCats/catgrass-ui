@@ -181,7 +181,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(useMultiWallet, ['addAccount', 'removeAccount', 'connectChainAccount']),
+    ...mapActions(useMultiWallet, ['removeAccount', 'openWalletPicker']),
     toggleNetwork(index: number) {
       this.selectedNetworkActive = !this.selectedNetworkActive;
       this.selectedNetworkIndex = index;
@@ -193,7 +193,7 @@ export default {
     },
     onConnectAccount(network: ChainMetadata) {
       if (!network || !network.chain?.chain_id) return;
-      this.connectChainAccount(network.chain.chain_id);
+      this.openWalletPicker(network.chain.chain_id);
     },
   },
 };

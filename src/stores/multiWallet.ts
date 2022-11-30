@@ -163,7 +163,7 @@ export const useMultiWallet = defineStore(
                     gasPrice: GasPrice.fromString("0.025juno"),
                   };
                 default:
-                  const fee = chain.fees.fee_tokens[0]
+                  const fee = chain?.fees.fee_tokens[0]
                   return {
                     gasPrice: GasPrice.fromString(`${fee.low_gas_price}${fee.denom}`),
                   };
@@ -182,7 +182,7 @@ export const useMultiWallet = defineStore(
                     gasPrice: GasPrice.fromString("0.025juno"),
                   };
                 default:
-                  const fee = chain.fees.fee_tokens[0]
+                  const fee = chain?.fees.fee_tokens[0]
                   return {
                     gasPrice: GasPrice.fromString(`${fee.low_gas_price}${fee.denom}`),
                   };
@@ -199,7 +199,6 @@ export const useMultiWallet = defineStore(
         // Init Defaults
         walletManager.setCurrentWallet(walletManager.wallets[0].walletName)
         walletManager.setCurrentChain(filteredChains[1].chain_name)
-        console.log('this.walletManager', walletManager);
         
         this._walletManager = walletManager;
       },

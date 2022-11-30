@@ -72,7 +72,7 @@
                     </div>
                   </div>
 
-                  <Label class="mt-8 mb-2" name="More Wallets Options:" />
+                  <Label class="mt-8 mb-2" name="More Wallet Options:" />
 
                   <div v-for="(wallet, index) in installWallets" :key="index">
                     <a :href="wallet.link" target="_blank"

@@ -6,12 +6,16 @@ import { Decimal } from "@cosmjs/math";
 import { GasPrice } from "@cosmjs/stargate";
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import type { Coin, Account, ChainMetadata } from "@/utils/types";
-import { chainColors, unsupportedChainIds } from "@/utils/constants";
+import { getChainData, getChainMetaData } from "@/utils/helpers";
+import { appConfig, filteredChainNames } from "@/utils/constants";
 import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
 import { wallets as keplrWallet } from "@cosmos-kit/keplr";
 import { wallets as leapwallets } from "@cosmos-kit/leap";
+import { wallets as vectiswallets } from "@cosmos-kit/vectis";
+// TODO: Soon!
+// import { wallets as trustwallets } from "@cosmos-kit/trust";
 
-// cache'd queriers
+// cache'd queriers, intentionally blank
 const queryProviderCache: any = {
   // Example:
   // juno: QueryClient
@@ -70,6 +74,11 @@ function uniq(a: any[], param: any) {
 
 export const getDefaultBalance = (microDenom = 'ujuno') => ({ amount: '0', denom: microDenom })
 
+const hasChainName = (c: Chain, network_type: string): boolean => {
+  const chainNameWithSuffix = (c: Chain) => `${c.chain_name}`.replace(network_type, '')
+  return (filteredChainNames.includes(chainNameWithSuffix(c)) && c.network_type === network_type)
+}
+
 export const getChainFromChainId = (
   chainId: string | undefined,
   chains: ChainMetadata[]
@@ -83,20 +92,6 @@ export const getFeeDenomFromChain = (
 ): string => {
   if (!chain) return '';
   return chain.chain?.fees?.fee_tokens[0].denom || chain.assetList.assets[0].base
-};
-
-export const getChainData = (chain: any) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain.chain_name
-  );
-  const asset = assetList?.assets[0];
-
-  return {
-    asset,
-    chain,
-    brandColor: chainColors[chain.chain_id],
-    supported: !unsupportedChainIds.includes(chain.chain_id),
-  };
 };
 
 export const getAccountsForNetwork = (
@@ -144,17 +139,16 @@ export const useMultiWallet = defineStore(
         // RESETS
         this.closeWalletPicker()
 
-        // TODO: Filter chains based on deployed contracts available!
-        // TODO: Lock to only testnet OR mainnet
-        // Filters to only known colors, because we don't yet support ALL chains out the gate
+        // Filters to only deployed contract networks, because we don't yet support ALL chains out the gate
         // NOTE: In the future, this list will start by the factory registries
-        const filteredChains: Chain[] = chains.filter((c) => Object.keys(chainColors).includes(c.chain_id));
+        const networkType = appConfig.networkType;
+        const filteredChains: Chain[] = chains.filter((c: Chain) => hasChainName(c, networkType));        
         this._networks = filteredChains.map(getChainData);
 
         const walletManager: any = WalletProvider({
           chains: filteredChains,
           assetLists: assets,
-          wallets: [...keplrWallet, ...cosmostationWallets, ...leapwallets],
+          wallets: [...keplrWallet, ...cosmostationWallets, ...leapwallets, ...vectiswallets],
           signerOptions: {
             // TODO: Define these better!
             signingStargate: (chain: Chain) => {
@@ -169,7 +163,10 @@ export const useMultiWallet = defineStore(
                     gasPrice: GasPrice.fromString("0.025juno"),
                   };
                 default:
-                  return void 0;
+                  const fee = chain.fees.fee_tokens[0]
+                  return {
+                    gasPrice: GasPrice.fromString(`${fee.low_gas_price}${fee.denom}`),
+                  };
               }
             },
             // TODO: Define these better!
@@ -185,7 +182,10 @@ export const useMultiWallet = defineStore(
                     gasPrice: GasPrice.fromString("0.025juno"),
                   };
                 default:
-                  return void 0;
+                  const fee = chain.fees.fee_tokens[0]
+                  return {
+                    gasPrice: GasPrice.fromString(`${fee.low_gas_price}${fee.denom}`),
+                  };
               }
             },
           },
@@ -321,15 +321,7 @@ export const useMultiWallet = defineStore(
 
       getChainMetadataForAccount(account: Account) {
         const chain = this.getNetworkForAccount(account)
-        const assetList = assets.find(
-          ({ chain_name }: any) => chain_name === chain.chain_name
-        )
-        const asset = assetList?.assets[0]
-        return {
-          ...chain,
-          asset,
-          brandColor: chainColors[chain.chain_id],
-        }
+        return getChainMetaData(chain)
       },
 
       // Wallet picker thangs

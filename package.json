@@ -23,6 +23,7 @@
     "@cosmos-kit/cosmostation": "^0.11.4",
     "@cosmos-kit/keplr": "^0.29.5",
     "@cosmos-kit/leap": "^0.10.6",
+    "@cosmos-kit/vectis": "^0.12.0",
     "@headlessui/vue": "^1.7.4",
     "@heroicons/vue": "^2.0.13",
     "chain-registry": "^1.5.0",

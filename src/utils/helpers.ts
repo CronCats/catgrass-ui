@@ -1,7 +1,7 @@
 // import type { Asset } from '@chain-registry/types'
 import { assets, chains } from "chain-registry";
 
-import { chainColors } from "./constants";
+import { chainColors, unsupportedChainNames } from "./constants";
 import ibcAssets from "./ibc_assets.json";
 import type {
   AssetList,
@@ -19,11 +19,24 @@ export const getChainMetaData = (chain: ChainMetadata) => {
   return {
     ...chain,
     asset,
-    brandColor: chainColors[chain?.chain?.chain_id],
+    brandColor: chainColors[chain?.chain?.chain_name],
+    supported: !unsupportedChainNames.includes(chain?.chain?.chain_name),
   };
 };
 
-export const unsupportedChainIds = ["cosmoshub-4"];
+export const getChainData = (chain: any) => {
+  const assetList = assets.find(
+    ({ chain_name }) => chain_name === chain.chain_name
+  );
+  const asset = assetList?.assets[0];
+
+  return {
+    asset,
+    chain,
+    brandColor: chainColors[chain.chain_name],
+    supported: !unsupportedChainNames.includes(chain.chain_name),
+  };
+};
 
 export function fromMicroCoin(coin: Coin, coinDecimals: string) {
   return {

@@ -4,11 +4,18 @@ import { assets, chains } from "chain-registry";
 import type { Chain, AssetList } from "@chain-registry/types";
 import { Decimal } from "@cosmjs/math";
 import { GasPrice } from "@cosmjs/stargate";
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import type { Coin, Account, ChainMetadata } from "@/utils/types";
 import { chainColors, unsupportedChainIds } from "@/utils/constants";
 import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
 import { wallets as keplrWallet } from "@cosmos-kit/keplr";
 import { wallets as leapwallets } from "@cosmos-kit/leap";
+
+// cache'd queriers
+const queryProviderCache: any = {
+  // Example:
+  // juno: QueryClient
+}
 
 import type {
   EndpointOptions,
@@ -149,17 +156,38 @@ export const useMultiWallet = defineStore(
           assetLists: assets,
           wallets: [...keplrWallet, ...cosmostationWallets, ...leapwallets],
           signerOptions: {
+            // TODO: Define these better!
             signingStargate: (chain: Chain) => {
               switch (chain.chain_name) {
                 case "osmosis":
                   return {
                     gasPrice: new GasPrice(Decimal.zero(1), "uosmo"),
                   };
+                case "juno":
+                  return {
+                    // gasPrice: new GasPrice("0.025", "ujuno"),
+                    gasPrice: GasPrice.fromString("0.025juno"),
+                  };
                 default:
                   return void 0;
               }
             },
-            signingCosmwasm: (chain: Chain) => undefined,
+            // TODO: Define these better!
+            signingCosmwasm: (chain: Chain) => {
+              switch (chain.chain_name) {
+                case "osmosis":
+                  return {
+                    gasPrice: new GasPrice(Decimal.zero(1), "uosmo"),
+                  };
+                case "juno":
+                  return {
+                    // gasPrice: new GasPrice("0.025", "ujuno"),
+                    gasPrice: GasPrice.fromString("0.025juno"),
+                  };
+                default:
+                  return void 0;
+              }
+            },
           },
           endpointOptions: {
             somechainname: {
@@ -167,9 +195,15 @@ export const useMultiWallet = defineStore(
             },
           },
         })
+
+        // Init Defaults
+        walletManager.setCurrentWallet(walletManager.wallets[0].walletName)
+        walletManager.setCurrentChain(filteredChains[1].chain_name)
+        console.log('this.walletManager', walletManager);
+        
         this._walletManager = walletManager;
       },
-      async connectChainAccount(walletName: string, chain_id: string | null) {
+      async connectChainAccount(walletName: string, chain_id?: string) {
         const chainId = chain_id || this.walletPickerChainId
         const {
           onMounted,
@@ -211,34 +245,61 @@ export const useMultiWallet = defineStore(
           return { amount: '0', denom: microDenom }
         }
       },
-      // TODO:
-      // async queryContract() {
-      //   if (!this.config || !this.config.contractAddress) return
-      //   const msg = msgHandler.getConfig()
-      //   try {
-      //     res = await this.querier.queryContractSmart(this.config.contractAddress, msg)
-      //     if (res) this.update({ key: 'contractConfig', value: res })
-      //   } catch (e) {
-      //   }
-      // },
-      // TODO:
-      // async execContract() {
-      //   await this.signer.execute(
-      //     this.account.address,
-      //     this.config.contractAddress,
-      //     msg,
-      //     fee,
-      //     memo,
-      //     funds,
-      //   )
-      //   if (!this.config || !this.config.contractAddress) return
-      //   const msg = msgHandler.getConfig()
-      //   try {
-      //     res = await this.querier.queryContractSmart(this.config.contractAddress, msg)
-      //     if (res) this.update({ key: 'contractConfig', value: res })
-      //   } catch (e) {
-      //   }
-      // },
+      // NON-Signer, Cached querier -- needs to be decoupled from a signed in wallet for all kinds of non-wallet info scenarios
+      async queryContract(contractAddr: string, queryMsg: any, type?: string) {
+        if (!contractAddr || !queryMsg) return Promise.reject('Missing required params')
+        // Derive the current chain name from contract bech32
+        const { prefix } = fromBech32(contractAddr);
+        let querier = queryProviderCache[prefix]
+        if (!querier) {
+          // Cache this for future use
+          const rpcEndpoint = await this.walletManager.getRpcEndpoint()
+          console.log('rpcEndpoint', rpcEndpoint, querier);
+          querier = await CosmWasmClient.connect(rpcEndpoint)
+        }
+        
+        if (!querier || !querier.queryContractSmart) return Promise.reject('Requires RPC connection');
+        queryProviderCache[prefix] = querier
+
+        try {
+          const res = await querier.queryContractSmart(contractAddr, queryMsg)
+          return res
+        } catch (e) {
+          return Promise.reject(e)
+        }
+      },
+
+      async execContract(account: Account, contractAddr: string, msg: any, fee?: any, memo?: any, funds?: any) {
+        if (!account || !contractAddr || !msg) return Promise.reject('Missing required params')
+
+        // Quick check if wallet is ready or needs nudge:
+        const { address, username } = this.walletManager;
+        if (!address || !username) {
+          // Derive the wallet & chain ID from account
+          const chain = this.getNetworkForAccount(account)
+          const walletName = account.walletName || ''
+          await this.connectChainAccount(walletName, chain.chain_id)
+        }
+
+        // Now we have the account loaded, get signer
+        const signer = await this.walletManager.getSigningCosmWasmClient()
+
+        try {
+          // NOTE: uses 'executeMultiple' under the hood
+          const res = await signer.execute(
+            account.address,
+            contractAddr,
+            msg,
+            fee,
+            memo = "",
+            funds,
+          )
+          return res
+        } catch (e) {
+          return Promise.reject(e)
+        }
+      },
+
       addAccount(account: Account) {
         if(!account || !account.address.length) return;
         let as: Account[] = this.accounts;

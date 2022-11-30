@@ -7,8 +7,9 @@
     >
       <div
         :class="{
-          'flex z-10 px-2 mb-2 bg-white rounded-lg border-2 cursor-pointer': true,
+          'flex z-10 px-2 mb-2 bg-white rounded-lg border-2': true,
           'opacity-30': disabled,
+          'cursor-pointer': !disabled,
         }"
         :style="{ borderColor: network.brandColor }"
       >
@@ -58,12 +59,12 @@
         <div
           :class="{
             'flex my-auto': true,
-            hidden: !(disabled || network.accounts.length === 0),
+            hidden: !(disabled == false && network.accounts.length === 0),
           }"
         >
           <button
             class="py-0 px-5 w-full text-xs tracking-widest text-gray-50 bg-gray-700 hover:bg-gray-900 rounded-full border-0 btn"
-            @click="onConnectAccount(network)"
+            @click="connectAccount(network)"
           >
             Connect
           </button>
@@ -107,7 +108,7 @@
             <div class="w-1/12">
               <div
                 className="px-2 text-right cursor-pointer opacity-40 hover:opacity-80"
-                @click="onDisconnectAccount(account)"
+                @click="disconnectAccount(account)"
                 title="Logout"
                 >
                 <ArrowRightOnRectangleIcon className="inline mr-0 w-5 h-5 text-gray-400 hover:text-gray-700" />
@@ -119,7 +120,7 @@
           <div class="p-2">
             <button
               class="py-0 px-5 w-full text-xs tracking-widest text-black bg-primary hover:bg-secondary rounded-full border-0 btn"
-              @click="onConnectAccount(network)"
+              @click="connectAccount(network)"
             >
               Connect Account
             </button>
@@ -131,7 +132,6 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from "vue";
 import { mapState, mapActions } from "pinia";
 import { useMultiWallet, appendAccountsToNetworks } from "../stores/multiWallet";
 import type { Account, ChainMetadata } from "../utils/types";
@@ -145,12 +145,6 @@ import {
 
 export default {
   props: {
-    networks: {
-      type: Object as PropType<ChainMetadata[]>,
-      required: true,
-    },
-    onConnectAccount: { type: Function, default: () => {} },
-    onDisconnectAccount: { type: Function, default: () => {} },
     disabled: { type: Boolean, required: false },
   },
 
@@ -170,7 +164,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useMultiWallet, ['accounts', 'walletManager']),
+    ...mapState(useMultiWallet, ['networks', 'accounts', 'walletManager']),
     filteredNetworks() {
       if (!this.networks || this.networks.length === 0) return;
       return appendAccountsToNetworks(
@@ -186,12 +180,12 @@ export default {
       this.selectedNetworkActive = !this.selectedNetworkActive;
       this.selectedNetworkIndex = index;
     },
-    onDisconnectAccount(account: Account) {
+    disconnectAccount(account: Account) {
       if (!account || !account.address) return;
       this.removeAccount(account.address)
       this.toggleNetwork(this.selectedNetworkIndex)
     },
-    onConnectAccount(network: ChainMetadata) {
+    connectAccount(network: ChainMetadata) {
       if (!network || !network.chain?.chain_id) return;
       this.openWalletPicker(network.chain.chain_id);
     },

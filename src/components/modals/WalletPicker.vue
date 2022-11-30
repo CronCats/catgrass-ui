@@ -245,11 +245,13 @@ export default {
       'getChainMetadataForAccount',
     ]),
     close() {
-      this.view = this.viewStatus.pick;
       this.status = null;
       this.activeWallet = null;
       this.activeAccount = {};
       this.closeWalletPicker()
+      setTimeout(() => {
+        this.view = this.viewStatus.pick;
+      }, 1200)
     },
     backWalletPicker() {
       this.view = this.viewStatus.pick;

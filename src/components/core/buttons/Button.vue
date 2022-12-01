@@ -7,7 +7,7 @@
       'hover:bg-dark active:bg-toast': variant == 'primary' && !isDisabled,
       'bg-dark': variant === 'primary' && active,
       // Secondary
-      'border-2 border-gray-700 link-text': variant === 'secondary',
+      'border-2 border-gray-700': variant === 'secondary',
       'hover:bg-btn-secondary-hover active:bg-btn-secondary-pressed':
         variant === 'secondary' && !isDisabled,
       'bg-btn-secondary-hover': variant === 'secondary' && active,

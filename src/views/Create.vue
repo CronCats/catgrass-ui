@@ -24,19 +24,19 @@
               <component :is="selectedAction.Component" />
             </section>
     
-            <!-- <section :class="{ hidden: currentIndex !== 1, }" id="1">
-              <CadenceBoundaryComponent />
+            <section :class="{ hidden: currentIndex !== 1 }" id="1">
+              <CadenceBoundary />
+            </section>
+    
+            <section :class="{ hidden: currentIndex !== 2 }" id="2">
+              <RecipeSummary />
+            </section>
+    
+            <!-- <section :class="{ hidden: currentIndex !== 3 }" id="3">
+              <NetworkSigner onComplete={nextSection} />
             </section> -->
     
-            <!-- <section :class="{ hidden: currentIndex !== 2, }" id="2">
-              <RecipeSummaryComponent />
-            </section> -->
-    
-            <!-- <section :class="{ hidden: currentIndex !== 3, }" id="3">
-              <NetworkSignerComponent onComplete={nextSection} />
-            </section> -->
-    
-            <!-- <section :class="{ hidden: currentIndex !== 4, }" id="4">
+            <!-- <section :class="{ hidden: currentIndex !== 4 }" id="4">
               <div class="text-center">
                 <CakeIcon class="mx-auto mb-4 w-24 text-gray-700" />
     
@@ -52,24 +52,16 @@
     
               <div class="my-12">
                 <a href="/profile/recipes">
-                  <RecipeCardComponent :bgColor="successRecipeData.bgColor" :data="successRecipeData" />
+                  <RecipeCard :bgColor="successRecipeData.bgColor" :data="successRecipeData" />
                 </a>
               </div>
             </section> -->
     
             <footer class="flex justify-between">
-              <Button :class="{ hidden: currentIndex === 0 || currentIndex > 3 }"
-                @click="prevSection"
-                size="2xl"
-                variant="secondary"
-                >
+              <Button :class="{ hidden: currentIndex === 0 || currentIndex > 3 }" @click="prevSection" size="2xl" variant="secondary" >
                 <span>Back</span>
               </Button>
-              <Button :class="{ hidden: currentIndex> 1, 'ml-auto': true, }"
-                @click="nextSection"
-                size="2xl"
-                variant="primary"
-                >
+              <Button :class="{ hidden: currentIndex> 1, 'ml-auto': true, }" @click="nextSection" size="2xl" variant="primary" >
                 <span>Next</span>
               </Button>
     
@@ -80,7 +72,7 @@
               </RouterLink>
     
               <div class="flex">
-                <SubmitButton :class="{ hidden: currentIndex !==2, 'ml-auto' : true, }" label="Confirm" variant="primary" />
+                <SubmitButton :class="{ hidden: currentIndex !== 2, 'ml-auto' : true, }" label="Confirm" variant="primary" />
               </div>
             </footer>
           <!-- </form> -->
@@ -104,7 +96,10 @@ import ActionSelector from "../components/ActionSelector.vue";
 import DollarCostAverage from "../components/forms/DollarCostAverage.vue";
 import PaymentMultiSend from "../components/forms/PaymentMultiSend.vue";
 import CustomMessage from "../components/forms/CustomMessage.vue";
+import CadenceBoundary from "../components/forms/CadenceBoundary.vue";
+import RecipeSummary from "../components/forms/RecipeSummary.vue";
 import Button from '@/components/core/buttons/Button.vue'
+import SubmitButton from '@/components/core/buttons/SubmitButton.vue'
 
 const actions = [
   {
@@ -149,12 +144,15 @@ const successRecipeData = {
 export default {
   components: {
     Button,
+    SubmitButton,
     PageHeader,
     ActionSelector,
     ArrowPathRoundedSquareIcon,
     BanknotesIcon,
     CakeIcon,
     DocumentTextIcon,
+    CadenceBoundary,
+    RecipeSummary,
   },
 
   data() {

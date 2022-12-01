@@ -145,17 +145,17 @@ const formatBoundary = (boundary: any, custom?: any) => {
 const actions = [
   {
     Icon: ArrowPathRoundedSquareIcon,
-    title: t('form.action_dca_title'),
-    subtitle: t('form.action_dca_subtitle'),
+    title: 'form.action_dca_title',
+    subtitle: 'form.action_dca_subtitle',
   },
 ]
 
 const rules = []
 
 const schedule = {
-  interval: formatInterval(interval, intervalCustom, ruleBalance),
-  start: formatBoundary(boundaryStart, boundaryStartNumber),
-  end: formatBoundary(boundaryEnd, boundaryEndNumber),
+  interval: 'formatInterval(interval, intervalCustom, ruleBalance)',
+  start: 'formatBoundary(boundaryStart, boundaryStartNumber)',
+  end: 'formatBoundary(boundaryEnd, boundaryEndNumber)',
 }
 
 // TODO:

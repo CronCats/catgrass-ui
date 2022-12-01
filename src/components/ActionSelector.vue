@@ -19,7 +19,7 @@
 
     <div
       :class="{
-        'absolute top-12 -right-1 -left-1 z-20 flex-col p-2 text-gray-100 bg-gray-500 rounded-lg shadow-lg': true,
+        'absolute top-16 -right-1 -left-1 z-20 flex-col p-2 text-gray-100 bg-gray-500 rounded-lg shadow-lg': true,
         visible: toggleActive === true,
         invisible: toggleActive === false,
       }"

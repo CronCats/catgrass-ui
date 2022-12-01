@@ -68,8 +68,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import type { Action, Addr, ChainMetadata, Coin, Rule } from "../utils/types";
-import { getChainMetaData } from "../utils/helpers";
+import type { Action, Addr, ChainMetadata, Coin, Rule } from "@/utils/types";
 import Balance from "./core/display/Balance.vue";
 import LogoFromImage from "./core/display/LogoFromImage.vue";
 
@@ -119,12 +118,7 @@ export default defineComponent({
 
   computed: {
     recipeChains() {
-      const n = this.data.networks || [];
-      return n
-        .filter(function (item, pos, self) {
-          return self.indexOf(item) === pos;
-        })
-        .map(getChainMetaData);
+      return this.data.networks || [];
     },
   },
 });

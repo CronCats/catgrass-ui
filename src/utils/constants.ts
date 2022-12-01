@@ -1,6 +1,7 @@
 export const appConfig = {
   title: import.meta.env.VITE_APP_TITLE || 'CronCat',
   networkType: import.meta.env.VITE_CONFIG_NETWORK_TYPE || 'testnet',
+  version: import.meta.env.VITE_CONFIG_VERSION || '',
 }
 
 export const deployedContracts = {

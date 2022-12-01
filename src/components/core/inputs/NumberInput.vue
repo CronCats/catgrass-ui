@@ -26,7 +26,7 @@
       }"
       :disabled="disabled"
       :required="required"
-      @change="onChange"
+      @change="change"
       type="number"
     />
   </div>
@@ -41,6 +41,12 @@ export default {
   components: {
     MinusIcon,
     PlusIcon,
+  },
+
+  methods: {
+    change(e) {
+      if (this.onChange) this.onChange(e.target.value)
+    },
   },
 };
 </script>

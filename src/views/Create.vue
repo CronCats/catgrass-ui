@@ -5,7 +5,7 @@
     <div class="py-8 md:py-12">
       <div class="px-2 mx-auto max-w-xl md:px-0">
 
-          <form @submit="handleSubmit">
+          <!-- <form @submit="handleSubmit"> -->
             <section :class="{ hidden: currentIndex !== 0 }" id="0">
               <h3 class="mb-2 text-xl">I want to…</h3>
     
@@ -47,7 +47,7 @@
               </div>
             </section> -->
     
-            <!-- <footer class="flex justify-between">
+            <footer class="flex justify-between">
               <Button :class="{ hidden: currentIndex === 0 || currentIndex > 3 }"
                 @click="prevSection"
                 size="2xl"
@@ -72,8 +72,8 @@
               <div class="flex">
                 <SubmitButton :class="{ hidden: currentIndex !==2, 'ml-auto' : true, }" label="Confirm" variant="primary" />
               </div>
-            </footer> -->
-          </form>
+            </footer>
+          <!-- </form> -->
 
       </div>
     </div>
@@ -92,14 +92,15 @@ import ActionSelector from "../components/ActionSelector.vue";
 import DollarCostAverage from "../components/forms/DollarCostAverage.vue";
 import PaymentMultiSend from "../components/forms/PaymentMultiSend.vue";
 import CustomMessage from "../components/forms/CustomMessage.vue";
+import Button from '@/components/core/buttons/Button.vue'
 
 const actions = [
-  {
-    Icon: ArrowPathRoundedSquareIcon,
-    title: 'Dollar Cost Average',
-    subtitle: 'Periodically swap a token to another token',
-    Component: DollarCostAverage,
-  },
+  // {
+  //   Icon: ArrowPathRoundedSquareIcon,
+  //   title: 'Dollar Cost Average',
+  //   subtitle: 'Periodically swap a token to another token',
+  //   Component: DollarCostAverage,
+  // },
   {
     Icon: BanknotesIcon,
     title: 'Payment Multi-Sender',
@@ -135,6 +136,7 @@ const successRecipeData = {
 
 export default {
   components: {
+    Button,
     PageHeader,
     ActionSelector,
     ArrowPathRoundedSquareIcon,

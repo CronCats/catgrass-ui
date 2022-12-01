@@ -5,28 +5,30 @@
         class="block"
         :rounded="true"
         size="42"
-        :src="value?.logo_URIs?.png || ''"
+        :src="getAccountImage(value)"
       />
     </div>
     <div class="flex-col py-2 m-auto w-full">
-      <h3 class="text-lg font-bold leading-4">{{value.symbol}}</h3>
+      <h3 class="text-lg font-bold leading-4">{{value?.symbol || ''}}</h3>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import type { Asset } from '../../../utils/types';
+import type { Asset } from '@/utils/types';
 import LogoFromImage from './LogoFromImage.vue';
-
-export interface TokenItemProps {
-  value: Asset
-}
 
 export default {
   props: ["value"],
 
   components: {
     LogoFromImage,
+  },
+
+  methods: {
+    getAccountImage(asset: Asset): string {
+      return asset?.logo_URIs?.png || ''
+    }
   },
 };
 </script>

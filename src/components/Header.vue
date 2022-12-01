@@ -16,7 +16,7 @@
             src="/croncat_color_logo.png"
             width="42"
           />
-          <div class="my-auto ml-4 badge badge-md">ALPHA</div>
+          <div v-if="flag" class="my-auto ml-4 px-2 py-1 text-xs bg-teal-400 rounded-full uppercase">{{ flag }}</div>
         </div>
       </RouterLink>
     </div>
@@ -120,8 +120,7 @@
 </template>
 
 <script lang="ts">
-// import Search from './Search.vue'
-
+import { appConfig } from "@/utils/constants"
 import {
   // ArrowSmallLeftIcon,
   Bars3BottomRightIcon,
@@ -254,6 +253,12 @@ export default {
       mobileNav,
       timer: null,
     };
+  },
+
+  computed: {
+    flag() {
+      return appConfig && appConfig.networkType && appConfig.networkType === 'testnet' ? appConfig.networkType : null
+    },
   },
 
   methods: {

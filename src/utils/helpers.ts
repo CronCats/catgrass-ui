@@ -1,4 +1,4 @@
-// import type { Asset } from '@chain-registry/types'
+import type { Asset } from '@chain-registry/types'
 import { assets, chains } from "chain-registry";
 
 import { chainColors, unsupportedChainNames } from "./constants";
@@ -11,32 +11,36 @@ import type {
   Expiration,
 } from "./types";
 
-export const getChainMetaData = (chain: ChainMetadata) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain?.chain?.chain_name
-  );
-  const asset = assetList?.assets[0];
-  return {
-    ...chain,
-    asset,
-    brandColor: chainColors[chain?.chain?.chain_name],
-    supported: !unsupportedChainNames.includes(chain?.chain?.chain_name),
-  };
-};
-
 export const getChainData = (chain: any) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain.chain_name
-  );
-  const asset = assetList?.assets[0];
+  const c = chain && chain.chain ? chain.chain : chain
+  const chainName = `${c.chain_name}`.replace('testnet', '')
+  
+  const assetList = getChainAssetList(c);
+  const asset = assetList ? assetList[0] : null;
 
   return {
     asset,
     chain,
-    brandColor: chainColors[chain.chain_name],
-    supported: !unsupportedChainNames.includes(chain.chain_name),
+    brandColor: chainColors[chainName],
+    supported: !unsupportedChainNames.includes(chainName),
   };
 };
+
+export const getChainAssetList = (chain: any): Asset[] | null => {
+  if (!chain || !chain.chain_name) return
+  const chainName = chain.chain_name.replace('testnet', '')
+  return (assets.find(({ chain_name }: Asset) => chain_name === chainName))?.assets || [];
+};
+
+export function getBalanceFromAmountAsset(amount: string, asset: Asset): Coin | null {
+  const base = asset.base
+  const unit = asset.denom_units.find(({denom}) => denom != base)
+  const decimals = `${unit?.exponent || 0}`
+  const coin: Coin = { amount, denom: unit?.denom || fromMicroDenom(base) }
+
+  // Convert to base micro amt
+  return toMicroCoin(coin, decimals)
+}
 
 export function fromMicroCoin(coin: Coin, coinDecimals: string) {
   return {

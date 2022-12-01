@@ -2,7 +2,6 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import persistedstate from 'pinia-persistedstate';
 import SecureLS from "secure-ls";
-// var ls = new SecureLS({ isCompression: false });
 var ls = new SecureLS({ encodingType: 'aes' });
 
 import { useMultiWallet } from "./stores/multiWallet";

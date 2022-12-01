@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
   readonly VITE_CONFIG_NETWORK_TYPE: string
+  readonly VITE_CONFIG_VERSION: string
   readonly VITE_CONTRACT_MANAGER_ARCHWAY: string
   readonly VITE_CONTRACT_MANAGER_JUNO: string
   readonly VITE_CONTRACT_MANAGER_QUASAR: string

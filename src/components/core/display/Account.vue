@@ -2,9 +2,9 @@
   <div class="flex justify-between p-2 w-full cursor-pointer">
     <div class="flex flex-row my-auto w-full">
       <div :style="{ minWidth: '42px' }">
-        <LogoFromImage class="block" :rounded="true" :size="42" :src="account.chain?.asset?.logo_URIs?.png || ''" />
+        <LogoFromImage class="block" :rounded="true" :size="42" :src="getAccountImage(account)" />
       </div>
-      <div class="flex-col w-full my-auto px-2">
+      <div class="flex-col w-full my-auto mt-1 px-2">
         <h3 class="block text-lg font-bold leading-4 pb-[2px] max-w-full">{{account.title}}</h3>
         <div class="w-full">
           <small
@@ -38,6 +38,12 @@ export default {
   components: {
     Balance,
     LogoFromImage,
+  },
+
+  methods: {
+    getAccountImage(account: Account): string {
+      return account.asset?.logo_URIs?.png || account.chain?.asset?.logo_URIs?.png || ''
+    }
   },
 };
 </script>

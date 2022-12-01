@@ -13,10 +13,11 @@
         'w-full bg-transparent border-none outline-none ring-none body-text': true,
         ...className
       }"
+      v-model="v"
       :disabled="disabled"
       :placeholder="placeholder"
       :required="required"
-      @change="onChange"
+      @change="change"
       type="text"
     />
   </div>
@@ -40,6 +41,21 @@ export default {
 
   components: {
     WalletIcon,
+  },
+
+  data() {
+    return {
+      v: null
+    }
+  },
+
+  methods: {
+    change(e) {
+      if (this.onChange) this.onChange(this.v)
+    },
+    reset() {
+      this.v = null
+    },
   },
 };
 </script>

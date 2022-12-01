@@ -3,8 +3,8 @@
     :class="{
       'relative py-[6px] px-[16px] text-center rounded-full transition': true,
       // Primary
-      'text-light bg-btn link-text': variant === 'primary',
-      'hover:bg-dark active:bg-toast': variant === 'primary' && !isDisabled,
+      'text-white bg-btn': variant == 'primary',
+      'hover:bg-dark active:bg-toast': variant == 'primary' && !isDisabled,
       'bg-dark': variant === 'primary' && active,
       // Secondary
       'border-2 border-gray-700 link-text': variant === 'secondary',

@@ -6,7 +6,7 @@ import { Decimal } from "@cosmjs/math";
 import { GasPrice } from "@cosmjs/stargate";
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import type { Coin, Account, ChainMetadata } from "@/utils/types";
-import { getChainData, getChainMetaData } from "@/utils/helpers";
+import { getChainData } from "@/utils/helpers";
 import { appConfig, filteredChainNames } from "@/utils/constants";
 import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
 import { wallets as keplrWallet } from "@cosmos-kit/keplr";
@@ -320,7 +320,7 @@ export const useMultiWallet = defineStore(
 
       getChainMetadataForAccount(account: Account) {
         const chain = this.getNetworkForAccount(account)
-        return getChainMetaData(chain)
+        return getChainData(chain)
       },
 
       // Wallet picker thangs

@@ -1,46 +1,14 @@
 <template>
   <div class="my-8">
-    <Label class="mb-2" name="From Account" />
-    <AccountSelector :onChange="onChange" :options="accounts" />
+    <Label class="mb-2" name="Sender Account" />
+    <AccountSelector :onChange="pickFromAccount" :options="accounts" />
 
     <br />
 
-    <Label class="mb-2" name="Token" />
-    <TokenSelector :onChange="onChange" :options="tokenOptions" />
+    <!-- <Label class="mb-2" name="Token" />
+    <TokenSelector :onChange="pickToken" :options="availableTokens" /> -->
 
-    <!-- {/* <br />
-
-    <Label class="mb-2" name={t('form.amount_total')} />
-    <NumberInput
-      // disabled={!isCreating}
-      // error={errors?.amount}
-      defaultValue={10}
-      fieldName={fieldNamePrefix + 'amount_total'}
-      onMinus={() =>
-        setValue(
-          fieldNamePrefix + 'amount_total',
-          Math.max(
-            Number(spendTotalAmount) - 1,
-            1 / 10 ** amountDecimals
-          ).toString()
-        )
-      }
-      onPlus={() =>
-        setValue(
-          fieldNamePrefix + 'amount_total',
-          Math.max(
-            Number(spendTotalAmount) + 1,
-            1 / 10 ** amountDecimals
-          ).toString()
-        )
-      }
-      register={register}
-      sizing="full"
-      step={1 / 10 ** amountDecimals}
-      validation={[validateRequired, validatePositive]}
-    /> */} -->
-
-    <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
+    <!-- <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" /> -->
 
     <h3 class="mb-2 text-xl">Recipients</h3>
 
@@ -48,44 +16,23 @@
       <Label class="mb-2" name="Recipient address" />
       <AddressInput
         containerclass="grow bg-white"
+        ref="addressRecipient"
+        :onChange="changeAddress"
         :disabled="false"
         :error="errors?.recipient_address"
       />
 
       <br />
 
-      <Label class="mb-2" name="Amount to receive each time" />
-      <NumberInput
-        containerclass="bg-white"
-        :defaultValue="1"
-        onMinus="{() =>
-          setValue(
-            fieldNamePrefix + 'amount_to_receive',
-            Math.max(
-              Number(spendEachAmount) - 1,
-              1 / 10 ** amountDecimals
-            ).toString()
-          )
-        }"
-        onPlus="{() =>
-          setValue(
-            fieldNamePrefix + 'amount_to_receive',
-            Math.max(
-              Number(spendEachAmount) + 1,
-              1 / 10 ** amountDecimals
-            ).toString()
-          )
-        }"
-        sizing="full"
-        :error="errors?.amount_to_receive"
-      />
+      <Label class="mb-2" name="Token amount sent each time" />
+      <TokenInputSelector ref="tokenRecipient" :onChange="pickTokenInput" :options="availableTokens" />
 
-      <Button class="mt-6 btn-success" variant="primary">
+      <Button @click="addRecipient" :active="true" class="mt-6 mb-4 btn-success" variant="primary">
         <PlusIcon class="w-4" />
         <span>Add Recipient</span>
       </Button>
 
-      <div class="p-2 -mx-2 mt-8 bg-white border-2 border-gray-100 rounded-lg md:p-4 md:-mx-4">
+      <div v-if="recipients.length > 0" class="p-2 -mx-2 mt-4 bg-white border-2 border-gray-100 rounded-lg md:p-4 md:-mx-4">
         <div class="overflow-x-auto">
           <table class="table w-full table-compact">
             <thead>
@@ -93,14 +40,20 @@
                 <th></th>
                 <th>Address</th>
                 <th>Payment</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(r, index) in recipients" :key="index">
                 <th>{{index + 1}}</th>
-                <td>{{r.address}}</td>
+                <td width="100%">{{r.address}}</td>
                 <td>
                   <Balance :amount="r.balance.amount" :denom="r.balance.denom" :decimals="6" />
+                </td>
+                <td>
+                  <div class="cursor-pointer opacity-50 hover:opacity-100" @click="removeRecipient(r.address)">
+                    <TrashIcon class="w-4" />
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -108,117 +61,94 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script lang="ts">
-import type { Asset, Chain } from '@chain-registry/types'
-import { assets, chains } from 'chain-registry'
-import { chainColors } from '@/utils/constants'
-import { PlusIcon } from '@heroicons/vue/24/outline'
+import { mapState, mapActions } from "pinia";
+import { useMultiWallet } from "../../stores/multiWallet";
+import type { Asset } from "@chain-registry/types";
+import type { Addr, Account, Coin } from '@/utils/types'
+import { getChainAssetList } from '@/utils/helpers'
 import Label from '../core/display/Label.vue'
 import Balance from '../core/display/Balance.vue'
 import Button from '../core/buttons/Button.vue'
 import AccountSelector from '../core/inputs/AccountSelector.vue'
 import AddressInput from '../core/inputs/AddressInput.vue'
-import TokenSelector from '../core/inputs/TokenSelector.vue'
+import TokenInputSelector from '../core/inputs/TokenInputSelector.vue'
 import NumberInput from '../core/inputs/NumberInput.vue'
-
-const getChainData = (chain: Chain) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain.chain_name
-  )
-  const asset = assetList?.assets[0]
-  return {
-    ...chain,
-    asset,
-    brandColor: chainColors[chain.chain_id],
-  }
-}
-
-const unsupportedChainIds = ['cosmoshub-4']
-const supportedChainIds = Object.keys(chainColors).filter(
-  (id) => !unsupportedChainIds.includes(id)
-)
-const supportedChains = chains
-  .filter((c) => supportedChainIds.includes(c.chain_id))
-  .map(getChainData)
-
-const accounts = [
-  {
-    key: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    value: {
-      title: 'Dev Main Account',
-      address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
-    },
-  },
-  {
-    key: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    value: {
-      title: 'Main Account 1',
-      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(
-        ({ chain_name }) => chain_name === 'osmosis'
-      ),
-    },
-  },
-]
-
-const recipients = [
-  {
-    address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    balance: { amount: '13370000', denom: 'ujuno' },
-  },
-]
-
-const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
-const tokens = assetList?.assets || []
-const tokenOptions = tokens.map((token) => ({
-  key: token.symbol,
-  value: token,
-}))
+import {
+  PlusIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline'
 
 export default {
-  // props: [""],
-
   components: {
+    TrashIcon,
     PlusIcon,
     Label,
     Balance,
     Button,
     AccountSelector,
     AddressInput,
-    TokenSelector,
+    TokenInputSelector,
     NumberInput,
   },
 
   data() {
     return {
-      accounts,
-      recipients,
-      tokenOptions,
-      selectedToken: tokenOptions[0],
+      address: '',
+      balance: { amount: 0, denom: '' } as Coin,
+      recipients: [] as Account[],
+      selectedAccount: null,
+      selectedToken: null,
+      availableTokens: [] as Asset[],
       errors: {},
     }
   },
 
   computed: {
-    fn() {
-      // 
-    },
+    ...mapState(useMultiWallet, [ 'accounts' ]),
   },
 
   methods: {
-    tokenCallback(token: any) {
-      console.log('tokenCallback', token)
-      this.selectedToken = token
+    ...mapActions(useMultiWallet, ['getChainMetadataForAccount']),
+    pickFromAccount(account: Account) {
+      this.availableTokens = getChainAssetList(account.chain)
     },
-    onChange() {
-      console.log('onChange')
+    pickTokenInput(coin: Coin) {
+      this.balance = coin
     },
+    changeAddress(value: string) {
+      this.address = value
+    },
+    addRecipient() {
+      const recipient = {
+        address: this.address,
+        balance: this.balance,
+      }
+      this.recipients.push(recipient)
+      console.log(this.$refs);
+      
+
+      if (this.$refs.addressRecipient) this.$refs.addressRecipient.reset()
+      if (this.$refs.tokenRecipient && this.$refs.tokenRecipient.reset) this.$refs.tokenRecipient.reset()
+    },
+    removeRecipient(address: Addr) {
+      this.recipients = this.recipients.filter((r: any) => r.address != address)
+    },
+  },
+
+  mounted() {
+    // init defaults
+    this.selectedAccount = this.accounts[0]
+    if (!this.selectedAccount || this.accounts.length <= 0) return []
+    let acc = this.selectedAccount || this.accounts[0]
+    if (!acc) return
+    if (!acc.chain) acc = { ...acc, ...this.getChainMetadataForAccount(acc)}
+    this.availableTokens = getChainAssetList(acc.chain)
+    if (this.availableTokens) this.selectedToken = this.availableTokens[0]
   },
 };
 </script>

@@ -5,11 +5,6 @@
 
     <br />
 
-    <!-- <Label class="mb-2" name="Token" />
-    <TokenSelector :onChange="pickToken" :options="availableTokens" /> -->
-
-    <!-- <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" /> -->
-
     <h3 class="mb-2 text-xl">Recipients</h3>
 
     <div class="p-2 pb-0 -mx-2 mt-4 bg-gray-100 rounded-lg md:p-4 md:pb-0 md:-mx-4">
@@ -66,8 +61,8 @@
 </template>
 
 <script lang="ts">
-import { mapState, mapActions } from "pinia";
-import { useMultiWallet } from "../../stores/multiWallet";
+import { mapState } from "pinia";
+import { useMultiWallet } from "@/stores/multiWallet";
 import type { Asset } from "@chain-registry/types";
 import type { Addr, Account, Coin } from '@/utils/types'
 import { getChainAssetList } from '@/utils/helpers'
@@ -113,8 +108,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(useMultiWallet, ['getChainMetadataForAccount']),
     pickFromAccount(account: Account) {
+      this.selectedAccount = account
       this.availableTokens = getChainAssetList(account.chain)
     },
     pickTokenInput(coin: Coin) {
@@ -129,8 +124,6 @@ export default {
         balance: this.balance,
       }
       this.recipients.push(recipient)
-      console.log(this.$refs);
-      
 
       if (this.$refs.addressRecipient) this.$refs.addressRecipient.reset()
       if (this.$refs.tokenRecipient && this.$refs.tokenRecipient.reset) this.$refs.tokenRecipient.reset()
@@ -146,7 +139,6 @@ export default {
     if (!this.selectedAccount || this.accounts.length <= 0) return []
     let acc = this.selectedAccount || this.accounts[0]
     if (!acc) return
-    if (!acc.chain) acc = { ...acc, ...this.getChainMetadataForAccount(acc)}
     this.availableTokens = getChainAssetList(acc.chain)
     if (this.availableTokens) this.selectedToken = this.availableTokens[0]
   },

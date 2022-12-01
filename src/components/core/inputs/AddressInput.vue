@@ -37,7 +37,7 @@ export interface AddressInputProps {
 }
 
 export default {
-  props: ["fieldName", "register", "error", "validation", "onChange", "disabled", "required", "className", "containerClassName", "placeholder"],
+  props: ["error", "validation", "onChange", "disabled", "required", "className", "containerClassName", "placeholder"],
 
   components: {
     WalletIcon,

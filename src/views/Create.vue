@@ -3,7 +3,17 @@
     <PageHeader title="Create Your Recipe" backgroundColor="#008F58" />
 
     <div class="py-8 md:py-12">
-      <div class="px-2 mx-auto max-w-xl md:px-0">
+      <div v-if="accounts.length == 0" class="px-2 mx-auto max-w-xl md:px-0">
+        <h1 class="block text-center text-xl m-auto mb-4">Connect Wallet</h1>
+        <p class="mb-8">Takes a few seconds then you'll be ready to create a recipe!</p>
+        <router-link to="/profile/accounts">
+          <div class="py-0 px-5 w-full text-xs tracking-widest text-gray-50 bg-gray-700 hover:bg-gray-900 rounded-full border-0 btn">
+            Manage Wallets
+          </div>
+        </router-link>
+        
+      </div>
+      <div v-if="accounts.length > 0" class="px-2 mx-auto max-w-xl md:px-0">
 
           <!-- <form @submit="handleSubmit"> -->
             <section :class="{ hidden: currentIndex !== 0 }" id="0">
@@ -81,6 +91,8 @@
 </template>
 
 <script lang="ts">
+import { mapState } from "pinia";
+import { useMultiWallet } from "@/stores/multiWallet";
 import {
   ArrowPathRoundedSquareIcon,
   BanknotesIcon,
@@ -95,12 +107,12 @@ import CustomMessage from "../components/forms/CustomMessage.vue";
 import Button from '@/components/core/buttons/Button.vue'
 
 const actions = [
-  // {
-  //   Icon: ArrowPathRoundedSquareIcon,
-  //   title: 'Dollar Cost Average',
-  //   subtitle: 'Periodically swap a token to another token',
-  //   Component: DollarCostAverage,
-  // },
+  {
+    Icon: ArrowPathRoundedSquareIcon,
+    title: 'Dollar Cost Average',
+    subtitle: 'Periodically swap a token to another token',
+    Component: DollarCostAverage,
+  },
   {
     Icon: BanknotesIcon,
     title: 'Payment Multi-Sender',
@@ -152,6 +164,10 @@ export default {
       successRecipeData: successRecipeData,
       actions,
     }
+  },
+
+  computed: {
+    ...mapState(useMultiWallet, ['accounts']),
   },
 
   methods: {

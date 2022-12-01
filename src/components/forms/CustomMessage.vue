@@ -1,7 +1,11 @@
 <template>
   <div aria-details="custom message fields" class="my-8 w-full min-h-16">
-      <Label class="mb-2" name="From Account" />
-      <AccountSelector :onChange="accountCallback" :options="accounts" />
+      <Label class="mb-2" name="Sender Account" />
+      <AccountSelector :onChange="pickFromAccount" :options="accounts" />
+
+      <!-- <br /> -->
+      <Label v-if="availableTokens.length > 0" class="mb-2" name="Funds" />
+      <TokenInputSelector :onChange="pickTokenInput" :options="availableTokens" />
 
       <br />
       <Label class="mb-2" name="Custom JSON Message" />
@@ -25,90 +29,31 @@
 </template>
 
 <script lang="ts">
+import { mapState } from "pinia";
+import { useMultiWallet } from "@/stores/multiWallet";
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
-import type { Chain } from '@chain-registry/types'
-import { assets, chains } from 'chain-registry'
-import type { Account } from '../../utils/types'
-import { chainColors } from '../../utils/constants'
+import type { Account } from '@/utils/types'
+import { getChainAssetList } from '@/utils/helpers'
 import AccountSelector from '../core/inputs/AccountSelector.vue'
+import TokenInputSelector from '../core/inputs/TokenInputSelector.vue'
 import Label from '../core/display/Label.vue'
 
 const extensions: any = [json(), oneDark]
 
-const getChainData = (chain: Chain) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain.chain_name
-  )
-  const asset = assetList?.assets[0]
-  return {
-    ...chain,
-    asset,
-    brandColor: chainColors[chain.chain_id],
-  }
-}
-
-const unsupportedChainIds = ['cosmoshub-4']
-const supportedChainIds = Object.keys(chainColors).filter(
-  (id) => !unsupportedChainIds.includes(id)
-)
-const supportedChains = chains
-  .filter((c) => supportedChainIds.includes(c.chain_id))
-  .map(getChainData)
-
-const accounts = [
-  {
-    key: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    value: {
-      title: 'Dev Main Account',
-      address: 'juno1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '13370000', denom: 'ujuno' },
-      chain: supportedChains.find(({ chain_name }) => chain_name === 'juno'),
-    },
-  },
-  {
-    key: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-    value: {
-      title: 'Main Account 1',
-      address: 'osmo1ab3wjkg7uu4awajw5aunctjdce9q657j0rrdpy',
-      balance: { amount: '420690000', denom: 'uosmo' },
-      chain: supportedChains.find(
-        ({ chain_name }) => chain_name === 'osmosis'
-      ),
-    },
-  },
-]
-
 const code: string = `
 {
-  "wasm": {
-    "execute": {
-      "swap": {
-        ...YOUR THINGS HERE
-      }
-    }
+  "method_name": {
+    "example": "YOUR THINGS HERE"
   }
 }
 `
 
-// // Status is available at all times via Codemirror EditorView
-// const getCodemirrorStates = () => {
-//   const state = view.value.state
-//   const ranges = state.selection.ranges
-//   const selected = ranges.reduce((r, range) => r + range.to - range.from, 0)
-//   const cursor = ranges[0].anchor
-//   const length = state.doc.length
-//   const lines = state.doc.lines
-//   // more state info ...
-//   // return ...
-// }
-
 export default {
-  // props: [""],
-
   components: {
     AccountSelector,
+    TokenInputSelector,
     Label,
     Codemirror,
   },
@@ -116,26 +61,41 @@ export default {
   data() {
     return {
       code,
-      accounts,
       extensions,
       view: null as any,
+      selectedAccount: null,
+      selectedToken: null,
+      funds: { amount: 0, denom: '' } as Coin,
+      availableTokens: [] as Asset[],
     }
   },
 
   computed: {
-    fn() {
-      // 
-    },
+    ...mapState(useMultiWallet, ['accounts']),
   },
 
   methods: {
-    accountCallback(account: Account) {
-      console.log('accountCallback', account)
+    pickFromAccount(account: Account) {
+      this.selectedAccount = account
+      this.availableTokens = getChainAssetList(account.chain)
+    },
+    pickTokenInput(coin: Coin) {
+      this.funds = coin
     },
     handleReady(payload: any) {
-      this.view.value = payload.view
+      // this.view.value = payload.view
     },
     log: console.log,
+  },
+
+  mounted() {
+    // init defaults
+    this.selectedAccount = this.accounts[0]
+    if (!this.selectedAccount || this.accounts.length <= 0) return []
+    let acc = this.selectedAccount || this.accounts[0]
+    if (!acc) return
+    this.availableTokens = getChainAssetList(acc.chain)
+    if (this.availableTokens) this.selectedToken = this.availableTokens[0]
   },
 };
 </script>

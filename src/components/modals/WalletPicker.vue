@@ -260,9 +260,7 @@ export default {
       this.activeWallet = wallet;
       this.view = this.viewStatus.connecting;
       let newAccount = await this.connectChainAccount(wallet.name)
-      if (newAccount) newAccount = { ...newAccount, ...this.getChainMetadataForAccount(newAccount) }
-      console.log('newAccount', newAccount);
-      
+      if (newAccount) newAccount = { ...newAccount, ...this.getChainMetadataForAccount(newAccount) }      
       this.activeAccount = newAccount
       this.view = !newAccount ? this.viewStatus.errored : this.viewStatus.connected;
     },

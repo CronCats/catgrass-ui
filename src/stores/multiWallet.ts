@@ -87,6 +87,12 @@ export const getChainFromChainId = (
   return chains.filter((c) => chainId == c.chain?.chain_id)[0];
 };
 
+export const getChainForAccount = (account: Account, networks: ChainMetadata[]) => {
+  const { prefix } = fromBech32(account.address);
+  const n = networks.filter((n: Chain) => n.chain?.bech32_prefix === prefix);
+  return n && n[0] ? n[0].chain : {};
+}
+
 export const getFeeDenomFromChain = (
   chain: any
 ): string => {
@@ -132,7 +138,12 @@ export const useMultiWallet = defineStore(
       walletManager: (state: any) => state._walletManager,
       currentWallet: (state: any) => state._walletManager.currentWallet,
       networks: (state: any) => state._networks,
-      accounts: (state: any) => state._accounts,
+      accounts: (state: any) => {
+        return state._accounts.map((account: Account) => {
+          const chain = getChainForAccount(account, state._networks)
+          return { ...account, ...getChainData(chain) }
+        })
+      },
     },
     actions: {
       async init() {
@@ -313,14 +324,11 @@ export const useMultiWallet = defineStore(
       },
 
       getNetworkForAccount(account: Account) {
-        const { prefix } = fromBech32(account.address);
-        const n = this._networks.filter((n: Chain) => n.chain?.bech32_prefix === prefix);
-        return n && n[0] ? n[0].chain : {};
+        return getChainForAccount(account, this._networks)
       },
 
       getChainMetadataForAccount(account: Account) {
-        const chain = this.getNetworkForAccount(account)
-        return getChainData(chain)
+        return getChainData(getChainForAccount(account, this._networks))
       },
 
       // Wallet picker thangs

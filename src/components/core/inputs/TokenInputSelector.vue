@@ -17,6 +17,7 @@
               ...className
             }"
             v-model="amount"
+            placeholder="0"
             :disabled="disabled"
             :required="required"
             @change="change"

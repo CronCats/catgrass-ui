@@ -33,17 +33,6 @@
 </template>
 
 <script lang="ts">
-export interface ComboInputSelectValue {
-  select: string
-  input: string
-}
-
-export interface ComboInputSelectOption {
-  key: string
-  value: string
-  default: string
-}
-
 export default {
   props: ["options", "onChange", "containerClassName", "className", "error", "validation"],
 

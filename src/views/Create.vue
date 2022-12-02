@@ -32,22 +32,22 @@
               <RecipeSummary />
             </section>
     
-            <!-- <section :class="{ hidden: currentIndex !== 3 }" id="3">
-              <NetworkSigner onComplete={nextSection} />
-            </section> -->
+            <section :class="{ hidden: currentIndex !== 3 }" id="3">
+              <NetworkSigner :onComplete="nextSection" />
+            </section>
     
-            <!-- <section :class="{ hidden: currentIndex !== 4 }" id="4">
+            <section :class="{ hidden: currentIndex !== 4 }" id="4">
               <div class="text-center">
                 <CakeIcon class="mx-auto mb-4 w-24 text-gray-700" />
     
                 <h3 class="mb-2 text-xl">
-                  {{'form.recipe_success_title')}}
+                  Great Job!
                 </h3>
                 <p class="text-gray-500">
-                  {{'form.recipe_success_subtitle')}}
+                  All transactions completed, your recipe will begin immediately.
                 </p>
     
-                {/* TODO: Add transaction links to explorers */}
+                <!-- {/* TODO: Add transaction links to explorers */} -->
               </div>
     
               <div class="my-12">
@@ -55,7 +55,7 @@
                   <RecipeCard :bgColor="successRecipeData.bgColor" :data="successRecipeData" />
                 </a>
               </div>
-            </section> -->
+            </section>
     
             <footer class="flex justify-between">
               <Button :class="{ hidden: currentIndex === 0 || currentIndex > 3 }" @click="prevSection" size="2xl" variant="secondary" >
@@ -65,14 +65,14 @@
                 <span>Next</span>
               </Button>
     
-              <RouterLink to="/profile/recipes">
-                <Button :class="{ hidden: currentIndex < 4, 'mx-auto' : true, }" size="2xl" variant="secondary">
+              <RouterLink :class="{ hidden: currentIndex < 4, 'mx-auto': true }" to="/profile/recipes">
+                <Button size="2xl" variant="secondary">
                   <span>View Recipes</span>
                 </Button>
               </RouterLink>
     
               <div class="flex">
-                <SubmitButton :class="{ hidden: currentIndex !== 2, 'ml-auto' : true, }" label="Confirm" variant="primary" />
+                <SubmitButton @click="nextSection" :class="{ hidden: currentIndex !== 2, 'ml-auto' : true, }" label="Confirm" variant="primary" />
               </div>
             </footer>
           <!-- </form> -->
@@ -91,15 +91,18 @@ import {
   CakeIcon,
   DocumentTextIcon,
 } from '@heroicons/vue/24/outline'
-import PageHeader from "../components/PageHeader.vue";
-import ActionSelector from "../components/ActionSelector.vue";
-import DollarCostAverage from "../components/forms/DollarCostAverage.vue";
-import PaymentMultiSend from "../components/forms/PaymentMultiSend.vue";
-import CustomMessage from "../components/forms/CustomMessage.vue";
-import CadenceBoundary from "../components/forms/CadenceBoundary.vue";
-import RecipeSummary from "../components/forms/RecipeSummary.vue";
+import PageHeader from "@/components/PageHeader.vue";
+import ActionSelector from "@/components/ActionSelector.vue";
+import DollarCostAverage from "@/components/forms/DollarCostAverage.vue";
+import PaymentMultiSend from "@/components/forms/PaymentMultiSend.vue";
+import CustomMessage from "@/components/forms/CustomMessage.vue";
+import CadenceBoundary from "@/components/forms/CadenceBoundary.vue";
+import RecipeSummary from "@/components/forms/RecipeSummary.vue";
+import NetworkSigner from "@/components/forms/NetworkSigner.vue";
 import Button from '@/components/core/buttons/Button.vue'
 import SubmitButton from '@/components/core/buttons/SubmitButton.vue'
+import RecipeCard from "@/components/RecipeCard.vue";
+import { successRecipeData } from "@/utils/mvpData"
 
 const actions = [
   {
@@ -122,25 +125,6 @@ const actions = [
   },
 ]
 
-// TODO: Change to dynamic
-const successRecipeData = {
-  title: 'Dollar Cost Average from $JUNO to $NETA',
-  // subtitle: '',
-  owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-  creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-  recipeHash:
-    '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
-  totalBalance: { amount: '10000000', denom: 'ujuno' },
-  actions: [],
-  rules: [],
-  networks: [],
-  bgColor: '#F9226C',
-};
-
-// TODO: computed
-// const assetList = assets.find(({ chain_name }) => chain_name === 'juno')
-// const tokens = assetList?.assets || []
-
 export default {
   components: {
     Button,
@@ -152,7 +136,9 @@ export default {
     CakeIcon,
     DocumentTextIcon,
     CadenceBoundary,
+    NetworkSigner,
     RecipeSummary,
+    RecipeCard,
   },
 
   data() {

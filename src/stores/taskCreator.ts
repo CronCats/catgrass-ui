@@ -1,26 +1,33 @@
 import { defineStore } from "pinia";
-import type { Task } from "@/utils/types";
+import type { Task, TaskRequest } from "@/utils/types";
 
-// Example!
-// const successRecipeData = {
-//   title: 'Dollar Cost Average from $JUNO to $NETA',
-//   // subtitle: '',
-//   owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-//   creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-//   recipeHash:
-//     '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
-//   totalBalance: { amount: '10000000', denom: 'ujuno' },
-//   actions: [],
-//   rules: [],
-//   networks: [],
-//   bgColor: '#F9226C',
-// };
+// export interface TaskRequest {
+//   actions: ActionForEmpty[];
+//   boundary?: Boundary | null;
+//   cw20_coins: Cw20Coin[];
+//   interval: Interval;
+//   rules?: Rule[] | null;
+//   stop_on_fail: boolean;
+// }
+
+// export interface Task {
+//   actions: ActionForEmpty[];
+//   amount_for_one_task: GenericBalance;
+//   boundary: BoundaryValidated;
+//   funds_withdrawn_recurring: Coin[];
+//   interval: Interval;
+//   owner_id: Addr;
+//   rules?: Rule[] | null;
+//   stop_on_fail: boolean;
+//   total_deposit: GenericBalance;
+//   version: string;
+// }
 
 export const useTaskCreator = defineStore(
-  "purr", // so you're too disgusted to inspect it
+  "purr", // go with teh flow
   {
     state: () => ({
-      _task: {} as Task,
+      _task: {} as Task | TaskRequest,
       _context: {} as any,
     }),
     getters: {
@@ -28,8 +35,21 @@ export const useTaskCreator = defineStore(
       context: (state: any) => state._context,
     },
     actions: {
-      async create() {},
+      async setDefault() {
+        let task: TaskRequest = {
+          actions: [],
+          boundary: null,
+          cw20_coins: [],
+          interval: "Once",
+          rules: null,
+          stop_on_fail: false,
+        }
+        this._task = task
+      },
       async validate() {},
+      async updateTask(obj: any) {
+        this._task = obj
+      },
       async updateContext(obj: any) {
         this._context = obj
       },

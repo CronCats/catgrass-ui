@@ -75,10 +75,8 @@
         :class="{
           'absolute top-12 -right-1 -left-1 z-20 bg-white rounded-lg border-2 border-gray-100 shadow-xl menu': true,
           hidden: disabled,
-          visible:
-            selectedNetworkIndex === index && selectedNetworkActive === true,
-          invisible:
-            selectedNetworkIndex !== index || selectedNetworkActive === false,
+          visible: selectedNetworkIndex === index && selectedNetworkActive === true,
+          invisible: selectedNetworkIndex !== index || selectedNetworkActive === false,
         }"
       >
         <li v-for="account in network.accounts" :key="account.address">
@@ -89,9 +87,7 @@
               <h3 className="text-lg leading-4">{{ account.title }}</h3>
               <div className="flex w-full">
                 <!-- <small className="text-xs text-gray-400 lowercase">{address.substring(0,20)}...</small> -->
-                <small
-                  className="overflow-hidden w-1/2 text-xs text-gray-400 lowercase text-ellipsis"
-                >
+                <small className="overflow-hidden w-1/2 text-xs text-gray-400 lowercase text-ellipsis">
                   {{ account.address }}
                 </small>
                 <small

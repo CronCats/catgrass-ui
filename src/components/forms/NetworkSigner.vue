@@ -27,7 +27,7 @@
   
     <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
   
-    <InputLabel class="mb-2" name="Note:" />
+    <InputLabel class="mb-2" name="Note" />
     <small class="text-gray-400">You will be signing transactions per-network. Depending on how many actions you have, there will more multiple times required to sign. Failure to sign all items could result in a bad state, please proceed carefully!</small>
   
     <br />
@@ -35,32 +35,12 @@
 </template>
 
 <script lang="ts">
-import type { Chain } from '@chain-registry/types'
-import { assets, chains } from 'chain-registry'
-import { chainColors } from '@/utils/constants'
+import { mapState } from "pinia";
+import { useMultiWallet } from "@/stores/multiWallet";
 import Label from '../core/display/Label.vue'
 import Balance from '../core/display/Balance.vue'
+import Button from "../core/buttons/Button.vue";
 import LogoFromImage from '../core/display/LogoFromImage.vue'
-
-const getChainData = (chain: Chain) => {
-  const assetList = assets.find(
-    ({ chain_name }) => chain_name === chain.chain_name
-  )
-  const asset = assetList?.assets[0]
-  return {
-    chain,
-    asset,
-    brandColor: chainColors[chain.chain_id],
-  }
-}
-
-const unsupportedChainIds = ['cosmoshub-4']
-const supportedChainIds = Object.keys(chainColors).filter(
-  (id) => !unsupportedChainIds.includes(id)
-)
-const supportedChains = chains
-  .filter((c) => supportedChainIds.includes(c.chain_id))
-  .map(getChainData)
 
 export default {
   props: ["onComplete"],
@@ -68,25 +48,31 @@ export default {
   components: {
     Label,
     Balance,
+    Button,
     LogoFromImage,
   },
 
   data() {
     return {
-      chainItems: [supportedChains[0]],
+      chainItems: [],
     }
   },
 
   computed: {
-    fn() {
-      // 
-    },
+    ...mapState(useMultiWallet, ['networks']),
   },
 
   methods: {
     fn() {
       // 
     },
+  },
+
+  mounted() {
+    // init defaults
+    console.log('this.networks', this.networks);
+    
+    this.chainItems = [this.networks[0]]
   },
 };
 </script>

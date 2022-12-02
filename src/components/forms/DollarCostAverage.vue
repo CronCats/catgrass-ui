@@ -10,7 +10,7 @@
 
     <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
 
-    <Label class="mb-2" name="To Account" />
+    <Label class="mb-2" name="Receiver Account" />
     <AccountSelector :onChange="pickToAccount" :options="accounts" />
 
     <br />
@@ -60,6 +60,9 @@ export default {
     pickFromAccount(account: Account) {
       this.fromAccount = account
       this.availableTokens = getChainAssetList(account.chain)
+    },
+    pickToAccount(account: Account) {
+      this.toAccount = account
     },
     pickTokenInput(coin: Coin) {
       this.fromToken = coin

@@ -184,3 +184,5 @@ export function nativeTokenDecimals(denom: string): number | undefined {
     : ibcAssets.tokens.find(({ denom: d }) => d === denom);
   return asset?.decimals;
 }
+
+export const addCommas = (s: string) => s.replace(/\B(?=(\d{3})+(?!\d))/g, ",")

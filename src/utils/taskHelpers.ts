@@ -95,21 +95,13 @@ export const boundaryOptions: any = [
     sort: 9,
     Icon: ClockIcon,
     title: 'Pick a time',
-    type: 'cron_custom',
-    data: {
-      intervalType: Interval.Cron,
-      intervalValue: '',
-    },
+    type: 'Time',
   },
   {
     sort: 11,
     Icon: RectangleStackIcon,
     title: 'Pick a block',
-    type: 'blocks_custom',
-    data: {
-      intervalType: Interval.Block,
-      intervalValue: 0, // TODO: Get current block + 1000
-    },
+    type: 'Height',
   },
 ]
 export const boundaryStartOptions = [

@@ -75,7 +75,7 @@ export default {
       this.prevInput = this.input
       this.onChange({
         input: this.input,
-        select: this.select,
+        select: this.select.value,
       })
     },
     updateSelect(option: any) {

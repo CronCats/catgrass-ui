@@ -118,7 +118,7 @@ export default {
 
       // signer account
       this.updateTaskContext({
-        signer_addr: account.addr,
+        signer_addr: account.address,
       })
     },
     pickTokenInput(coin: Coin) {
@@ -148,7 +148,7 @@ export default {
         to_address: recipient.address,
         amount: `${recipient.balance.amount}`,
       }))
-      this.updateTaskContext({ actions })
+      this.updateTask({ actions })
       this.recipients.push(recipient)
 
       if (this.$refs.addressRecipient) this.$refs.addressRecipient.reset()
@@ -160,7 +160,7 @@ export default {
       // remove the action as well
       let { actions } = this.context
       actions.splice(idx, 1)
-      this.updateTaskContext({ actions })
+      this.updateTask({ actions })
     },
   },
 

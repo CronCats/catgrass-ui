@@ -151,12 +151,14 @@ export default {
 
   computed: {
     ...mapState(useMultiWallet, ['accounts']),
+    ...mapState(useTaskCreator, ['task', 'context']),
   },
 
   methods: {
     ...mapActions(useTaskCreator, ['setDefaultTask', 'resetTaskCreator']),
     nextSection() {
       this.currentIndex = this.currentIndex + 1
+      console.log('NEXT:', this.task, this.context);
     },
     prevSection() {
       this.currentIndex = this.currentIndex - 1

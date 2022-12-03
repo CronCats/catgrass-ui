@@ -3,8 +3,9 @@ import { fromBech32 } from "@cosmjs/encoding";
 import { assets, chains } from "chain-registry";
 import type { Chain, AssetList } from "@chain-registry/types";
 import { Decimal } from "@cosmjs/math";
-import { GasPrice } from "@cosmjs/stargate";
-import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { GasPrice, QueryClient } from "@cosmjs/stargate";
+import { CosmWasmClient, setupWasmExtension } from '@cosmjs/cosmwasm-stargate';
+import { BlockResponse, HttpBatchClient, Tendermint34Client, TxResponse } from "@cosmjs/tendermint-rpc";
 import type { Coin, Account, ChainMetadata } from "@/utils/types";
 import { getChainData } from "@/utils/helpers";
 import { appConfig, filteredChainNames } from "@/utils/constants";
@@ -16,6 +17,7 @@ import { wallets as vectiswallets } from "@cosmos-kit/vectis";
 // import { wallets as trustwallets } from "@cosmos-kit/trust";
 
 // cache'd queriers, intentionally blank
+const tmProviderCache: any = {}
 const queryProviderCache: any = {
   // Example:
   // juno: QueryClient
@@ -256,15 +258,38 @@ export const useMultiWallet = defineStore(
         }
       },
       // NON-Signer, Cached querier -- needs to be decoupled from a signed in wallet for all kinds of non-wallet info scenarios
+      async querier(chainName: string) {
+        if (!chainName) return Promise.reject('Missing required params')
+        let querier = tmProviderCache[chainName]
+        if (!querier) {
+          // Cache this for future use, walletManager does nice fallback logic
+          await this.walletManager.setCurrentChain(chainName)
+          const rpcEndpoint = await this.walletManager.getRpcEndpoint()
+          try {
+            const httpBatchClient = new HttpBatchClient(rpcEndpoint, {
+              batchSizeLimit: 5,
+              dispatchInterval: 1 * 1000
+            })
+            querier = await Tendermint34Client.create(httpBatchClient)
+          } catch (e) {
+            return Promise.reject(e)
+          }
+        }
+
+        if (!querier || !querier.status) return Promise.reject('Requires RPC connection');
+        tmProviderCache[chainName] = querier
+        return querier
+      },
+
+      // NON-Signer, Cached querier -- needs to be decoupled from a signed in wallet for all kinds of non-wallet info scenarios
       async queryContract(contractAddr: string, queryMsg: any, type?: string) {
         if (!contractAddr || !queryMsg) return Promise.reject('Missing required params')
         // Derive the current chain name from contract bech32
         const { prefix } = fromBech32(contractAddr);
         let querier = queryProviderCache[prefix]
         if (!querier) {
-          // Cache this for future use
+          // Cache this for future use, walletManager does nice fallback logic
           const rpcEndpoint = await this.walletManager.getRpcEndpoint()
-          console.log('rpcEndpoint', rpcEndpoint, querier);
           querier = await CosmWasmClient.connect(rpcEndpoint)
         }
         

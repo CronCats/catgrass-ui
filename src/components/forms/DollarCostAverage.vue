@@ -21,8 +21,9 @@
 </template>
 
 <script lang="ts">
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useMultiWallet } from "@/stores/multiWallet";
+import { useTaskCreator } from "@/stores/taskCreator";
 import { getChainAssetList } from '@/utils/helpers'
 import Label from '../core/display/Label.vue'
 import AccountSelector from '../core/inputs/AccountSelector.vue'
@@ -54,9 +55,11 @@ export default {
 
   computed: {
     ...mapState(useMultiWallet, ['accounts']),
+    ...mapState(useTaskCreator, ['task', 'context']),
   },
 
   methods: {
+    ...mapActions(useTaskCreator, ['updateTask', 'updateTaskContext']),
     pickFromAccount(account: Account) {
       this.fromAccount = account
       this.availableTokens = getChainAssetList(account.chain)

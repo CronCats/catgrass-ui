@@ -1,5 +1,7 @@
 import type { Addr, Coin, GenericBalance } from "@/utils/types"
 
+// TODO: Setup msgs for diff networks - so i can filter/access based on authed wallet
+
 // TODO: Change to dynamic
 export const successRecipeData = {
   title: 'Dollar Cost Average from $JUNO to $NETA',
@@ -16,6 +18,19 @@ export const successRecipeData = {
 };
 
 export const getCosmosMsg = (msg: any, gas_limit?: number) => ({ msg, gas_limit, })
+
+export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: Addr, msg: any, funds: Coin[] }) => {
+  return getCosmosMsg({
+    wasm: {
+      execute: {
+        contract_addr,
+        // TODO: need binary transform
+        msg,
+        funds,
+      }
+    }
+  })
+}
 
 // TODO: Remove someday :)
 export const queriesCatalog = {
@@ -59,18 +74,6 @@ export const transformsCatalog = {}
 
 // TODO: Remove someday :)
 export const actionCatalog = {
-  getWasmExecMsg({ contract_addr, msg, funds}: { contract_addr: Addr, msg: any, funds: Coin[]}) {
-    return getCosmosMsg({
-      wasm: {
-        execute: {
-          contract_addr,
-          // TODO: need binary transform
-          msg,
-          funds,
-        }
-      }
-    })
-  },
   getBankSend({ to_address, amount }: { to_address: Addr, amount: Coin[] }) {
     return getCosmosMsg({
       bank: {
@@ -79,6 +82,19 @@ export const actionCatalog = {
           amount,
         }
       }
+    })
+  },
+  getCw20Send({ contract_addr, to_address, amount }: { contract_addr: Addr, to_address: Addr, amount: string }) {
+    return getWasmExecMsg({
+      // cw20 address
+      contract_addr,
+      msg: {
+        transfer: {
+          recipient: to_address,
+          amount
+        }
+      },
+      funds: [],
     })
   },
   getStakingDelegation({ validator, amount }: { validator: Addr, amount: Coin }) {

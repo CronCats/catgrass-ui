@@ -1,41 +1,25 @@
 import { defineStore } from "pinia";
-import type { Task, TaskRequest } from "@/utils/types";
-
-// export interface TaskRequest {
-//   actions: ActionForEmpty[];
-//   boundary?: Boundary | null;
-//   cw20_coins: Cw20Coin[];
-//   interval: Interval;
-//   rules?: Rule[] | null;
-//   stop_on_fail: boolean;
-// }
-
-// export interface Task {
-//   actions: ActionForEmpty[];
-//   amount_for_one_task: GenericBalance;
-//   boundary: BoundaryValidated;
-//   funds_withdrawn_recurring: Coin[];
-//   interval: Interval;
-//   owner_id: Addr;
-//   rules?: Rule[] | null;
-//   stop_on_fail: boolean;
-//   total_deposit: GenericBalance;
-//   version: string;
-// }
+import type { Empty, Task, TaskRequest } from "@/utils/types";
 
 export const useTaskCreator = defineStore(
   "purr", // go with teh flow
   {
     state: () => ({
-      _task: {} as Task | TaskRequest,
+      _task: {} as Task | TaskRequest | Empty,
       _context: {} as any,
     }),
     getters: {
       task: (state: any) => state._task,
+      // TODO:
+      isTaskValid: (state: any) => (true),
       context: (state: any) => state._context,
     },
     actions: {
-      async setDefault() {
+      resetTaskCreator() {
+        this._task = {}
+        this._context = {}
+      },
+      setDefaultTask() {
         let task: TaskRequest = {
           actions: [],
           boundary: null,
@@ -46,12 +30,15 @@ export const useTaskCreator = defineStore(
         }
         this._task = task
       },
-      async validate() {},
-      async updateTask(obj: any) {
-        this._task = obj
+      updateTask(obj: any) {
+        Object.keys(obj).forEach(k => {
+          this._task[k] = obj[k]
+        })
       },
-      async updateContext(obj: any) {
-        this._context = obj
+      updateTaskContext(obj: any) {
+        Object.keys(obj).forEach(k => {
+          this._context[k] = obj[k]
+        })
       },
     },
   }

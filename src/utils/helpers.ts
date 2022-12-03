@@ -26,11 +26,28 @@ export const getChainData = (chain: any) => {
   };
 };
 
-export const getChainAssetList = (chain: any): Asset[] | null => {
+export const getChainAssetList = (chain: any): Asset[] | undefined => {
   if (!chain || !chain.chain_name) return
   const chainName = chain.chain_name.replace('testnet', '')
   return (assets.find(({ chain_name }: Asset) => chain_name === chainName))?.assets || [];
 };
+
+export const getAssetByDenomOnChain = (denom: string, chain: any): Asset | undefined => {
+  const assetList = getChainAssetList(chain)
+  if (!assetList) return;
+  
+  return assetList.find((a: Asset) => {
+    return a.denom_units.find(d => d.denom === fromMicroDenom(denom))
+  })
+}
+
+export const isNativeAsset = (asset: Asset): boolean => {
+  return !Object.keys(asset).includes('address')
+}
+
+export const isCw20Asset = (asset: Asset): boolean => {
+  return asset.type_asset === 'cw20'
+}
 
 export function getBalanceFromAmountAsset(amount: string, asset: Asset): Coin | null {
   const base = asset.base

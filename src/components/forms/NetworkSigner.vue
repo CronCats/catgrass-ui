@@ -16,7 +16,7 @@
               </small>
             </div>
             <div class="flex-col py-2 m-auto w-auto">
-              <Button class="min-w-[110px] bg-green-600 hover:bg-green-800" @click="onComplete">
+              <Button class="min-w-[110px] bg-green-600 hover:bg-green-800" @click="exec">
                 <span>Sign</span>
               </Button>
             </div>
@@ -37,6 +37,7 @@
 <script lang="ts">
 import { mapState } from "pinia";
 import { useMultiWallet } from "@/stores/multiWallet";
+import { useTaskCreator } from "@/stores/taskCreator";
 import Label from '../core/display/Label.vue'
 import Balance from '../core/display/Balance.vue'
 import Button from "../core/buttons/Button.vue";
@@ -60,18 +61,19 @@ export default {
 
   computed: {
     ...mapState(useMultiWallet, ['networks']),
+    ...mapState(useTaskCreator, ['task', 'context']),
   },
 
   methods: {
-    fn() {
-      // 
+    exec() {
+      console.log(this.task, this.context)
+      if (this.onComplete) this.onComplete()
     },
   },
 
   mounted() {
     // init defaults
     console.log('this.networks', this.networks);
-    
     this.chainItems = [this.networks[0]]
   },
 };

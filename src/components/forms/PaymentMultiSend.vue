@@ -46,7 +46,7 @@
                   <Balance :amount="r.balance.amount" :denom="r.balance.denom" :decimals="6" />
                 </td>
                 <td>
-                  <div class="cursor-pointer opacity-50 hover:opacity-100" @click="removeRecipient(r.address)">
+                  <div class="cursor-pointer opacity-50 hover:opacity-100" @click="removeRecipient(index)">
                     <TrashIcon class="w-4" />
                   </div>
                 </td>
@@ -61,11 +61,13 @@
 </template>
 
 <script lang="ts">
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useMultiWallet } from "@/stores/multiWallet";
+import { useTaskCreator } from "@/stores/taskCreator";
 import type { Asset } from "@chain-registry/types";
 import type { Addr, Account, Coin } from '@/utils/types'
-import { getChainAssetList } from '@/utils/helpers'
+import { getChainAssetList, getAssetByDenomOnChain, isCw20Asset, isNativeAsset } from '@/utils/helpers'
+import { actionCatalog } from '@/utils/mvpData'
 import Label from '../core/display/Label.vue'
 import Balance from '../core/display/Balance.vue'
 import Button from '../core/buttons/Button.vue'
@@ -104,13 +106,20 @@ export default {
   },
 
   computed: {
-    ...mapState(useMultiWallet, [ 'accounts' ]),
+    ...mapState(useMultiWallet, ['accounts']),
+    ...mapState(useTaskCreator, ['task', 'context']),
   },
 
   methods: {
+    ...mapActions(useTaskCreator, ['updateTask', 'updateTaskContext']),
     pickFromAccount(account: Account) {
       this.selectedAccount = account
       this.availableTokens = getChainAssetList(account.chain)
+
+      // signer account
+      this.updateTaskContext({
+        signer_addr: account.addr,
+      })
     },
     pickTokenInput(coin: Coin) {
       this.balance = coin
@@ -119,17 +128,39 @@ export default {
       this.address = value
     },
     addRecipient() {
+      if (!this.address || !this.balance) return;
       const recipient = {
         address: this.address,
         balance: this.balance,
       }
+      // push the action needed for payment
+      const ctx = this.context
+      let actions = ctx.actions || []
+      const asset = getAssetByDenomOnChain(recipient.balance.denom, this.selectedAccount?.chain)
+      if (!asset) return;
+
+      if (isNativeAsset(asset)) actions.push(actionCatalog.getBankSend({
+        to_address: recipient.address,
+        amount: [recipient.balance],
+      }))
+      if (isCw20Asset(asset)) actions.push(actionCatalog.getCw20Send({
+        contract_addr: asset.address || '',
+        to_address: recipient.address,
+        amount: `${recipient.balance.amount}`,
+      }))
+      this.updateTaskContext({ actions })
       this.recipients.push(recipient)
 
       if (this.$refs.addressRecipient) this.$refs.addressRecipient.reset()
       if (this.$refs.tokenRecipient && this.$refs.tokenRecipient.reset) this.$refs.tokenRecipient.reset()
     },
-    removeRecipient(address: Addr) {
-      this.recipients = this.recipients.filter((r: any) => r.address != address)
+    removeRecipient(idx: number) {
+      this.recipients.splice(idx, 1)
+
+      // remove the action as well
+      let { actions } = this.context
+      actions.splice(idx, 1)
+      this.updateTaskContext({ actions })
     },
   },
 

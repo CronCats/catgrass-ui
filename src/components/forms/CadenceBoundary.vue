@@ -41,8 +41,20 @@
 
     <div v-if="selectedStart.type === 'Time' || selectedStart.type === 'Height'" class="mt-4">
       <Label v-if="selectedStart.type === 'Height'" class="mb-2" name="Block Height" />
-      <Label v-if="selectedStart.type === 'Time'" class="mb-2" name="Timestamp" />
-      <NumberInput :onChange="setBoundaryStartValue" :error="errors.cadence_start_number" sizing="full" />
+      <!-- <Label v-if="selectedStart.type === 'Time'" class="mb-2" name="Timestamp" /> -->
+      <template v-if="selectedStart.type === 'Time'">
+        <DatePicker v-model="timestampStart" mode="dateTime" is24hr is-expanded>
+          <template v-slot="{ inputValue, togglePopover }">
+            <div @click="togglePopover()" class="flex gap-1 items-center py-[17px] px-3 font-mono text-sm bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default">
+              <CalendarDaysIcon class="mr-2 w-6 h-6" color="currentColor" />
+              <input :value="inputValue" placeholder="Choose Start" class="w-full bg-transparent border-none outline-none ring-none body-text" readonly />
+            </div>
+          </template>
+        </DatePicker>
+      </template>
+      <template v-if="selectedStart.type === 'Height'">
+        <NumberInput :onChange="setBoundaryStartValue" :error="errors.cadence_start_number" sizing="full" />
+      </template>
 
       <Subtext v-if="selectedStart.type === 'Height'" :text="recentBlockHeight" />
       <Subtext v-if="errors.cadence_start_number && selectedStart.type === 'Height'" :error="true" :text="error.cadence_start_number_block" />
@@ -57,8 +69,22 @@
 
     <div v-if="selectedEnd.type === 'Time' || selectedEnd.type === 'Height'" class="mt-4">
       <Label v-if="selectedEnd.type === 'Height'" class="mb-2" name="Block Height" />
-      <Label v-if="selectedEnd.type === 'Time'" class="mb-2" name="Timestamp" />
-      <NumberInput :onChange="setBoundaryEndValue" :error="errors.cadence_end_number" sizing="full" />
+      <!-- <Label v-if="selectedEnd.type === 'Time'" class="mb-2" name="Timestamp" /> -->
+      <template v-if="selectedEnd.type === 'Time'">
+        <DatePicker v-model="timestampEnd" mode="dateTime" is24hr>
+          <template v-slot="{ inputValue, togglePopover }">
+            <div @click="togglePopover()"
+              class="flex gap-1 items-center py-[17px] px-3 font-mono text-sm bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default">
+              <CalendarDaysIcon class="mr-2 w-6 h-6" color="currentColor" />
+              <input :value="inputValue" placeholder="Choose End" class="w-full bg-transparent border-none outline-none ring-none body-text"
+                readonly />
+            </div>
+          </template>
+        </DatePicker>
+      </template>
+      <template v-if="selectedEnd.type === 'Height'">
+        <NumberInput :onChange="setBoundaryEndValue" :error="errors.cadence_end_number" sizing="full" />
+      </template>
 
       <Subtext v-if="selectedEnd.type === 'Height'" :text="recentBlockHeight" />
       <Subtext v-if="errors.cadence_end_number && selectedStart.type === 'Height'" :error="true" :text="error.cadence_end_number_block" />
@@ -80,6 +106,9 @@ import NumberInput from '@/components/core/inputs/NumberInput.vue'
 import SelectList from '@/components/core/inputs/SelectList.vue'
 import SelectComboInput from "../core/inputs/SelectComboInput.vue";
 import TokenInputSelector from "../core/inputs/TokenInputSelector.vue";
+import 'v-calendar/dist/style.css';
+// https://github.com/nathanreyes/v-calendar
+import { DatePicker } from 'v-calendar';
 import {
   Interval,
   intervalUxOptions,
@@ -88,16 +117,21 @@ import {
   boundaryEndOptions,
   customUxOptions,
 } from "@/utils/taskHelpers"
+import {
+  CalendarDaysIcon,
+} from '@heroicons/vue/24/outline'
 
 export default {
   components: {
     AddressInput,
+    CalendarDaysIcon,
     SelectComboInput,
     Label,
     Subtext,
     NumberInput,
     SelectList,
     TokenInputSelector,
+    DatePicker,
   },
 
   data() {
@@ -106,6 +140,8 @@ export default {
       errors: {},
       blockHeight: 0,
       boundary: {} as any,
+      timestampStart: null,
+      timestampEnd: null,
       availableTokens: [] as Asset[],
       selectedStart: boundaryStartOptions[0],
       selectedEnd: boundaryEndOptions[0],
@@ -183,7 +219,12 @@ export default {
     setBoundaryStart(value: any) {
       this.selectedStart = value
     },
-    setBoundaryStartValue(value: any) {
+    setBoundaryEnd(value: any) {
+      this.selectedEnd = value
+    },
+    setBoundaryStartValue(v: any) {
+      const value = v || this.timestampStart
+      
       if (this.selectedStart.type === 'Height') {
         delete this.boundary.Time
         this.boundary.Height = this.boundary.Height || {}
@@ -192,15 +233,14 @@ export default {
       if (this.selectedStart.type === 'Time') {
         delete this.boundary.Height
         this.boundary.Time = this.boundary.Time || {}
-        this.boundary.Time.start = parseInt(value)
+        this.boundary.Time.start = new Date(value).getTime()
       }
 
       this.updateTask({ boundary: { ...this.boundary } })
     },
-    setBoundaryEnd(value: any) {
-      this.selectedEnd = value
-    },
-    setBoundaryEndValue(value: any) {
+    setBoundaryEndValue(v: any) {
+      const value = v || this.timestampEnd
+
       if (this.selectedStart.type === 'Height') {
         delete this.boundary.Time
         this.boundary.Height = this.boundary.Height || {}
@@ -209,7 +249,7 @@ export default {
       if (this.selectedStart.type === 'Time') {
         delete this.boundary.Height
         this.boundary.Time = this.boundary.Time || {}
-        this.boundary.Time.end = parseInt(value)
+        this.boundary.Time.end = new Date(value).getTime()
       }
 
       this.updateTask({ boundary: { ...this.boundary } })
@@ -233,6 +273,11 @@ export default {
     // if (!acc) return
     // this.availableTokens = getChainAssetList(acc.chain)
     // if (this.availableTokens) this.fromToken = this.availableTokens[0]
+  },
+
+  watch: {
+    'timestampStart': ['setBoundaryStartValue'],
+    'timestampEnd': ['setBoundaryEndValue'],
   },
 };
 </script>

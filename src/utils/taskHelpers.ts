@@ -19,7 +19,7 @@ export const Interval = {
 export const intervalUxOptions = [
   {
     sort: 1,
-    Icon: CalendarDaysIcon,
+    Icon: ClockIcon,
     title: 'Every Day',
     type: 'cron_daily',
     data: {
@@ -93,8 +93,8 @@ export const intervalUxOptions = [
 export const boundaryOptions: any = [
   {
     sort: 9,
-    Icon: ClockIcon,
-    title: 'Pick a time',
+    Icon: CalendarDaysIcon,
+    title: 'Pick a date & time',
     type: 'Time',
   },
   {

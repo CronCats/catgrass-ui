@@ -23,13 +23,13 @@
       </div>
     </div>
 
-    <div v-if="intervalOption.type === 'balance_gt' || intervalOption.type === 'balance_lt'" class="mt-4">
-      <Label class="mb-2" :name="`${'Balance ' + (intervalOption.type == 'balance_gt' ? 'Greater Than' : 'Less Than')}`" />
+    <div v-if="intervalOption.type === 'has_balance_gte' || intervalOption.type === 'has_balance_lte'" class="mt-4">
+      <Label class="mb-2" :name="`${'Balance ' + (intervalOption.type == 'has_balance_gte' ? 'Greater Than' : 'Less Than')}`" />
       <TokenInputSelector :onChange="setIntervalBalanceAsset" :options="availableTokens" />
       <Subtext v-if="errors.rule_balance" :error="true" :text="error.rule_balance" />
     
       <Label class="mt-4 mb-2" name="Wallet Address to Watch" />
-      <AddressInput containerclass="grow" :onChange="setIntervalBalanceAddress" :disabled="false" :error="errors.rule_balance_address" />
+      <AddressInput :default="watchAddress" containerclass="grow" :onChange="setIntervalBalanceAddress" :disabled="false" :error="errors.rule_balance_address" />
       <Subtext v-if="errors.rule_balance_address" :error="true" :text="error.rule_balance_address" />
     </div>
 
@@ -97,8 +97,16 @@
 import { mapState, mapActions } from "pinia";
 import { useMultiWallet } from "@/stores/multiWallet";
 import { useTaskCreator } from "@/stores/taskCreator";
-import { addCommas } from '@/utils/helpers'
-import type { Addr, Boundary } from "@/utils/types"
+import {
+  addCommas,
+  getChainAssetList,
+  getAssetByDenomOnChain,
+  getDeployedContractsByChain,
+  isCw20Asset,
+  isNativeAsset,
+} from '@/utils/helpers'
+import type { Addr, Account, Asset, Boundary, GenericBalance } from "@/utils/types"
+import { queriesCatalog } from "@/utils/mvpData"
 import Label from '@/components/core/display/Label.vue'
 import Subtext from '@/components/core/display/Subtext.vue'
 import AddressInput from '@/components/core/inputs/AddressInput.vue'
@@ -139,10 +147,13 @@ export default {
       Interval,
       errors: {},
       blockHeight: 0,
-      boundary: {} as any,
+      boundary: null as any | null,
       timestampStart: null,
       timestampEnd: null,
+      signer: undefined as Account | undefined,
       availableTokens: [] as Asset[],
+      watchToken: undefined as Asset | undefined,
+      watchAddress: undefined as Addr | undefined,
       selectedStart: boundaryStartOptions[0],
       selectedEnd: boundaryEndOptions[0],
       intervalOption: intervalUxOptions[0],
@@ -166,8 +177,9 @@ export default {
     },
   },
 
+  // TODO: Validations!
   methods: {
-    ...mapActions(useMultiWallet, ['querier']),
+    ...mapActions(useMultiWallet, ['querier', 'getNetworkForAccount']),
     ...mapActions(useTaskCreator, ['updateTask', 'updateTaskContext']),
     setIntervalOption(interval: any) {
       let i: any = "Immediate"
@@ -187,6 +199,11 @@ export default {
           break;
         default:
           break;
+      }
+
+      if (i === 'Immediate' && (interval.type === 'has_balance_gte' || interval.type === 'has_balance_lte')) {
+        // Set the watch address straight away with my signer as default:
+        if (this.context?.signer_addr) this.setIntervalBalanceAddress(this.context.signer_addr)
       }
 
       this.updateTask({ interval: i })
@@ -211,27 +228,105 @@ export default {
       this.intervalCustom = custom
     },
     setIntervalBalanceAsset(asset: any) {
-      console.log('TODO: setIntervalBalanceAsset', asset);
+      this.watchToken = asset
+      this.setQuery_HasBalance()
     },
     setIntervalBalanceAddress(address: Addr) {
-      console.log('TODO: setIntervalBalanceAddress', address);
+      this.watchAddress = address
+      this.setQuery_HasBalance()
+    },
+    setQuery_HasBalance() {
+      if (!this.watchAddress || !this.watchToken) return;
+      const type = this.intervalOption.type
+      const rawAsset = this.watchToken
+      const chain = this.getNetworkForAccount({ address: this.watchAddress })
+      const asset = getAssetByDenomOnChain(rawAsset.denom, chain)
+      if (!asset) return;
+
+      // balance logic if native/cw20 token
+      // NOTE: How to check IBC balance?
+      let required_balance = {}
+      if (isNativeAsset(asset)) {
+        required_balance = {
+          native: [this.watchToken]
+        }
+      }
+      if (isCw20Asset(asset)) {
+        required_balance = {
+          cw20: {
+            address: asset.address || '',
+            amount: this.watchToken.amount,
+          }
+        }
+      }
+
+      // Get the deployed rules contract for balances
+      const deployed = getDeployedContractsByChain(chain)
+      const contract_addr = deployed?.rules
+      if (!contract_addr) return;
+
+      const queryMsg = queriesCatalog.hasBalanceLogicType({
+        contract_addr,
+        address: this.watchAddress,
+        required_balance: required_balance as GenericBalance,
+        type,
+      })
+
+      // update the task with this query rule
+      this.updateTask({ queries: [queryMsg] })
     },
     setBoundaryStart(value: any) {
       this.selectedStart = value
+
+      // Reset any set fields if immediate
+      if (value.type === 'immediate') {
+        if (this.boundary.Height?.start) delete this.boundary.Height.start
+        if (this.boundary.Time?.start) delete this.boundary.Time.start
+      }
+
+      // clean up if missing state
+      if (this.boundary?.Height) {
+        if (Object.keys(this.boundary.Height).length == 0) this.boundary = null
+      }
+      if (this.boundary?.Time) {
+        if (Object.keys(this.boundary.Time).length == 0) this.boundary = null
+      }
+
+      if (this.boundary) this.updateTask({ boundary: { ...this.boundary } })
+      else this.updateTask({ boundary: null })
     },
     setBoundaryEnd(value: any) {
       this.selectedEnd = value
+
+      // Reset any set fields if immediate
+      if (value.type === 'immediate') {
+        if (this.boundary.Height?.end) delete this.boundary.Height.end
+        if (this.boundary.Time?.end) delete this.boundary.Time.end
+      }
+
+      // clean up if missing state
+      if (this.boundary?.Height) {
+        if (Object.keys(this.boundary.Height).length == 0) this.boundary = null
+      }
+      if (this.boundary?.Time) {
+        if (Object.keys(this.boundary.Time).length == 0) this.boundary = null
+      }
+      
+      if (this.boundary) this.updateTask({ boundary: { ...this.boundary } })
+      else this.updateTask({ boundary: null })
     },
     setBoundaryStartValue(v: any) {
       const value = v || this.timestampStart
       
       if (this.selectedStart.type === 'Height') {
-        delete this.boundary.Time
+        if (!this.boundary) this.boundary = {}
+        if (this.boundary?.Time) delete this.boundary.Time
         this.boundary.Height = this.boundary.Height || {}
         this.boundary.Height.start = parseInt(value)
       }
       if (this.selectedStart.type === 'Time') {
-        delete this.boundary.Height
+        if (!this.boundary) this.boundary = {}
+        if (this.boundary?.Height) delete this.boundary.Height
         this.boundary.Time = this.boundary.Time || {}
         this.boundary.Time.start = new Date(value).getTime()
       }
@@ -241,13 +336,15 @@ export default {
     setBoundaryEndValue(v: any) {
       const value = v || this.timestampEnd
 
-      if (this.selectedStart.type === 'Height') {
-        delete this.boundary.Time
+      if (this.selectedEnd.type === 'Height') {
+        if (!this.boundary) this.boundary = {}
+        if (this.boundary?.Time) delete this.boundary.Time
         this.boundary.Height = this.boundary.Height || {}
         this.boundary.Height.end = parseInt(value)
       }
-      if (this.selectedStart.type === 'Time') {
-        delete this.boundary.Height
+      if (this.selectedEnd.type === 'Time') {
+        if (!this.boundary) this.boundary = {}
+        if (this.boundary?.Height) delete this.boundary.Height
         this.boundary.Time = this.boundary.Time || {}
         this.boundary.Time.end = new Date(value).getTime()
       }
@@ -255,24 +352,26 @@ export default {
       this.updateTask({ boundary: { ...this.boundary } })
     },
     async getCurrentBlockHeight() {
-      // TODO: Get current "sender" account's chain name
-      const q = await this.querier(this.accounts[0].chain.chain_name)
+      const q = await this.querier(this.signer.chain.chain_name)
       const r = await q.status()
       if (r?.syncInfo?.latestBlockHeight) this.blockHeight = r.syncInfo.latestBlockHeight
     },
   },
 
   mounted() {
-    // TODO: Add back!
-    // this.getCurrentBlockHeight()
-    // // init defaults
-    // this.fromAccount = this.accounts[0]
-    // this.toAccount = this.accounts[0]
-    // if (!this.fromAccount || this.accounts.length <= 0) return []
-    // let acc = this.fromAccount || this.accounts[0]
-    // if (!acc) return
-    // this.availableTokens = getChainAssetList(acc.chain)
-    // if (this.availableTokens) this.fromToken = this.availableTokens[0]
+    this.signer = this.accounts[0]
+    // Get current "sender" account's chain name
+    if (this.context?.signer_addr) {
+      const signer = this.accounts.find((a: Account) => a.address === this.context.signer_addr)
+      if (signer) this.signer = signer
+    }
+    if (!this.signer) return;
+
+    // init defaults
+    this.getCurrentBlockHeight()
+    this.availableTokens = getChainAssetList(this.signer.chain)
+    this.watchAddress = this.signer.address
+    if (this.availableTokens) this.watchToken = this.availableTokens[0]
   },
 
   watch: {

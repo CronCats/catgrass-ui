@@ -37,7 +37,7 @@ export interface AddressInputProps {
 }
 
 export default {
-  props: ["error", "validation", "onChange", "disabled", "required", "className", "containerClassName", "placeholder"],
+  props: ["default", "error", "validation", "onChange", "disabled", "required", "className", "containerClassName", "placeholder"],
 
   components: {
     WalletIcon,
@@ -56,6 +56,10 @@ export default {
     reset() {
       this.v = null
     },
+  },
+
+  mounted() {
+    if (this.default) this.v = this.default
   },
 };
 </script>

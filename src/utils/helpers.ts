@@ -1,7 +1,7 @@
 import type { Asset } from '@chain-registry/types'
 import { assets, chains } from "chain-registry";
 
-import { chainColors, unsupportedChainNames } from "./constants";
+import { chainColors, unsupportedChainNames, deployedContracts } from "./constants";
 import ibcAssets from "./ibc_assets.json";
 import type {
   AssetList,
@@ -24,6 +24,12 @@ export const getChainData = (chain: any) => {
     brandColor: chainColors[chainName],
     supported: !unsupportedChainNames.includes(chainName),
   };
+};
+
+export const getDeployedContractsByChain = (chain: any): any | undefined => {
+  if (!chain || !chain.chain_name) return
+  const chainName = chain.chain_name.replace('testnet', '')
+  return deployedContracts[chainName]
 };
 
 export const getChainAssetList = (chain: any): Asset[] | undefined => {

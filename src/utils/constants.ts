@@ -7,29 +7,37 @@ export const appConfig = {
 export const deployedContracts = {
   archway: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_ARCHWAY || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_ARCHWAY || '',
   },
   juno: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_JUNO || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_JUNO || '',
   },
   quasar: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_QUASAR || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_QUASAR || '',
   },
   osmosis: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_OSMOSIS || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_OSMOSIS || '',
   },
   neutron: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_NEUTRON || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_NEUTRON || '',
   },
   secret: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_SECRET || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_SECRET || '',
   },
   stargaze: {
     manager: import.meta.env.VITE_CONTRACT_MANAGER_STARGAZE || '',
+    rules: import.meta.env.VITE_CONTRACT_RULES_STARGAZE || '',
   },
 
   // NON-CosmWasm, but ICA
   cosmoshub: {
     manager: '',
+    rules: '',
   },
 }
 

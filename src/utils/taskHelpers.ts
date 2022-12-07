@@ -61,7 +61,7 @@ export const intervalUxOptions = [
     sort: 5,
     Icon: ArrowTrendingUpIcon,
     title: 'When balance above',
-    type: 'balance_gt',
+    type: 'has_balance_gte',
     data: {
       intervalType: Interval.Immediate,
       intervalValue: null,
@@ -71,7 +71,7 @@ export const intervalUxOptions = [
     sort: 6,
     Icon: ArrowTrendingDownIcon,
     title: 'When balance below',
-    type: 'balance_lt',
+    type: 'has_balance_lte',
     data: {
       intervalType: Interval.Immediate,
       intervalValue: null,

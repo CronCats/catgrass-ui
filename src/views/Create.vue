@@ -158,7 +158,7 @@ export default {
     ...mapActions(useTaskCreator, ['setDefaultTask', 'resetTaskCreator']),
     nextSection() {
       this.currentIndex = this.currentIndex + 1
-      console.log('NEXT:', this.task, this.context);
+      console.log('NEXT:', JSON.stringify(this.task), JSON.stringify(this.context));
     },
     prevSection() {
       this.currentIndex = this.currentIndex - 1

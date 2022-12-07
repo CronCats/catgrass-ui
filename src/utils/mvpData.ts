@@ -19,7 +19,7 @@ export const successRecipeData = {
 
 export const getCosmosMsg = (msg: any, gas_limit?: number) => ({ msg, gas_limit, })
 
-export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: Addr, msg: any, funds: Coin[] }) => {
+export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: Addr, msg: any, funds: Coin[] | undefined }) => {
   return getCosmosMsg({
     wasm: {
       execute: {
@@ -34,37 +34,45 @@ export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: A
 
 // TODO: Remove someday :)
 export const queriesCatalog = {
-  hasBalanceGte({ contract_addr, address, required_balance }: { contract_addr: Addr, address: Addr, required_balance: GenericBalance }) {
-    return getCosmosMsg({
+  hasBalanceLogicType({ contract_addr, type, address, required_balance }: { contract_addr: Addr, address: Addr, type: string, required_balance: GenericBalance }) {
+    return {
       contract_addr,
       msg: {
-        has_balance_gte: {
+        // has_balance_gte
+        // has_balance_gt
+        // has_balance_lte
+        // has_balance_lt
+        // has_balance_eq
+        // has_balance_ne
+        [type]: {
           address,
           required_balance,
         }
-      }
-    })
+      },
+    }
   },
   getNativeBalance({ contract_addr, address, denom }: { contract_addr: Addr, address: Addr, denom: string }) {
-    return getCosmosMsg({
+    return getWasmExecMsg({
       contract_addr,
       msg: {
         get_balance: {
           address,
           denom,
         }
-      }
+      },
+      funds: []
     })
   },
   getCw20Balance({ contract_addr, cw20_contract, address }: { contract_addr: Addr, cw20_contract: Addr, address: Addr }) {
-    return getCosmosMsg({
+    return getWasmExecMsg({
       contract_addr,
       msg: {
         get_cw20_balance: {
           cw20_contract,
           address,
         }
-      }
+      },
+      funds: []
     })
   },
 }

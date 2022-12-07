@@ -3,6 +3,7 @@ import { assets, chains } from "chain-registry";
 
 import { chainColors, unsupportedChainNames, deployedContracts } from "./constants";
 import ibcAssets from "./ibc_assets.json";
+import { Interval } from './taskHelpers';
 import type {
   AssetList,
   Coin,
@@ -192,3 +193,36 @@ export function nativeTokenDecimals(denom: string): number | undefined {
 }
 
 export const addCommas = (s: string) => s.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+export const formatInterval = (interval: any) => {
+  if (!interval) return ''
+
+  let s = ''
+  
+  if (interval.Block) s = `Every ${interval.Block} blocks`
+  else if (interval.Cron) s = `Cron Spec: "${interval.Cron}"`
+  else s = interval
+
+  return s
+}
+
+// Types:
+// Timestamp: Return Humanized
+// Block: Return CSV number
+// Examples: 'When funds run out' | 'Tuesday, Oct 14th' | '5,134,948' | 'Immediately'
+export const formatBoundary = (boundary: any, type: string) => {
+  let s = null
+
+  if (boundary?.Height && boundary?.Height[type]) {
+    s = `Block ${addCommas(`${boundary.Height[type]}`)}`
+  }
+
+  if (boundary?.Time && boundary?.Time[type]) {
+    const t = new Date(parseInt(boundary.Time[type]))
+    s = t.toLocaleString()
+  }
+
+  if (!s) s = type === 'start' ? 'Immediately' : 'When funds run out'
+
+  return s
+}

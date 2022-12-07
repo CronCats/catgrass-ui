@@ -299,7 +299,7 @@ export default {
       this.selectedEnd = value
 
       // Reset any set fields if immediate
-      if (value.type === 'immediate') {
+      if (value.type === 'event_funds_lt') {
         if (this.boundary.Height?.end) delete this.boundary.Height.end
         if (this.boundary.Time?.end) delete this.boundary.Time.end
       }
@@ -366,6 +366,8 @@ export default {
       if (signer) this.signer = signer
     }
     if (!this.signer) return;
+
+    // TODO: Set default interval, based on UI (every day)
 
     // init defaults
     this.getCurrentBlockHeight()

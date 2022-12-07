@@ -7,6 +7,10 @@
     <br />
     <br />
 
+    <!-- TODO: Queries -->
+    <!-- TODO: Transforms -->
+    <!-- TODO: Actions -->
+
     <!-- <Label class="mb-2" name={t('form.actions')} />
 
     {actions.map((action: Action, id) => (
@@ -16,12 +20,6 @@
     ))}
 
     <br /> -->
-
-    <div v-if="rules.length > 0">
-      <Label class="mb-2" name="Rules" />
-
-      <br />
-    </div>
 
     <InputLabel class="mb-2" name="Schedule" />
 
@@ -48,131 +46,17 @@
 </template>
 
 <script lang="ts">
-import { ArrowPathRoundedSquareIcon } from '@heroicons/vue/24/outline'
+import { mapState } from "pinia";
+import { useMultiWallet } from "@/stores/multiWallet";
+import { useTaskCreator } from "@/stores/taskCreator";
+import { formatInterval, formatBoundary, } from "@/utils/helpers"
+import {
+  ArrowPathRoundedSquareIcon,
+} from '@heroicons/vue/24/outline'
 import Label from '../core/display/Label.vue'
 import RecipeCard from '../RecipeCard.vue'
 
-const formatInterval = (interval: any, custom: any, rule: any) => {
-  if (!interval || !interval.key) return ''
-
-  let s = ''
-
-  switch (interval.key) {
-    case 'cron_daily':
-    case 'cron_hourly':
-    case 'cron_minutely':
-    case 'blocks_1000':
-      s = interval.value.title
-      break
-    case 'balance_gt':
-    case 'balance_lt':
-      s = `${interval.value.title} ${rule.input} ${rule.select.toUpperCase()}`
-      break
-    case 'custom':
-      if (custom && custom.select) {
-        if (custom.select === 'block') s = `Every ${custom.input} blocks`
-        if (custom.select === 'cron') s = `Cron Spec: "${custom.input}"`
-      }
-      break
-    default:
-      s = 'N/A'
-  }
-
-  return s
-}
-
-// Types:
-// Timestamp: Return Humanized
-// Block: Return CSV number
-// Examples: 'When funds run out' | 'Tuesday, Oct 14th' | '5,134,948' | 'Immediately'
-const formatBoundary = (boundary: any, custom?: any) => {
-  if (!boundary || !boundary.key) return ''
-
-  let s = ''
-
-  switch (boundary.key) {
-    case 'immediate':
-    case 'event_funds_lt':
-      s = boundary.value.title
-      break
-    case 'cron_custom':
-      const t = new Date(parseInt(custom))
-      s = t.toLocaleString()
-      break
-    case 'blocks_custom':
-      // TODO: support other locales
-      s = `Block ${parseFloat(`${custom}`).toLocaleString('en-US')}`
-      break
-    default:
-      s = 'N/A'
-  }
-
-  return s
-}
-
-// // TODO: Read from store
-// const [
-//   fromAccount,
-//   toAccount,
-//   fromToken,
-//   toToken,
-//   amountToSwap,
-//   interval,
-//   intervalCustom,
-//   ruleBalance,
-//   ruleBalanceAddress,
-//   boundaryStart,
-//   boundaryStartNumber,
-//   boundaryEnd,
-//   boundaryEndNumber,
-// ] = getValues([
-//   'from_account',
-//   'to_account',
-//   'from_token',
-//   'to_token',
-//   'amount_to_swap_each',
-//   'interval',
-//   'interval_custom',
-//   'rule_balance',
-//   'rule_balance_address',
-//   'boundary_start',
-//   'cadence_start_number',
-//   'boundary_end',
-//   'cadence_end_number',
-// ])
-
-// DEMO DATA
-const actions = [
-  {
-    Icon: ArrowPathRoundedSquareIcon,
-    title: 'form.action_dca_title',
-    subtitle: 'form.action_dca_subtitle',
-  },
-]
-
-const rules = []
-
-const schedule = {
-  interval: 'formatInterval(interval, intervalCustom, ruleBalance)',
-  start: 'formatBoundary(boundaryStart, boundaryStartNumber)',
-  end: 'formatBoundary(boundaryEnd, boundaryEndNumber)',
-}
-
-// TODO:
-const summary = {
-  fees: '0.234913 JUNO', // gasWanted 380622, gasUsed 389326
-  funds: '10 JUNO',
-  // duration: '',
-  occurances: '~10',
-  // signatures: '',
-}
-
-let networks: Chain[] = []
-
-// if (fromAccount?.value?.chain) networks.push(fromAccount.value.chain)
-// // TODO: Filter dups?
-// if (toAccount?.value?.chain) networks.push(toAccount.value.chain)
-
+// TODO: Change this!
 const recipeData = {
   title: 'Dollar Cost Average from $JUNO to $NETA',
   // subtitle: '',
@@ -182,12 +66,10 @@ const recipeData = {
   totalBalance: { amount: '10000000', denom: 'ujuno' },
   actions: [],
   rules: [],
-  networks,
+  networks: [],
 }
 
 export default {
-  // props: [""],
-
   components: {
     ArrowPathRoundedSquareIcon,
     Label,
@@ -196,24 +78,59 @@ export default {
 
   data() {
     return {
-      actions,
-      rules,
-      schedule,
-      summary,
       recipeData,
     }
   },
 
   computed: {
-    fn() {
-      // 
+    ...mapState(useMultiWallet, ['networks', 'accounts']),
+    ...mapState(useTaskCreator, ['task', 'context']),
+    schedule() {
+      const schedule: any = {}
+
+      if (this.interval) schedule.interval = this.interval
+      if (this.start) schedule.start = this.start
+      if (this.end) schedule.end = this.end
+
+      return schedule
+    },
+    summary() {
+      const summary: any = {}
+
+      if (this.fees) summary.fees = this.fees
+      if (this.funds) summary.funds = this.funds
+      if (this.occurances) summary.occurances = this.occurances
+
+      return summary
+    },
+    interval() {
+      if (!this.task?.interval) return;
+      return formatInterval(this.task.interval)
+    },
+    start() {
+      return formatBoundary(this.task.boundary, 'start')
+    },
+    end() {
+      return formatBoundary(this.task.boundary, 'end')
+    },
+    fees() {
+      // TODO: Run simulate
+      return '0.234913 JUNO' // gasWanted 380622, gasUsed 389326
+    },
+    funds() {
+      // TODO:
+      return '10 JUNO'
+    },
+    occurances() {
+      // TODO:
+      return '~10'
     },
   },
 
   methods: {
-    fn() {
-      // 
-    },
+    // fn() {
+    //   // 
+    // },
   },
 };
 </script>

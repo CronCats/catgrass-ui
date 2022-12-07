@@ -11,6 +11,7 @@ import type {
   ChainMetadata,
   Chain,
   Expiration,
+  TaskRequest,
 } from "./types";
 
 export const getChainData = (chain: any) => {
@@ -241,6 +242,34 @@ export const getFeeEstimateTotal = () => {
 // 2. Cron Spec
 // 3. Rule Based - Queries make open ended results. This will always report 1, until future computations can be made.
 //      TODO: Add a way to make advanced funding adjustments if people wanna fill their task more than the computed.
-export const getOccurancesTotal = (interval: typeof Interval, boundary: Boundary) => {
-  // 
+export const getOccurancesTotal = (task: TaskRequest) => {
+  // Once / Immediate: will always report 1, until future computations can be made.
+  if (task.interval === 'Once' || task.interval === 'Immediate') return 1
+
+  // Block Height: compute range
+  if ('Block' in task.interval) {
+    const start = 0
+    const end = 0
+    const blocks = parseInt(task.interval.Block)
+
+    // if have start && end, then we know finite range (includes current block), rounds down
+    if (start && end) return Math.floor((end - start) / blocks)
+
+    // if have no end, then we have to know total funds attached, rounds down
+    if (start && !end) {
+      // TODO: THIS!!
+      // return Math.floor((end - start) / parseInt(task.interval.Block))
+    }
+
+    // if no start/end, we must assume this is happening only 1 time
+    return 1
+  }
+
+  // Cron Spec: compute range
+  if ('Cron' in task.interval) {
+    // TODO: Compute the times based on funds, rounds down
+    return 'TODO:'
+  }
+
+  return 0
 }

@@ -118,8 +118,8 @@ const actions = [
   },
   {
     Icon: DocumentTextIcon,
-    title: 'Custom Message',
-    subtitle: 'Freeform json, use caution!',
+    title: 'Custom Messages',
+    subtitle: 'Freeform json task creation, use caution!',
     Component: CustomMessage,
   },
 ]
@@ -173,6 +173,12 @@ export default {
         console.log('actions', this.task.actions);
         const gasUsed = await this.simulateExec(this.signer, this.task.actions)
         console.log('gasUsed', gasUsed);
+        // TODO: Gas simulation
+        // - get all actions totals
+        // - get base croncat operation gas
+        // - get tally of all funds needed
+        // - compute: occurances
+        // - compute: total funds, total fees
       }
     },
     prevSection() {

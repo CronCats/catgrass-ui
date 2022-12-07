@@ -120,16 +120,16 @@ export default {
     },
     feesTotal() {
       // TODO: get from simulate estimate
-      // getFeeEstimateTotal
-      return '0.234913 JUNO' // gasWanted 380622, gasUsed 389326
+      // getFeeEstimateTotal()
+      return '0.123456 JUNO' // gasWanted 380622, gasUsed 389326
     },
     fundsTotal() {
       // TODO:
-      return '10 JUNO'
+      return '1.234 JUNO'
     },
     occurances() {
-      const occurred = getOccurancesTotal(this.task.interval, this.task.boundary)
-      return '~10'
+      if (!this.task || !this.task.interval) return '0'
+      return `~${getOccurancesTotal(this.task) }`
     },
   },
 

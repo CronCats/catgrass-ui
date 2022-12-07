@@ -156,9 +156,24 @@ export default {
 
   methods: {
     ...mapActions(useTaskCreator, ['setDefaultTask', 'resetTaskCreator']),
-    nextSection() {
+    ...mapActions(useMultiWallet, ['simulateExec']),
+    async nextSection() {
       this.currentIndex = this.currentIndex + 1
       console.log('NEXT:', JSON.stringify(this.task), JSON.stringify(this.context));
+
+      if (this.currentIndex === 2) {
+        this.signer = this.accounts[0]
+        // Get current "sender" account's chain name
+        if (this.context?.signer_addr) {
+          const signer = this.accounts.find((a: Account) => a.address === this.context.signer_addr)
+          if (signer) this.signer = signer
+        }
+        
+        if (!this.signer) return;
+        console.log('actions', this.task.actions);
+        const gasUsed = await this.simulateExec(this.signer, this.task.actions)
+        console.log('gasUsed', gasUsed);
+      }
     },
     prevSection() {
       this.currentIndex = this.currentIndex - 1

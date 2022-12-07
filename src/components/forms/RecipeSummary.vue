@@ -21,7 +21,7 @@
 
     <br /> -->
 
-    <InputLabel class="mb-2" name="Schedule" />
+    <Label class="mb-2" name="Schedule" />
 
     <div class="py-2 px-4 bg-white rounded-lg">
       <div v-for="(k, i) in Object.keys(schedule)" :key="i" class="flex justify-between my-1 uppercase">
@@ -36,7 +36,7 @@
 
     <div class="py-2 px-4 bg-white rounded-lg">
       <div v-for="(k, i) in Object.keys(summary)" :key="i" class="flex justify-between my-1 uppercase">
-        <span>{{k}}</span>
+        <span>{{ formatTitle(k) }}</span>
         <span>{{summary[k]}}</span>
       </div>
     </div>
@@ -49,7 +49,12 @@
 import { mapState } from "pinia";
 import { useMultiWallet } from "@/stores/multiWallet";
 import { useTaskCreator } from "@/stores/taskCreator";
-import { formatInterval, formatBoundary, } from "@/utils/helpers"
+import {
+  formatInterval,
+  formatBoundary,
+  getOccurancesTotal,
+  getFeeEstimateTotal,
+} from "@/utils/helpers"
 import {
   ArrowPathRoundedSquareIcon,
 } from '@heroicons/vue/24/outline'
@@ -97,8 +102,8 @@ export default {
     summary() {
       const summary: any = {}
 
-      if (this.fees) summary.fees = this.fees
-      if (this.funds) summary.funds = this.funds
+      if (this.fundsTotal) summary.funds_total = this.fundsTotal
+      if (this.feesTotal) summary.fees_total = this.feesTotal
       if (this.occurances) summary.occurances = this.occurances
 
       return summary
@@ -113,24 +118,25 @@ export default {
     end() {
       return formatBoundary(this.task.boundary, 'end')
     },
-    fees() {
-      // TODO: Run simulate
+    feesTotal() {
+      // TODO: get from simulate estimate
+      // getFeeEstimateTotal
       return '0.234913 JUNO' // gasWanted 380622, gasUsed 389326
     },
-    funds() {
+    fundsTotal() {
       // TODO:
       return '10 JUNO'
     },
     occurances() {
-      // TODO:
+      const occurred = getOccurancesTotal(this.task.interval, this.task.boundary)
       return '~10'
     },
   },
 
   methods: {
-    // fn() {
-    //   // 
-    // },
+    formatTitle(str: string) {
+      return str.replace(/_/g, ' ')
+    },
   },
 };
 </script>

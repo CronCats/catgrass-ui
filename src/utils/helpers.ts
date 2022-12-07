@@ -6,6 +6,7 @@ import ibcAssets from "./ibc_assets.json";
 import { Interval } from './taskHelpers';
 import type {
   AssetList,
+  Boundary,
   Coin,
   ChainMetadata,
   Chain,
@@ -35,7 +36,8 @@ export const getDeployedContractsByChain = (chain: any): any | undefined => {
 
 export const getChainAssetList = (chain: any): Asset[] | undefined => {
   if (!chain || !chain.chain_name) return
-  const chainName = chain.chain_name.replace('testnet', '')
+  // const chainName = chain.chain_name.replace('testnet', '')
+  const chainName = chain.chain_name
   return (assets.find(({ chain_name }: Asset) => chain_name === chainName))?.assets || [];
 };
 
@@ -225,4 +227,20 @@ export const formatBoundary = (boundary: any, type: string) => {
   if (!s) s = type === 'start' ? 'Immediately' : 'When funds run out'
 
   return s
+}
+
+export const getFeeEstimateTotal = () => {
+  // gasEstimate: 66668
+  // gasMultiplier: 1.3
+  // gasAmount: 86668
+  // fee: Math.round(0.025 * 86668) / 1e6 = 0.002167
+}
+
+// Returns the total estimated count of occurances based on 3 scenarios:
+// 1. Block range (Once, Immediate, Block Height)
+// 2. Cron Spec
+// 3. Rule Based - Queries make open ended results. This will always report 1, until future computations can be made.
+//      TODO: Add a way to make advanced funding adjustments if people wanna fill their task more than the computed.
+export const getOccurancesTotal = (interval: typeof Interval, boundary: Boundary) => {
+  // 
 }

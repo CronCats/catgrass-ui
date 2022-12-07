@@ -3,9 +3,11 @@ import { fromBech32 } from "@cosmjs/encoding";
 import { assets, chains } from "chain-registry";
 import type { Chain, AssetList } from "@chain-registry/types";
 import { Decimal } from "@cosmjs/math";
-import { GasPrice, QueryClient } from "@cosmjs/stargate";
+import { GasPrice, QueryClient, SigningStargateClient } from "@cosmjs/stargate";
+import { encodeAsAny } from "@cosmjs/proto-signing";
 import { CosmWasmClient, setupWasmExtension } from '@cosmjs/cosmwasm-stargate';
 import { BlockResponse, HttpBatchClient, Tendermint34Client, TxResponse } from "@cosmjs/tendermint-rpc";
+import { cwMsgToEncodeObject } from "@/utils/cwMsgToEncodeObject"
 import type { Coin, Account, ChainMetadata } from "@/utils/types";
 import { getChainData } from "@/utils/helpers";
 import { appConfig, filteredChainNames } from "@/utils/constants";
@@ -258,7 +260,7 @@ export const useMultiWallet = defineStore(
         }
       },
       // NON-Signer, Cached querier -- needs to be decoupled from a signed in wallet for all kinds of non-wallet info scenarios
-      async querier(chainName: string) {
+      async querier(chainName: string, batchSizeLimit?: number, dispatchInterval?: number) {
         if (!chainName) return Promise.reject('Missing required params')
         let querier = tmProviderCache[chainName]
         if (!querier) {
@@ -267,8 +269,8 @@ export const useMultiWallet = defineStore(
           const rpcEndpoint = await this.walletManager.getRpcEndpoint()
           try {
             const httpBatchClient = new HttpBatchClient(rpcEndpoint, {
-              batchSizeLimit: 5,
-              dispatchInterval: 1 * 1000
+              batchSizeLimit: batchSizeLimit || 5,
+              dispatchInterval: dispatchInterval || 1 * 1000
             })
             querier = await Tendermint34Client.create(httpBatchClient)
           } catch (e) {
@@ -304,12 +306,10 @@ export const useMultiWallet = defineStore(
         }
       },
 
-      async execContract(account: Account, contractAddr: string, msg: any, fee?: any, memo?: any, funds?: any) {
-        if (!account || !contractAddr || !msg) return Promise.reject('Missing required params')
-
+      async getSignerClient(account: Account) {
         // Quick check if wallet is ready or needs nudge:
         const { address, username } = this.walletManager;
-        if (!address || !username) {
+        if (!address || !username || account.address !== address) {
           // Derive the wallet & chain ID from account
           const chain = this.getNetworkForAccount(account)
           const walletName = account.walletName || ''
@@ -317,7 +317,13 @@ export const useMultiWallet = defineStore(
         }
 
         // Now we have the account loaded, get signer
-        const signer = await this.walletManager.getSigningCosmWasmClient()
+        return this.walletManager.getSigningCosmWasmClient()
+        // return this.walletManager.getSigningStargateClient()
+      },
+
+      async execContract(account: Account, contractAddr: string, msg: any, fee?: any, memo?: any, funds?: any) {
+        if (!account || !contractAddr || !msg) return Promise.reject('Missing required params')
+        const signer = await this.getSignerClient(account)
 
         try {
           // NOTE: uses 'executeMultiple' under the hood
@@ -331,6 +337,26 @@ export const useMultiWallet = defineStore(
           )
           return res
         } catch (e) {
+          return Promise.reject(e)
+        }
+      },
+
+      async simulateExec(account: Account, msgs: any[], memo?: string) {
+        if (!account) return Promise.reject('Missing required params')
+        const signer = await this.getSignerClient(account)
+
+        try {
+          const encodedMsgs = msgs.map((msg) => cwMsgToEncodeObject(msg.msg, account.address))
+          const res = await signer.simulate(
+            account.address,
+            encodedMsgs,
+            'auto',
+          );
+          
+          // gasEstimated
+          return res
+        } catch (e) {
+          // Handle errors! Mostlikely the signer doesn't match the active in keplr/wallet. Tell user to check that.
           return Promise.reject(e)
         }
       },

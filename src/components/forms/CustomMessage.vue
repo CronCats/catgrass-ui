@@ -279,7 +279,6 @@ export default {
       this.updateTask(task)
     },
     removeJsonByType(idx: number, type: string) {
-      console.log('removeJsonByType', idx, type, this[type]);
       const task: any = {}
 
       this[type].splice(idx, 1)

@@ -22,7 +22,7 @@ export const junoswapPools = {
           "denom": "ujuno"
         },
         {
-          "id": "",
+          "chain_name": "juno",
           "chain_id": "juno-1",
           "token_address": "juno15u3dt79t6sxxa3x3kpkhzsy56edaa5a66wvt3kxmukqjz2sx0hes5sn38g",
           "symbol": "RAW",

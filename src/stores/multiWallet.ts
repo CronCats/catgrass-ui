@@ -9,7 +9,7 @@ import { CosmWasmClient, setupWasmExtension } from '@cosmjs/cosmwasm-stargate';
 import { BlockResponse, HttpBatchClient, Tendermint34Client, TxResponse } from "@cosmjs/tendermint-rpc";
 import { cwMsgToEncodeObject } from "@/utils/cwMsgToEncodeObject"
 import type { Coin, Account, ChainMetadata } from "@/utils/types";
-import { getChainData } from "@/utils/helpers";
+import { getChainData, uniq } from "@/utils/helpers";
 import { appConfig, filteredChainNames } from "@/utils/constants";
 import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
 import { wallets as keplrWallet } from "@cosmos-kit/keplr";
@@ -63,18 +63,6 @@ export const WalletProvider = ({
     storageOptions
   )
 };
-
-function uniq(a: any[], param: any) {
-  return a.filter(function (item, pos, array) {
-    return (
-      array
-        .map(function (mapItem) {
-          return mapItem[param];
-        })
-        .indexOf(item[param]) === pos
-    );
-  });
-}
 
 export const getDefaultBalance = (microDenom = 'ujuno') => ({ amount: '0', denom: microDenom })
 

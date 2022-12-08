@@ -34,6 +34,7 @@ export const useTaskCreator = defineStore(
         Object.keys(obj).forEach(k => {
           this._task[k] = obj[k]
         })
+        console.log('updateTask store', this._task);
       },
       updateTaskContext(obj: any) {
         Object.keys(obj).forEach(k => {

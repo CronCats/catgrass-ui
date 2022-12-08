@@ -117,9 +117,7 @@ export default {
       this.availableTokens = getChainAssetList(account.chain)
 
       // signer account
-      this.updateTaskContext({
-        signer_addr: account.address,
-      })
+      this.updateTaskContext({ signer_addr: account.address })
     },
     pickTokenInput(coin: Coin) {
       this.balance = coin

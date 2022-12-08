@@ -14,6 +14,18 @@ import type {
   TaskRequest,
 } from "./types";
 
+export const uniq =(a: any[], param: any) => {
+  return a.filter(function (item, pos, array) {
+    return (
+      array
+        .map(function (mapItem) {
+          return mapItem[param];
+        })
+        .indexOf(item[param]) === pos
+    );
+  });
+}
+
 export const getChainData = (chain: any) => {
   const c = chain && chain.chain ? chain.chain : chain
   const chainName = `${c.chain_name}`.replace('testnet', '')

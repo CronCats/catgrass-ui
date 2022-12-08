@@ -73,7 +73,6 @@ export default {
 
   mounted() {
     // init defaults
-    console.log('this.networks', this.networks);
     this.chainItems = [this.networks[0]]
   },
 };

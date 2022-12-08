@@ -27,7 +27,7 @@ export default {
 
   methods: {
     getAccountImage(asset: Asset): string {
-      return asset?.logo_URIs?.png || ''
+      return asset?.logoURI || asset?.logo_URIs?.png || ''
     }
   },
 };

@@ -18,6 +18,16 @@ export const Interval = {
 
 export const intervalUxOptions = [
   {
+    sort: 0,
+    Icon: BoltIcon,
+    title: 'Once',
+    type: 'once',
+    data: {
+      intervalType: Interval.Once,
+      intervalValue: null,
+    },
+  },
+  {
     sort: 1,
     Icon: ClockIcon,
     title: 'Every Day',

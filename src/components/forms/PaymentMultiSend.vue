@@ -156,11 +156,7 @@ export default {
     },
     removeRecipient(idx: number) {
       this.recipients.splice(idx, 1)
-
-      // remove the action as well
-      let { actions } = this.context
-      actions.splice(idx, 1)
-      this.updateTask({ actions })
+      this.updateTask({ actions: [...this.recipients] })
     },
   },
 

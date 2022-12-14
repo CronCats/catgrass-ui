@@ -46,6 +46,24 @@ import NumberInput from '@/components/core/inputs/NumberInput.vue'
 // TODO: 
 // OSMOSIS Setup
 
+// Formats junoswap denom/decimals to chain registry formatting in denom_units
+const getDenomUnitsFromPoolAssets = (asset: any): any[] => {
+  const units = [
+    {
+      denom: asset.denom,
+      exponent: 0,
+    }
+  ]
+
+  if (asset.decimals) units.push({
+    denom: asset.denom[0] === 'u' ? asset.denom.substring(1, asset.denom.length) : asset.denom,
+    exponent: asset.decimals,
+  })
+  console.log('getDenomUnitsFromPoolAssets units', units);
+  
+  return units
+}
+
 // JUNOSWAP Setup
 const junoswap = {
   formatToAsset(list) {
@@ -56,7 +74,7 @@ const junoswap = {
         allAssets.push({
           ...p,
           base: p.denom,
-          denom_units: [{ denom: p.denom, exponent: p.decimals }],
+          denom_units: getDenomUnitsFromPoolAssets(p),
         })
       })
     })
@@ -74,7 +92,7 @@ const junoswap = {
         if (p.denom !== fromToken.denom) allAssets.push({
           ...p,
           base: p.denom,
-          denom_units: [{ denom: p.denom, exponent: p.decimals }],
+          denom_units: getDenomUnitsFromPoolAssets(p),
         })
       })
     })
@@ -179,13 +197,13 @@ const junoswap = {
 }
 
 // TODO: Change to work based on all accounts (and their chain)
-const getSupportedDexChains = (chain: Chain) => {
+const isSupportedDexChain = (chain: Chain) => {
   const chainName = chain?.chain_name
-  if (!chainName) return []
-  const supported = []
+  if (!chainName) return false
+  let supported = false
 
   // TODO: add more once built
-  if (junoswapPools[chainName]) supported.push(chainName)
+  if (junoswapPools[chainName]) supported = true
 
   return supported
 }
@@ -249,12 +267,10 @@ export default {
     ...mapState(useMultiWallet, ['accounts']),
     ...mapState(useTaskCreator, ['task', 'context']),
     currentNetworkIsSupported() {
-      if (!this.fromAccount) return false
+      if (!this.fromAccount || !this.fromAccount.chain) return false
       const chain = this.fromAccount.chain
       if (!chain || !chain.chain_name) return false
-      const list = getSupportedDexChains(chain)
-      if (list.length <= 0) return false
-      return list.includes(chain.chain_name)
+      return isSupportedDexChain(chain)
     },
   },
 
@@ -290,7 +306,6 @@ export default {
       this.updateTaskData()
     },
     pickTokenInput(coin: Coin) {
-      // TODO: Change/check the base/denom amounts here! See payroll for inspiration
       this.fromToken = coin
       this.setAvailableToTokens()
       this.updateTaskData()
@@ -329,15 +344,24 @@ export default {
 
       // Update the task data
       this.updateTask({ queries, transforms, actions })
+
+      // Load context with the token amount needed for FUNDS
+      this.updateTaskContext({ attachedFunds: [this.fromToken] })
     },
   },
 
   mounted() {
     // init defaults
-    // TODO: Check for first supported network account!!!
     if (this.accounts.length <= 0) return
-    this.fromAccount = this.accounts[0]
-    this.toAccount = this.accounts[0]
+
+    // Check for first supported network account!!!
+    this.accounts.forEach((a: any) => {
+      if (!this.fromAccount && isSupportedDexChain(a.chain)) {
+        this.fromAccount = a
+        this.toAccount = a
+      }
+    })
+    
     if (!this.fromAccount) return
     this.setAvailableFromTokens(this.fromAccount)
   },

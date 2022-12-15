@@ -201,6 +201,7 @@ const jsonTypeOptions = [
   },
 ]
 
+// TODO: Validations
 export default {
   components: {
     AccountSelector,
@@ -256,10 +257,9 @@ export default {
     pickTokenInput(coin: Coin) {
       this.funds = coin
 
-      // attached funds
-      // TODO: Figure out cw20 setup as well
+      // Load context with the token amount needed for FUNDS
       this.updateTaskContext({
-        funds: [coin],
+        attachedFunds: [coin],
       })
     },
     setActiveJsonType(value: any) {

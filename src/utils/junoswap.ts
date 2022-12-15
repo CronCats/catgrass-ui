@@ -1,4 +1,3 @@
-
 // Pools, using hardcoded, as they dont change much
 // REF: https://wasmswap.io/pools_list.testnet.json
 // REF: https://raw.githubusercontent.com/CosmosContracts/junoswap-asset-list/main/pools_list.json

@@ -1,3 +1,4 @@
+import { fromBase64, fromUtf8, toBase64, toUtf8 } from '@cosmjs/encoding'
 import type { Addr, Coin, GenericBalance } from "@/utils/types"
 
 // TODO: Setup msgs for diff networks - so i can filter/access based on authed wallet
@@ -17,6 +18,21 @@ export const successRecipeData = {
   bgColor: '#F9226C',
 };
 
+export function encodeMessage(msg: any) {
+  return toBase64(toUtf8(JSON.stringify(msg)))
+}
+
+// REF: https://github.com/DA0-DA0/dao-dao-ui/blob/development/packages/utils/messages.ts#L12
+export function parseEncodedMessage(base64String?: string) {
+  if (base64String) {
+    const jsonMessage = fromUtf8(fromBase64(base64String))
+    if (jsonMessage) {
+      return JSON.parse(jsonMessage)
+    }
+  }
+  return undefined
+}
+
 export const getCosmosMsg = (msg: any, gas_limit?: number) => ({ msg, gas_limit, })
 
 export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: Addr, msg: any, funds: Coin[] | undefined }) => {
@@ -24,8 +40,7 @@ export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: A
     wasm: {
       execute: {
         contract_addr,
-        // TODO: need binary transform
-        msg,
+        msg: encodeMessage(msg),
         funds,
       }
     }
@@ -37,7 +52,7 @@ export const queriesCatalog = {
   hasBalanceLogicType({ contract_addr, type, address, required_balance }: { contract_addr: Addr, address: Addr, type: string, required_balance: GenericBalance }) {
     return {
       contract_addr,
-      msg: {
+      msg: encodeMessage({
         // has_balance_gte
         // has_balance_gt
         // has_balance_lte
@@ -48,32 +63,30 @@ export const queriesCatalog = {
           address,
           required_balance,
         }
-      },
+      }),
     }
   },
   getNativeBalance({ contract_addr, address, denom }: { contract_addr: Addr, address: Addr, denom: string }) {
-    return getWasmExecMsg({
+    return {
       contract_addr,
-      msg: {
+      msg: encodeMessage({
         get_balance: {
           address,
           denom,
         }
-      },
-      funds: []
-    })
+      }),
+    }
   },
   getCw20Balance({ contract_addr, cw20_contract, address }: { contract_addr: Addr, cw20_contract: Addr, address: Addr }) {
-    return getWasmExecMsg({
+    return {
       contract_addr,
-      msg: {
+      msg: encodeMessage({
         get_cw20_balance: {
           cw20_contract,
           address,
         }
-      },
-      funds: []
-    })
+      }),
+    }
   },
 }
 

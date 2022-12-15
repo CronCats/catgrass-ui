@@ -59,7 +59,6 @@ const getDenomUnitsFromPoolAssets = (asset: any): any[] => {
     denom: asset.denom[0] === 'u' ? asset.denom.substring(1, asset.denom.length) : asset.denom,
     exponent: asset.decimals,
   })
-  console.log('getDenomUnitsFromPoolAssets units', units);
   
   return units
 }
@@ -363,7 +362,11 @@ export default {
     })
     
     if (!this.fromAccount) return
+    console.log('this.fromAccount', this.fromAccount.address);
+    
     this.setAvailableFromTokens(this.fromAccount)
+    // TODO: Figure out why this is!?
+    this.updateTaskContext({ signer_addr: this.fromAccount.address })
   },
 };
 </script>

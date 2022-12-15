@@ -7,27 +7,9 @@
 
     <h3 class="mb-2 text-xl">Recipients</h3>
 
-    <div class="p-2 pb-0 -mx-2 mt-4 bg-gray-100 rounded-lg md:p-4 md:pb-0 md:-mx-4">
-      <Label class="mb-2" name="Recipient address" />
-      <AddressInput
-        containerclass="grow bg-white"
-        ref="addressRecipient"
-        :onChange="changeAddress"
-        :disabled="false"
-        :error="errors?.recipient_address"
-      />
+    <div class="p-2 pt-0 -mx-2 mt-4 md:p-4 md:pt-0 md:pb-0 md:-mx-4 bg-gray-100 rounded-lg">
 
-      <br />
-
-      <Label class="mb-2" name="Token amount sent each time" />
-      <TokenInputSelector ref="tokenRecipient" :onChange="pickTokenInput" :options="availableTokens" />
-
-      <Button @click="addRecipient" :active="true" class="mt-6 mb-4 btn-success" variant="primary">
-        <PlusIcon class="w-4" />
-        <span>Add Recipient</span>
-      </Button>
-
-      <div v-if="recipients.length > 0" class="p-2 -mx-2 mt-4 bg-white border-2 border-gray-100 rounded-lg md:p-4 md:-mx-4">
+      <div v-if="recipients.length > 0" class="p-2 -mx-2 mb-4 mt-0 bg-white border-2 border-gray-100 rounded-lg md:p-4 md:-mx-4">
         <div class="overflow-x-auto">
           <table class="table w-full table-compact">
             <thead>
@@ -55,6 +37,26 @@
           </table>
         </div>
       </div>
+
+      <Label class="mb-2 pt-2" name="Recipient address" />
+      <AddressInput
+        containerclass="grow bg-white"
+        ref="addressRecipient"
+        :onChange="changeAddress"
+        :disabled="false"
+        :error="errors?.recipient_address"
+      />
+
+      <br />
+
+      <Label class="mb-2" name="Token amount sent each time" />
+      <TokenInputSelector ref="tokenRecipient" :onChange="pickTokenInput" :options="availableTokens" />
+
+      <Button @click="addRecipient" :active="true" class="mt-6 mb-6 btn-success" variant="primary">
+        <PlusIcon class="w-4" />
+        <span>Add Recipient</span>
+      </Button>
+
     </div>
 
   </div>
@@ -80,6 +82,7 @@ import {
   TrashIcon,
 } from '@heroicons/vue/24/outline'
 
+// TODO: Validations
 export default {
   components: {
     TrashIcon,
@@ -146,15 +149,34 @@ export default {
         to_address: recipient.address,
         amount: `${recipient.balance.amount}`,
       }))
-      this.updateTask({ actions })
       this.recipients.push(recipient)
+      this.updateTask({ actions })
+      this.updateAttachedFunds()
 
       if (this.$refs.addressRecipient) this.$refs.addressRecipient.reset()
       if (this.$refs.tokenRecipient && this.$refs.tokenRecipient.reset) this.$refs.tokenRecipient.reset()
     },
     removeRecipient(idx: number) {
-      this.recipients.splice(idx, 1)
+      const removedRecipient = this.recipients.splice(idx, 1)
       this.updateTask({ actions: [...this.recipients] })
+      this.updateAttachedFunds()
+    },
+    updateAttachedFunds() {
+      const funds: any = {}
+
+      // Loop all recipients to tally cw20s/natives
+      this.recipients.forEach(r => {
+        if (r.balance && r.balance.amount) {
+          funds[r.balance.denom] = funds[r.balance.denom] ? funds[r.balance.denom] : '0'
+          // plz plz plz dont overflow, plzzzzzzzž
+          funds[r.balance.denom] = `${parseInt(funds[r.balance.denom]) + parseInt(r.balance.amount)}`
+        }
+      })
+
+      const attachedFunds = Object.keys(funds).map((k: string) => ({ amount: funds[k] || '0', denom: k })) || []
+
+      // Load context with the token amount needed for FUNDS
+      this.updateTaskContext({ attachedFunds })
     },
   },
 

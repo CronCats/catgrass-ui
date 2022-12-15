@@ -10,9 +10,9 @@ export const useTaskCreator = defineStore(
     }),
     getters: {
       task: (state: any) => state._task,
+      context: (state: any) => state._context,
       // TODO:
       isTaskValid: (state: any) => (true),
-      context: (state: any) => state._context,
     },
     actions: {
       resetTaskCreator() {
@@ -40,6 +40,7 @@ export const useTaskCreator = defineStore(
         Object.keys(obj).forEach(k => {
           this._context[k] = obj[k]
         })
+        console.log('updateTaskContext store', this._context);
       },
     },
   }

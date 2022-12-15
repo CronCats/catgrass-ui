@@ -3,14 +3,16 @@ import { fromBech32 } from "@cosmjs/encoding";
 import { assets, chains } from "chain-registry";
 import type { Chain, AssetList } from "@chain-registry/types";
 import { Decimal } from "@cosmjs/math";
-import { GasPrice, QueryClient, SigningStargateClient } from "@cosmjs/stargate";
+import type { StdFee } from "@cosmjs/stargate";
+import { GasPrice, calculateFee, QueryClient, SigningStargateClient } from "@cosmjs/stargate";
 import { encodeAsAny } from "@cosmjs/proto-signing";
 import { CosmWasmClient, setupWasmExtension } from '@cosmjs/cosmwasm-stargate';
 import { BlockResponse, HttpBatchClient, Tendermint34Client, TxResponse } from "@cosmjs/tendermint-rpc";
 import { cwMsgToEncodeObject } from "@/utils/cwMsgToEncodeObject"
-import type { Coin, Account, ChainMetadata } from "@/utils/types";
+import { CwCroncatCoreQueryClient } from "@/utils/contracts/cw-croncat-core/CwCroncatCore.client"
+import type { Addr, Coin, Account, ChainMetadata } from "@/utils/types";
 import { getChainData, uniq } from "@/utils/helpers";
-import { appConfig, filteredChainNames } from "@/utils/constants";
+import { appConfig, filteredChainNames, deployedContracts } from "@/utils/constants";
 import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
 import { wallets as keplrWallet } from "@cosmos-kit/keplr";
 import { wallets as leapwallets } from "@cosmos-kit/leap";
@@ -272,10 +274,8 @@ export const useMultiWallet = defineStore(
       },
 
       // NON-Signer, Cached querier -- needs to be decoupled from a signed in wallet for all kinds of non-wallet info scenarios
-      async queryContract(contractAddr: string, queryMsg: any, type?: string) {
-        if (!contractAddr || !queryMsg) return Promise.reject('Missing required params')
-        // Derive the current chain name from contract bech32
-        const { prefix } = fromBech32(contractAddr);
+      async getQuerier(prefix: string) {
+        if (!prefix) return Promise.reject('Missing required params')
         let querier = queryProviderCache[prefix]
         if (!querier) {
           // Cache this for future use, walletManager does nice fallback logic
@@ -285,6 +285,16 @@ export const useMultiWallet = defineStore(
         
         if (!querier || !querier.queryContractSmart) return Promise.reject('Requires RPC connection');
         queryProviderCache[prefix] = querier
+
+        return querier
+      },
+
+      // NON-Signer, Cached querier -- needs to be decoupled from a signed in wallet for all kinds of non-wallet info scenarios
+      async queryContract(contractAddr: string, queryMsg: any, type?: string) {
+        if (!contractAddr || !queryMsg) return Promise.reject('Missing required params')
+        // Derive the current chain name from contract bech32
+        const { prefix } = fromBech32(contractAddr);
+        let querier = this.getQuerier(prefix)
 
         try {
           const res = await querier.queryContractSmart(contractAddr, queryMsg)
@@ -347,6 +357,39 @@ export const useMultiWallet = defineStore(
           // Handle errors! Mostlikely the signer doesn't match the active in keplr/wallet. Tell user to check that.
           return Promise.reject(e)
         }
+      },
+
+      calcFee(gasLimit: number, chain: Chain): StdFee | undefined {
+        const feeToken = chain.fees?.fee_tokens[0]
+        if (!feeToken || !feeToken.denom) return;
+        const gasPrice = GasPrice.fromString(`${feeToken?.average_gas_price}${feeToken?.denom}`)
+        if (!gasPrice) return;
+
+        // Fee: (gas / exponent * price) example: 635024/1000000*0.04 = 0.025401 units
+        return calculateFee(gasLimit, gasPrice)
+      },
+
+      // bootstrapped contract methods
+      async getManagerQueryInstance(chain: Chain | ChainMetadata) {
+        const c = chain && chain.chain ? chain.chain : chain
+        const chainName = `${c.chain_name}`.replace('testnet', '')
+        let querier = await this.getQuerier(chainName)
+
+        // manager addr based on network
+        const contractAddr: string = deployedContracts[chainName].manager
+        
+        if (!contractAddr) return;
+
+        return new CwCroncatCoreQueryClient(querier, contractAddr)
+      },
+
+      // contract address hleper
+      getContractAddressesByChain(chain: Chain | ChainMetadata) {
+        const c = chain && chain.chain ? chain.chain : chain
+        const chainName = `${c.chain_name}`.replace('testnet', '')
+
+        // available addrs based on network
+        return deployedContracts[chainName]
       },
 
       addAccount(account: Account) {

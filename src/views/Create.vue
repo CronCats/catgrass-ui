@@ -28,7 +28,7 @@
         </section>
 
         <section :class="{ hidden: currentIndex !== 2 }" id="2">
-          <RecipeSummary />
+          <RecipeSummary ref="summary" />
         </section>
 
         <section :class="{ hidden: currentIndex !== 3 }" id="3">
@@ -102,6 +102,7 @@ import {
   CakeIcon,
   DocumentTextIcon,
 } from '@heroicons/vue/24/outline'
+import { log } from 'console';
 
 const actions = [
   {
@@ -124,6 +125,7 @@ const actions = [
   },
 ]
 
+// TODO: Validation checker, using context
 export default {
   components: {
     Button,
@@ -156,29 +158,13 @@ export default {
 
   methods: {
     ...mapActions(useTaskCreator, ['setDefaultTask', 'resetTaskCreator']),
-    ...mapActions(useMultiWallet, ['simulateExec']),
     async nextSection() {
       this.currentIndex = this.currentIndex + 1
-      console.log('NEXT:', JSON.stringify(this.task), JSON.stringify(this.context));
+      console.log('NEXT:', this.currentIndex, JSON.stringify(this.task), JSON.stringify(this.context));
 
-      if (this.currentIndex === 2) {
-        this.signer = this.accounts[0]
-        // Get current "sender" account's chain name
-        if (this.context?.signer_addr) {
-          const signer = this.accounts.find((a: Account) => a.address === this.context.signer_addr)
-          if (signer) this.signer = signer
-        }
-        
-        if (!this.signer) return;
-        console.log('actions', this.task.actions);
-        const gasUsed = await this.simulateExec(this.signer, this.task.actions)
-        console.log('gasUsed', gasUsed);
-        // TODO: Gas simulation
-        // - get all actions totals
-        // - get base croncat operation gas
-        // - get tally of all funds needed
-        // - compute: occurances
-        // - compute: total funds, total fees
+      // trigger summary computations
+      if (this.currentIndex === 2 && this.$refs.summary) {
+        await this.$refs.summary.computeEstimates()
       }
     },
     prevSection() {

@@ -32,7 +32,7 @@
         </section>
 
         <section :class="{ hidden: currentIndex !== 3 }" id="3">
-          <NetworkSigner :onComplete="nextSection" />
+          <NetworkSigner ref="networksigner" :onComplete="nextSection" />
         </section>
 
         <section :class="{ hidden: currentIndex !== 4 }" id="4">
@@ -165,6 +165,10 @@ export default {
       // trigger summary computations
       if (this.currentIndex === 2 && this.$refs.summary) {
         await this.$refs.summary.computeEstimates()
+      }
+      // load context into signers
+      if (this.currentIndex === 3 && this.$refs.networksigner) {
+        await this.$refs.networksigner.loadContext()
       }
     },
     prevSection() {

@@ -6,13 +6,6 @@
         :style="{ backgroundImage: iconUrl ? `url(${iconUrl})` : '' }"
       ></div>
     </template>
-    <!-- <template v-else>
-      <div
-        class="inline-flex justify-center items-center w-4 h-4 text-black bg-disabled rounded-full"
-      >
-        ?
-      </div>
-    </template> -->
 
     {{formattedAmt}} {{symbol}}
   </span>
@@ -53,9 +46,7 @@ export default {
     },
     // TODO: connect with assets list to find relevant decimals
     formattedAmt() {
-      console.log('BALANCE', this.balance);
-      
-      const amt = this.balance?.denom ? this.balance?.denom : this.amount
+      const amt = this.balance?.amount ? this.balance.amount : this.amount
       return convertMicroDenomToDenomWithDecimals(
         amt,
         this.decimals

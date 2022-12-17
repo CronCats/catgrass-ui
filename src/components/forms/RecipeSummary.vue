@@ -192,7 +192,6 @@ export default {
       // NOTE: Needs to be grabbed for each network involved, when available
       const config = await this.getManagerConfig(signer.chain)
       const contracts = this.getContractAddressesByChain(signer.chain)
-      console.log('contracts manager', contracts.manager);
 
       // get base croncat operation gas, from on-chain config
       // NOTE: Likely config.gas_price will be available, but will utilize chain registry avg
@@ -212,7 +211,6 @@ export default {
       actions.forEach(a => p.push(this.simulateExec(signer, [a])))
 
       const gasAmounts = await Promise.all(p)
-      console.log('gasAmounts', gasAmounts);
 
       // Assign each found gas to each action, including app multiplier
       const tmpActions = actions.map((a, i) => {
@@ -221,7 +219,7 @@ export default {
         return a
       })
       const encodedActions = [...actions].map((a, i) => {
-        // TODO: Make less brittle
+        // TODO: Check if needed
         // only encode wasm execute msgs
         // if ('wasm' in a.msg) a.msg.wasm.execute.msg = encodeMessage(a.msg.wasm.execute.msg)
         return a
@@ -239,7 +237,7 @@ export default {
       // TODO: compute: occurances (try using raf's PR!!)
       const occurances = 3
 
-      // TODO: Compute correct funds to attach, including enough for future fees, any per-action funds
+      // Compute correct funds to attach, including enough for future fees, any per-action funds
       const totalQueriesGas = encodedQueries.length * queryGas
       const totalActionsGas = gasAmounts.length > 0 ? gasAmounts.reduce((p, a) => p + a, 0) : 0
       const gasTotal = gasBaseFee + totalActionsGas + totalQueriesGas
@@ -252,7 +250,6 @@ export default {
       // TODO: setup better funds handler for unique denom coins maths
       const attachedFunds = this.context?.attachedFunds && this.context?.attachedFunds.length > 0 ? this.context?.attachedFunds[0] : null
       const attachedAmount = attachedFunds ? parseInt(attachedFunds.amount) : 0
-      console.log('TODO: attachedAmount', attachedAmount, this.context.attachedFunds);
 
       // fee needs to include the occurance multiplier
       const totalTaskTxFeesAmount = singleTaskTxFees * occurances
@@ -261,7 +258,6 @@ export default {
       const totalAttachedFees = { amount: `${totalTaskTxFeesAmount}`, denom: actionFees.amount[0].denom || signer.chain.base }
       const totalTaskCost = Math.ceil(totalTaskTxFeesAmount + totalTaskTxAttachedAmount)
       const totalTaskTxFees = { amount: `${totalTaskCost}`, denom: actionFees.amount[0].denom || signer.chain.base }
-      console.log('totalTaskTxFees', totalTaskTxFees, totalAttachedFunds, totalAttachedFees);
 
       // Simulate the task creation gas, then add to the summary/attached fees
       const createTaskMsg: { create_task: { task: TaskRequest } } = { create_task: { task: {
@@ -269,22 +265,27 @@ export default {
         actions: encodedActions,
         queries: encodedQueries,
       } } }
-      const wasmMsg = getWasmExecMsg({
+      const signPayload = {
         contract_addr: contracts.manager,
         msg: createTaskMsg,
         // NOTE: This has to be accurate here!!!!
-        funds: [totalTaskTxFees], 
-      })
+        funds: [totalTaskTxFees],
+      }
+      const wasmMsg = getWasmExecMsg(signPayload)
       console.log('wasmMsg', wasmMsg);
       // for directly paying the task creation
       const createTaskGas = await this.simulateExec(signer, [wasmMsg])
       const attachedFee = this.calcFee(createTaskGas, signer.chain)
       const attachedFeeValue = parseInt(attachedFee.amount[0].amount || '0')
-      console.log('createTaskGas', createTaskGas, attachedFee, attachedFeeValue);
 
-      // TODO: Add attachedFee to totalTaskTxFees for UI accuracy
+      // Add attachedFee to totalTaskTxFees for UI accuracy
+      if (attachedFeeValue) {
+        totalAttachedFees.amount = `${parseInt(totalAttachedFees.amount) + attachedFeeValue}`
+        totalTaskTxFees.amount = `${totalTaskCost + attachedFeeValue}`
+      }
 
-      this.updateTaskContext({ totalAttachedFunds, totalAttachedFees, occurances })
+      signPayload.chain = signer.chain
+      this.updateTaskContext({ signPayloads: [signPayload], totalAttachedFunds, totalAttachedFees, occurances })
 
       this.simulating = false
     },

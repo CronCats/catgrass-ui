@@ -4,6 +4,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
   readonly VITE_CONFIG_NETWORK_TYPE: string
   readonly VITE_CONFIG_VERSION: string
+  readonly VITE_CONFIG_GAS_MULTIPLIER: number
   readonly VITE_CONTRACT_MANAGER_ARCHWAY: string
   readonly VITE_CONTRACT_RULES_ARCHWAY: string
   readonly VITE_CONTRACT_MANAGER_JUNO: string

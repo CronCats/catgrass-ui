@@ -2,6 +2,7 @@ export const appConfig = {
   title: import.meta.env.VITE_APP_TITLE || 'CronCat',
   networkType: import.meta.env.VITE_CONFIG_NETWORK_TYPE || 'testnet',
   version: import.meta.env.VITE_CONFIG_VERSION || '',
+  gasLimitMultiplier: import.meta.env.VITE_CONFIG_GAS_MULTIPLIER || 1,
 }
 
 export const deployedContracts = {

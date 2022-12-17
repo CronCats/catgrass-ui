@@ -31,13 +31,18 @@ export interface BalanceProps {
   decimals: number;
   imageUrl?: string;
   usdcValue?: number;
+  balance?: {
+    denom: string;
+    amount: string;
+  }
 }
 
 export default {
-  props: ["denom", "amount", "decimals", "imageUrl"],
+  props: ["denom", "amount", "decimals", "imageUrl", "balance"],
 
   computed: {
     symbol() {
+      if (this.balance?.denom) return nativeTokenLabel(this.balance.denom);
       return nativeTokenLabel(this.denom);
     },
     icon() {
@@ -46,9 +51,13 @@ export default {
     iconUrl() {
       return this.icon || this.imageUrl;
     },
+    // TODO: connect with assets list to find relevant decimals
     formattedAmt() {
+      console.log('BALANCE', this.balance);
+      
+      const amt = this.balance?.denom ? this.balance?.denom : this.amount
       return convertMicroDenomToDenomWithDecimals(
-        this.amount,
+        amt,
         this.decimals
       ).toLocaleString(undefined, {
         maximumFractionDigits: this.decimals,

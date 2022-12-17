@@ -25,7 +25,8 @@ export const useTaskCreator = defineStore(
           boundary: null,
           cw20_coins: [],
           interval: "Once",
-          rules: null,
+          queries: null,
+          transforms: null,
           stop_on_fail: false,
         }
         this._task = task

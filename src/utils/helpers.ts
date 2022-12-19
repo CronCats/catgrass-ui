@@ -63,6 +63,23 @@ export const getAssetByDenomOnChain = (denom: string, chain: any): Asset | undef
   })
 }
 
+// Formats junoswap denom/decimals to chain registry formatting in denom_units
+export const getDenomUnitsFromPoolAssets = (asset: any): any[] => {
+  const units = [
+    {
+      denom: asset.denom,
+      exponent: 0,
+    }
+  ]
+
+  if (asset.decimals) units.push({
+    denom: asset.denom[0] === 'u' ? asset.denom.substring(1, asset.denom.length) : asset.denom,
+    exponent: asset.decimals,
+  })
+
+  return units
+}
+
 export const isNativeAsset = (asset: Asset): boolean => {
   return !Object.keys(asset).includes('address')
 }
@@ -233,7 +250,7 @@ export const formatBoundary = (boundary: any, type: string) => {
   }
 
   if (boundary?.Time && boundary?.Time[type]) {
-    const t = new Date(parseInt(boundary.Time[type]))
+    const t = new Date(parseInt(boundary.Time[type]) / 1000)
     s = t.toLocaleString()
   }
 

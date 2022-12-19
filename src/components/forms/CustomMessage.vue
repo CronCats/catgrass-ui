@@ -141,9 +141,25 @@ import {
 const extensions: any = [json(), oneDark]
 
 const actionDefaultCode: string = `{
-  "method_name": {
-    "example": "YOUR THINGS HERE"
-  }
+  "msg": {
+    "wasm": {
+      "execute": {
+        "contract_addr": "juno1abc123...",
+        "msg": {
+          "do_thing": {
+            "example": "YOUR THINGS HERE"
+          }
+        },
+        "funds": [
+          {
+            "amount": "1000000",
+            "denom": "ujunox"
+          }
+        ]
+      }
+    }
+  },
+  "gas_limit": null
 }`
 const queryDefaultCode: string = `{
   "contract_addr": "COSMWASM_CONTRACT_ADDRESS HERE",

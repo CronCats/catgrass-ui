@@ -43,7 +43,7 @@
               Great Job!
             </h3>
             <p class="text-gray-500">
-              All transactions completed, your recipe will begin immediately.
+              All transactions completed, your recipe is now running successfully.
             </p>
 
             <!-- {/* TODO: Add transaction links to explorers */} -->
@@ -66,7 +66,7 @@
 
           <RouterLink :class="{ hidden: currentIndex < 4, 'mx-auto': true }" to="/profile/recipes">
             <Button size="2xl" variant="secondary">
-              <span>View Recipes</span>
+              <span>View Your Recipes</span>
             </Button>
           </RouterLink>
 

@@ -69,22 +69,8 @@ import Loader from '@/components/Loader.vue'
 import Balance from "@/components/core/display/Balance.vue";
 import RecipeCard from '../RecipeCard.vue'
 import { TaskRequest } from '../../utils/types';
-import { TreeBuffer } from "@lezer/common";
 
-// TODO: Change this!
-const recipeData = {
-  title: 'Dollar Cost Average from $JUNO to $NETA',
-  // subtitle: '',
-  owner: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-  creator: 'juno1hmzk8ngj5zx4gxt80n8z72r50zxvlpk8kpqk6n',
-  // recipeHash: '8855DEBAB57DA0D06781B10501654F947CF4FA2925ACA2C1B26D5323EAF9DEC4',
-  totalBalance: { amount: '10000000', denom: 'ujuno' },
-  actions: [],
-  rules: [],
-  networks: [],
-}
-
-// TODO: Setup a way to change occurances via UI!
+// TODO: Setup a way to change occurrences via UI!
 export default {
   components: {
     ArrowPathRoundedSquareIcon,
@@ -97,13 +83,17 @@ export default {
   data() {
     return {
       simulating: true,
-      recipeData,
     }
   },
 
   computed: {
     ...mapState(useMultiWallet, ['networks', 'accounts']),
     ...mapState(useTaskCreator, ['task', 'context']),
+    recipeData() {
+      return {
+        task: this.task
+      }
+    },
     schedule() {
       const schedule: any = {}
 
@@ -118,7 +108,7 @@ export default {
 
       if (this.fundsTotal) summary.funds_total = this.fundsTotal
       if (this.feesTotal) summary.fees_total = this.feesTotal
-      if (this.occurances) summary.occurances = this.occurances
+      if (this.occurrences) summary.occurrences = this.occurrences
       console.log('summary', summary);
 
       return summary
@@ -144,15 +134,15 @@ export default {
       const denom = attachedFunds && attachedFunds.denom ? attachedFunds.denom : ''
       return { amount, denom }
     },
-    occurances() {
-      if (!this.context?.occurances) return '0'
+    occurrences() {
+      if (!this.context?.occurrences) return '0'
       // return `~${getOccurancesTotal(this.task) }`
-      return `~${this.context?.occurances}`
+      return `${this.context?.occurrences}`
     },
   },
 
   methods: {
-    ...mapActions(useTaskCreator, ['updateTask', 'updateTaskContext']),
+    ...mapActions(useTaskCreator, ['updateTask', 'updateTaskContext', 'getTaskOccurrences']),
     ...mapActions(useMultiWallet, [
       'simulateExec',
       'execContract',
@@ -181,10 +171,10 @@ export default {
       this.simulating = true
       let signer
       // Get current "sender" account's chain name
-      if (this.context?.signer_addr) {
+      if (this.context.signer_addr) {
         signer = this.accounts.find((a: Account) => a.address === this.context.signer_addr)
       }
-      console.log('signer', signer, this.context);
+      console.log('signer', signer, this.context.signer_addr);
       // App level config!
       const gasLimitMultiplier = appConfig.gasLimitMultiplier
 
@@ -204,8 +194,8 @@ export default {
 
       if (!signer) return;
       const p = []
-      const actions = this.task.actions
-      const queries = this.task.queries
+      const actions = this.task.actions || []
+      const queries = this.task.queries || []
       
       // setup promises for each action simulation
       actions.forEach(a => p.push(this.simulateExec(signer, [a])))
@@ -234,15 +224,12 @@ export default {
       this.updateTask({ actions: tmpActions })
       console.log('encodedActions', tmpActions, encodedActions);
 
-      // TODO: compute: occurances (try using raf's PR!!)
-      const occurances = 3
-
       // Compute correct funds to attach, including enough for future fees, any per-action funds
       const totalQueriesGas = encodedQueries.length * queryGas
       const totalActionsGas = gasAmounts.length > 0 ? gasAmounts.reduce((p, a) => p + a, 0) : 0
       const gasTotal = gasBaseFee + totalActionsGas + totalQueriesGas
 
-      // Computing a single task txn cost, then multiplying by occurances
+      // Computing a single task txn cost
       const actionFees = this.calcFee(gasTotal, signer.chain)
       const actionFeeValue = parseInt(actionFees.amount[0].amount || '0')
       // add agent+owner fees into the mix as well!
@@ -251,9 +238,15 @@ export default {
       const attachedFunds = this.context?.attachedFunds && this.context?.attachedFunds.length > 0 ? this.context?.attachedFunds[0] : null
       const attachedAmount = attachedFunds ? parseInt(attachedFunds.amount) : 0
 
+      // compute: occurrences, cap at the max of worst case attached funds/fees maths
+      // TODO: Allow override via input as necessary
+      let occurrences = this.getTaskOccurrences(this.task, this.context.blockHeight || 0)
+      if (attachedAmount / singleTaskTxFees < occurrences) occurrences = Math.floor(attachedAmount / singleTaskTxFees)
+      console.log('occurrences', occurrences);
+
       // fee needs to include the occurance multiplier
-      const totalTaskTxFeesAmount = singleTaskTxFees * occurances
-      const totalTaskTxAttachedAmount = attachedAmount * occurances
+      const totalTaskTxFeesAmount = singleTaskTxFees * occurrences
+      const totalTaskTxAttachedAmount = attachedAmount * occurrences
       const totalAttachedFunds = { amount: `${totalTaskTxAttachedAmount}`, denom: attachedFunds.denom || signer.chain.base }
       const totalAttachedFees = { amount: `${totalTaskTxFeesAmount}`, denom: actionFees.amount[0].denom || signer.chain.base }
       const totalTaskCost = Math.ceil(totalTaskTxFeesAmount + totalTaskTxAttachedAmount)
@@ -285,7 +278,7 @@ export default {
       }
 
       signPayload.chain = signer.chain
-      this.updateTaskContext({ signPayloads: [signPayload], totalAttachedFunds, totalAttachedFees, occurances })
+      this.updateTaskContext({ signPayloads: [signPayload], totalAttachedFunds, totalAttachedFees, occurrences })
 
       this.simulating = false
     },

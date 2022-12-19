@@ -23,14 +23,17 @@ export function encodeMessage(msg: any) {
 }
 
 // REF: https://github.com/DA0-DA0/dao-dao-ui/blob/development/packages/utils/messages.ts#L12
-export function parseEncodedMessage(base64String?: string) {
-  if (base64String) {
+export function decodedMessage(base64String?: string) {
+  if (!base64String) return
+  
+  try {
     const jsonMessage = fromUtf8(fromBase64(base64String))
     if (jsonMessage) {
       return JSON.parse(jsonMessage)
     }
+  } catch (e) {
+    return base64String
   }
-  return undefined
 }
 
 export const getCosmosMsg = (msg: any, gas_limit?: number) => ({ msg, gas_limit, })

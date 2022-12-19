@@ -8,6 +8,25 @@ import {
   ClockIcon,
   RectangleStackIcon,
 } from '@heroicons/vue/24/outline'
+import type { Task } from './types'
+
+// /// Get the hash of a task based on parameters
+// pub fn to_hash(&self) -> String {
+//     let message = format!(
+//         "{:?}{:?}{:?}{:?}{:?}",
+//         self.owner_id, self.interval, self.boundary, self.actions, self.queries
+//     );
+
+//     let hash = Sha256::digest(message.as_bytes());
+//     encode(hash)
+// }
+// /// Get the hash of a task based on parameters
+// pub fn to_hash_vec(&self) -> Vec<u8> {
+//     self.to_hash().into_bytes()
+// }
+export const getTaskHash = (task: Task): string => {
+  return '4556ad31217db053204a307d7a3e8c5fbb18e42c2f2c0f79eeb7292e8e719dc4'
+}
 
 export const Interval = {
   Once: 0,
@@ -34,7 +53,7 @@ export const intervalUxOptions = [
     type: 'cron_daily',
     data: {
       intervalType: Interval.Cron,
-      intervalValue: '0 0 * * *',
+      intervalValue: '0 0 * * * *',
     },
   },
   {
@@ -44,7 +63,7 @@ export const intervalUxOptions = [
     type: 'cron_hourly',
     data: {
       intervalType: Interval.Cron,
-      intervalValue: '0 * * * *',
+      intervalValue: '0 * * * * *',
     },
   },
   {
@@ -54,7 +73,7 @@ export const intervalUxOptions = [
     type: 'cron_minutely',
     data: {
       intervalType: Interval.Cron,
-      intervalValue: '* * * * *',
+      intervalValue: '* * * * * *',
     },
   },
   {
@@ -158,6 +177,6 @@ export const customUxOptions = [
   {
     key: 'CronTab Spec',
     value: Interval.Cron,
-    default: '0 0 * * *', // daily
+    default: '0 0 * * * *', // daily
   },
 ]

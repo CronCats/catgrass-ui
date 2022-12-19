@@ -64,31 +64,33 @@
     <br />
     <br />
 
-    <h3 class="mb-2 text-xl">When should this end?</h3>
-    <SelectList :onChange="setBoundaryEnd" :options="boundaryEndOptions" />
+    <div v-if="intervalOption.type != 'once'">
+      <h3 class="mb-2 text-xl">When should this end?</h3>
+      <SelectList :onChange="setBoundaryEnd" :options="boundaryEndOptions" />
 
-    <div v-if="selectedEnd.type === 'Time' || selectedEnd.type === 'Height'" class="mt-4">
-      <Label v-if="selectedEnd.type === 'Height'" class="mb-2" name="Block Height" />
-      <!-- <Label v-if="selectedEnd.type === 'Time'" class="mb-2" name="Timestamp" /> -->
-      <template v-if="selectedEnd.type === 'Time'">
-        <DatePicker v-model="timestampEnd" mode="dateTime" is24hr>
-          <template v-slot="{ inputValue, togglePopover }">
-            <div @click="togglePopover()"
-              class="flex gap-1 items-center py-[17px] px-3 font-mono text-sm bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default">
-              <CalendarDaysIcon class="mr-2 w-6 h-6" color="currentColor" />
-              <input :value="inputValue" placeholder="Choose End" class="w-full bg-transparent border-none outline-none ring-none body-text"
-                readonly />
-            </div>
-          </template>
-        </DatePicker>
-      </template>
-      <template v-if="selectedEnd.type === 'Height'">
-        <NumberInput :onChange="setBoundaryEndValue" :error="errors.cadence_end_number" sizing="full" />
-      </template>
+      <div v-if="selectedEnd.type === 'Time' || selectedEnd.type === 'Height'" class="mt-4">
+        <Label v-if="selectedEnd.type === 'Height'" class="mb-2" name="Block Height" />
+        <!-- <Label v-if="selectedEnd.type === 'Time'" class="mb-2" name="Timestamp" /> -->
+        <template v-if="selectedEnd.type === 'Time'">
+          <DatePicker v-model="timestampEnd" mode="dateTime" is24hr>
+            <template v-slot="{ inputValue, togglePopover }">
+              <div @click="togglePopover()"
+                class="flex gap-1 items-center py-[17px] px-3 font-mono text-sm bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default">
+                <CalendarDaysIcon class="mr-2 w-6 h-6" color="currentColor" />
+                <input :value="inputValue" placeholder="Choose End" class="w-full bg-transparent border-none outline-none ring-none body-text"
+                  readonly />
+              </div>
+            </template>
+          </DatePicker>
+        </template>
+        <template v-if="selectedEnd.type === 'Height'">
+          <NumberInput :onChange="setBoundaryEndValue" :error="errors.cadence_end_number" sizing="full" />
+        </template>
 
-      <Subtext v-if="selectedEnd.type === 'Height'" :text="recentBlockHeight" />
-      <Subtext v-if="errors.cadence_end_number && selectedStart.type === 'Height'" :error="true" :text="error.cadence_end_number_block" />
-      <Subtext v-if="errors.cadence_end_number && selectedStart.type === 'Time'" :error="true" :text="error.cadence_end_number_ts" />
+        <Subtext v-if="selectedEnd.type === 'Height'" :text="recentBlockHeight" />
+        <Subtext v-if="errors.cadence_end_number && selectedStart.type === 'Height'" :error="true" :text="error.cadence_end_number_block" />
+        <Subtext v-if="errors.cadence_end_number && selectedStart.type === 'Time'" :error="true" :text="error.cadence_end_number_ts" />
+      </div>
     </div>
   </div>
 </template>
@@ -322,13 +324,13 @@ export default {
         if (!this.boundary) this.boundary = {}
         if (this.boundary?.Time) delete this.boundary.Time
         this.boundary.Height = this.boundary.Height || {}
-        this.boundary.Height.start = parseInt(value)
+        this.boundary.Height.start = `${value}`
       }
       if (this.selectedStart.type === 'Time') {
         if (!this.boundary) this.boundary = {}
         if (this.boundary?.Height) delete this.boundary.Height
         this.boundary.Time = this.boundary.Time || {}
-        this.boundary.Time.start = new Date(value).getTime()
+        this.boundary.Time.start = `${new Date(value).getTime() * 1000}`
       }
 
       this.updateTask({ boundary: { ...this.boundary } })
@@ -340,13 +342,13 @@ export default {
         if (!this.boundary) this.boundary = {}
         if (this.boundary?.Time) delete this.boundary.Time
         this.boundary.Height = this.boundary.Height || {}
-        this.boundary.Height.end = parseInt(value)
+        this.boundary.Height.end = `${value}`
       }
       if (this.selectedEnd.type === 'Time') {
         if (!this.boundary) this.boundary = {}
         if (this.boundary?.Height) delete this.boundary.Height
         this.boundary.Time = this.boundary.Time || {}
-        this.boundary.Time.end = new Date(value).getTime()
+        this.boundary.Time.end = `${new Date(value).getTime() * 1000}`
       }
 
       this.updateTask({ boundary: { ...this.boundary } })
@@ -355,6 +357,7 @@ export default {
       const q = await this.querier(this.signer.chain.chain_name)
       const r = await q.status()
       if (r?.syncInfo?.latestBlockHeight) this.blockHeight = r.syncInfo.latestBlockHeight
+      this.updateTaskContext({ blockHeight: this.blockHeight })
     },
   },
 
@@ -366,8 +369,6 @@ export default {
       if (signer) this.signer = signer
     }
     if (!this.signer) return;
-
-    // TODO: Set default interval, based on UI (every day)
 
     // init defaults
     this.getCurrentBlockHeight()

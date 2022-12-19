@@ -33,9 +33,7 @@
 import { mapState, mapActions } from "pinia";
 import { useMultiWallet } from "@/stores/multiWallet";
 import { useTaskCreator } from "@/stores/taskCreator";
-import { uniq } from '@/utils/helpers'
-import { junoswapPools } from '@/utils/junoswap'
-import { getWasmExecMsg } from '@/utils/mvpData'
+import { junoswap, junoswapPools } from '@/utils/junoswap'
 import Label from '@/components/core/display/Label.vue'
 import Subtext from '@/components/core/display/Subtext.vue'
 import AccountSelector from '@/components/core/inputs/AccountSelector.vue'
@@ -46,154 +44,6 @@ import NumberInput from '@/components/core/inputs/NumberInput.vue'
 // TODO: 
 // OSMOSIS Setup
 
-// Formats junoswap denom/decimals to chain registry formatting in denom_units
-const getDenomUnitsFromPoolAssets = (asset: any): any[] => {
-  const units = [
-    {
-      denom: asset.denom,
-      exponent: 0,
-    }
-  ]
-
-  if (asset.decimals) units.push({
-    denom: asset.denom[0] === 'u' ? asset.denom.substring(1, asset.denom.length) : asset.denom,
-    exponent: asset.decimals,
-  })
-  
-  return units
-}
-
-// JUNOSWAP Setup
-const junoswap = {
-  formatToAsset(list) {
-    const allAssets: any = []
-
-    list.forEach((i: any) => {
-      i.pool_assets.forEach(p => {
-        allAssets.push({
-          ...p,
-          base: p.denom,
-          denom_units: getDenomUnitsFromPoolAssets(p),
-        })
-      })
-    })
-
-    return uniq(allAssets, "symbol")
-  },
-
-  filterAssetsToPoolPairTokens(list: any[], fromToken: any) {
-    const allAssets: any = []
-
-    list.forEach((i: any) => {
-      const hasFromToken = i.pool_assets.filter(p => p.denom === fromToken.denom).length > 0
-      
-      if (hasFromToken) i.pool_assets.forEach(p => {
-        if (p.denom !== fromToken.denom) allAssets.push({
-          ...p,
-          base: p.denom,
-          denom_units: getDenomUnitsFromPoolAssets(p),
-        })
-      })
-    })
-
-    return uniq(allAssets, "symbol")
-  },
-
-  getPoolByContext(pools: any[], ctx: any) {
-    let pool
-
-    // find the correct pool
-    pools.forEach(p => {
-      const poolDenoms = p.pool_assets.map(pa => pa.denom)
-
-      if (poolDenoms.includes(ctx.fromToken.denom) && poolDenoms.includes(ctx.toToken.denom)) {
-        pool = p
-      }
-    })
-
-    return pool
-  },
-
-  // Setup query for getting price
-  getQueries(pools: any[], ctx: any) {
-    const queries = []
-    const pool = junoswap.getPoolByContext(pools, ctx)
-    if (!pool) return
-
-    // format query based on the side
-    const query = { contract_addr: pool.swap_address }
-
-    if (pool.pool_assets[0].denom === ctx.fromToken.denom && pool.pool_assets[1].denom === ctx.toToken.denom) {
-      query.msg = {
-        token1_for_token2_price: {
-          token1_amount: ctx.fromToken.amount
-        }
-      }
-    }
-    if (pool.pool_assets[1].denom === ctx.fromToken.denom && pool.pool_assets[0].denom === ctx.toToken.denom) {
-      query.msg = {
-        token2_for_token2_price: {
-          token2_amount: ctx.toToken.amount
-        }
-      }
-    }
-
-    if (!query.msg) return
-    return [{ query }]
-  },
-
-  // Setup transform for setting price in action
-  getTransforms(pools: any[], ctx: any) {
-    const pool = junoswap.getPoolByContext(pools, ctx)
-    if (!pool) return
-    let query_response_path: any = []
-
-    if (pool.pool_assets[0].denom === ctx.fromToken.denom && pool.pool_assets[1].denom === ctx.toToken.denom) {
-      query_response_path = [{ key: 'token2_amount' }]
-    }
-    if (pool.pool_assets[1].denom === ctx.fromToken.denom && pool.pool_assets[0].denom === ctx.toToken.denom) {
-      query_response_path = [{ key: 'token1_amount' }]
-    }
-
-    const transforms = [
-      {
-        action_idx: 0,
-        query_idx: 0,
-        action_path: [
-          { key: 'swap_and_send_to' },
-          { key: 'min_token' }
-        ],
-        query_response_path,
-      }
-    ]
-    return transforms
-  },
-
-  // Setup action for executing swap
-  getActions(pools: any[], ctx: any) {
-    const pool = junoswap.getPoolByContext(pools, ctx)
-    if (!pool) return
-    let input_token = 'Token1'
-    if (pool.pool_assets[1].denom === ctx.fromToken.denom && pool.pool_assets[0].denom === ctx.toToken.denom) {
-      input_token = 'Token2'
-    }
-
-    const wasmMsg = getWasmExecMsg({
-      contract_addr: pool.swap_address,
-      msg: {
-        swap_and_send_to: {
-          input_token,
-          input_amount: ctx.fromToken.amount,
-          min_token: "0", // gets replaced by query+tranform
-          recipient: ctx.toAccount.address || ctx.fromAccount.address
-        }
-      },
-      funds: [ctx.fromToken],
-    })
-
-    return [wasmMsg]
-  },
-}
 
 // TODO: Change to work based on all accounts (and their chain)
 const isSupportedDexChain = (chain: Chain) => {
@@ -366,7 +216,9 @@ export default {
     
     this.setAvailableFromTokens(this.fromAccount)
     // TODO: Figure out why this is!?
-    this.updateTaskContext({ signer_addr: this.fromAccount.address })
+    setTimeout(() => {
+      this.updateTaskContext({ signer_addr: this.fromAccount.address })
+    }, 10)
   },
 };
 </script>

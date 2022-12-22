@@ -3,6 +3,7 @@ export const recipeData = {
   testnet: [
     {
       task: { // DCA
+        "owner_id": "juno18nhxas6yzzef3agczvfr62303enemkl8m84rlhur6q920rzarg5q3dn2fd",
         "actions": [
           {
             "msg": {
@@ -64,6 +65,7 @@ export const recipeData = {
     },
     {
       task: { // Payrolls
+        "owner_id": "juno1s3g0k4fnrvqxr6w82vr6fttfp0965xlyluc2zq",
         "actions": [
           {
             "msg": {
@@ -80,11 +82,29 @@ export const recipeData = {
               }
             },
             "gas_limit": 62116
+          },
+          {
+            "msg": {
+              "bank": {
+                "send": {
+                  "to_address": "juno18nhxas6yzzef3agczvfr62303enemkl8m84rlhur6q920rzarg5q3dn2fd",
+                  "amount": [
+                    {
+                      "amount": "1000000",
+                      "denom": "uneta"
+                    }
+                  ]
+                }
+              }
+            },
+            "gas_limit": 62116
           }
         ],
         "boundary": null,
         "cw20_coins": [],
-        "interval": "Once",
+        "interval": {
+          "Block": 1200
+        },
         "queries": null,
         "transforms": null,
         "stop_on_fail": false
@@ -92,6 +112,7 @@ export const recipeData = {
     },
     {
       task: { // Custom Message
+        "owner_id": "juno18nhxas6yzzef3agczvfr62303enemkl8m84rlhur6q920rzarg5q3dn2fd",
         "actions": [
           {
             "msg": {

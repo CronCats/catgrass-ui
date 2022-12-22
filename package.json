@@ -30,6 +30,7 @@
     "codemirror": "^6.0.1",
     "cron-parser": "^4.7.0",
     "daisyui": "^2.41.0",
+    "js-sha256": "^0.9.0",
     "pinia": "^2.0.23",
     "pinia-persistedstate": "^0.1.2",
     "secure-ls": "^1.2.6",

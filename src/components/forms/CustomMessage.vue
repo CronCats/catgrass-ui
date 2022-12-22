@@ -11,77 +11,16 @@
 
       <h3 class="text-xl">Queries ({{queries.length}})</h3>
       <Subtext text="Request data or check data meets criteria before actions" />
-      <div v-for="(item, idx) in queries" :key="idx" class="relative p-3 mt-2 mb-2 w-full text-left bg-white rounded-md border-2 border-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 focus:ring-gray-200 cursor-default sm:text-sm">
-        <div class="flex w-full justify-between">
-          <div class="flex w-full justify-between" @click="toggleItem(item)">
-            <span>{{ getItemTitle(item, idx) }}</span>
-            <ChevronUpIcon :class="activeItem == item ? 'rotate-180 transform' : ''" class="h-5 w-5 text-gray-500" />
-          </div>
-          <div class="cursor-pointer opacity-30 hover:opacity-100 pr-2 pl-6" @click="removeJsonByType(idx, 'queries')">
-            <TrashIcon class="w-5" />
-          </div>
-        </div>
-        <div :class="activeItem == item ? 'visible' : 'hidden'" class="text-sm text-gray-500 relative w-full pt-2">
-          <Codemirror
-            :modelValue="JSON.stringify(item, null, 2)"
-            :style="{ height: '150px', borderRadius: '6px', overflow: 'scroll' }"
-            :autofocus="false"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-          />
-        </div>
-      </div>
+      <CustomMsgCollapseItem v-for="(item, idx) in queries" :key="idx" :item="item" :active="activeItem == item" :toggleCallback="toggleItem(item)" :removeCallback="() => removeJsonByType(idx, 'queries')" />
 
       <h3 class="mt-6 text-xl">Transforms ({{transforms.length}})</h3>
       <Subtext text="Use context from queries as variables inside other queries or actions" />
-      <div v-for="(item, idx) in transforms" :key="idx" class="relative p-3 mt-2 mb-2 w-full text-left bg-white rounded-md border-2 border-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 focus:ring-gray-200 cursor-default sm:text-sm">
-        <div class="flex w-full justify-between">
-          <div class="flex w-full justify-between" @click="toggleItem(item)">
-            <span>{{ getItemTitle(item, idx) }}</span>
-            <ChevronUpIcon :class="activeItem == item ? 'rotate-180 transform' : ''" class="h-5 w-5 text-gray-500" />
-          </div>
-          <div class="cursor-pointer opacity-30 hover:opacity-100 pr-2 pl-6" @click="removeJsonByType(idx, 'transforms')">
-            <TrashIcon class="w-5" />
-          </div>
-        </div>
-        <div :class="activeItem == item ? 'visible' : 'hidden'" class="text-sm text-gray-500 relative w-full pt-2">
-          <Codemirror
-            :modelValue="JSON.stringify(item, null, 2)"
-            :style="{ height: '150px', borderRadius: '6px', overflow: 'scroll' }"
-            :autofocus="false"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-          />
-        </div>
-      </div>
+      <CustomMsgCollapseItem v-for="(item, idx) in transforms" :key="idx" :item="item" :active="activeItem == item" :toggleCallback="toggleItem(item)" :removeCallback="() => removeJsonByType(idx, 'transforms')" />
 
       <h3 class="mt-6 text-xl">Actions ({{actions.length}})</h3>
       <Subtext text="Execute cross-contract calls with any kind of Cosmos or CosmWasm message" />
-      <div v-for="(item, idx) in actions" :key="idx" class="relative p-3 mt-2 mb-2 w-full text-left bg-white rounded-md border-2 border-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 focus:ring-gray-200 cursor-default sm:text-sm">
-        <div class="flex w-full justify-between">
-          <div class="flex w-full justify-between" @click="toggleItem(item)">
-            <span>{{ getItemTitle(item, idx) }}</span>
-            <ChevronUpIcon :class="activeItem == item ? 'rotate-180 transform' : ''" class="h-5 w-5 text-gray-500" />
-          </div>
-          <div class="cursor-pointer opacity-30 hover:opacity-100 pr-2 pl-6" @click="removeJsonByType(idx, 'actions')">
-            <TrashIcon class="w-5" />
-          </div>
-        </div>
-        <div :class="activeItem == item ? 'visible' : 'hidden'" class="text-sm text-gray-500 relative w-full pt-2">
-          <Codemirror
-            :modelValue="JSON.stringify(item, null, 2)"
-            :style="{ height: '150px', borderRadius: '6px', overflow: 'scroll' }"
-            :autofocus="false"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-          />
-        </div>
-      </div>
+      <CustomMsgCollapseItem v-for="(item, idx) in actions" :key="idx" :item="item" :active="activeItem == item" :toggleCallback="() => toggleItem(item)" :removeCallback="() => removeJsonByType(idx, 'actions')" />
       
-
       <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
       
       <div class="p-2 pb-0 mt-4 bg-gray-100 rounded-lg md:p-4 md:pb-0">
@@ -124,6 +63,7 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import type { Account } from '@/utils/types'
 import { getChainAssetList } from '@/utils/helpers'
 import AccountSelector from '@/components/core/inputs/AccountSelector.vue'
+import CustomMsgCollapseItem from "../core/display/CustomMsgCollapseItem.vue";
 import TokenInputSelector from '@/components/core/inputs/TokenInputSelector.vue'
 import SelectList from '@/components/core/inputs/SelectList.vue'
 import Label from '@/components/core/display/Label.vue'
@@ -221,6 +161,7 @@ const jsonTypeOptions = [
 export default {
   components: {
     AccountSelector,
+    CustomMsgCollapseItem,
     TokenInputSelector,
     ChevronUpIcon,
     Button,

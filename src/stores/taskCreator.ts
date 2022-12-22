@@ -5,9 +5,10 @@ import { Interval } from "@/utils/taskHelpers";
 
 // type: Height | Time
 export function getBoundaryDiff(boundary: Boundary, type: string = 'Height', currentValue: number): any {
+  if (!boundary || !boundary[type]) return { diff: 1, start: 0, end: 0 }
   // only use block height boundaries
-  let start = boundary[type]?.start ? parseInt(boundary[type].start) : 0
-  let end = boundary[type]?.end ? parseInt(boundary[type].end) : 0
+  let start = boundary[type].start ? parseInt(boundary[type].start) : 0
+  let end = boundary[type].end ? parseInt(boundary[type].end) : 0
 
   // adjust start based on current stuffz
   if (currentValue && currentValue >= start) start = currentValue

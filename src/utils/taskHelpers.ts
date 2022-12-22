@@ -1,3 +1,4 @@
+import { sha256, sha224 } from 'js-sha256'
 import {
   AdjustmentsVerticalIcon,
   ArrowTrendingDownIcon,
@@ -10,22 +11,21 @@ import {
 } from '@heroicons/vue/24/outline'
 import type { Task } from './types'
 
-// /// Get the hash of a task based on parameters
-// pub fn to_hash(&self) -> String {
-//     let message = format!(
-//         "{:?}{:?}{:?}{:?}{:?}",
-//         self.owner_id, self.interval, self.boundary, self.actions, self.queries
-//     );
-
-//     let hash = Sha256::digest(message.as_bytes());
-//     encode(hash)
-// }
-// /// Get the hash of a task based on parameters
-// pub fn to_hash_vec(&self) -> Vec<u8> {
-//     self.to_hash().into_bytes()
-// }
+// Get the hash of a task based on parameters
+// let message = format!(
+//   "{:?}{:?}{:?}{:?}{:?}{:?}",
+//   self.owner_id, self.interval, self.boundary, self.actions, self.queries, self.transforms
+// );
 export const getTaskHash = (task: Task): string => {
-  return '4556ad31217db053204a307d7a3e8c5fbb18e42c2f2c0f79eeb7292e8e719dc4'
+  let str = ''
+  // Order matters!
+  const keys = ['owner_id', 'interval', 'boundary', 'actions', 'queries', 'transforms']
+
+  keys.forEach((k: string) => {
+    str += task && task[k] ? JSON.stringify(task[k]) : ''
+  })
+
+  return sha256(str)
 }
 
 export const Interval = {

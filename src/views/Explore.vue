@@ -11,7 +11,7 @@
             :key="index"
             href="/create"
           >
-            <RecipeCard :bgColor="recipe.bgColor" :data="recipe" />
+            <RecipeCard :bgColor="recipe.bgColor" :data="recipe" class="h-full" />
           </a>
         </template>
       </div>

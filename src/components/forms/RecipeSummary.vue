@@ -7,19 +7,33 @@
     <br />
     <br />
 
-    <!-- TODO: Queries -->
-    <!-- TODO: Transforms -->
-    <!-- TODO: Actions -->
-
-    <!-- <Label class="mb-2" name={t('form.actions')} />
-
-    {actions.map((action: Action, id) => (
-      <div key={id} class="p-2 text-gray-100 bg-gray-800 rounded-lg shadow-lg">
-        <ActionItem action={action} />
+    <div class="relative p-3 mt-2 mb-2 w-full text-left bg-white rounded-md cursor-default sm:text-sm">
+      <div class="flex justify-between" @click="toggleAdvanced">
+        <Label name="Advanced" />
+        <ChevronUpIcon :class="showAdvanced != true ? 'rotate-180 transform' : ''" class="h-5 w-5 text-gray-500" />
       </div>
-    ))}
-
-    <br /> -->
+      <div v-if="showAdvanced == true" class="pt-4">
+        <div v-if="task.queries && task.queries.length > 0" class="mb-4">
+          <Label class="mb-2" name="Queries" />
+          <CustomMsgCollapseItem v-for="(item, idx) in task.queries" :key="idx" :item="item" :active="activeItem == item"
+            :toggleCallback="toggleItem(item)" />
+        </div>
+        
+        <div v-if="task.transforms && task.transforms.length > 0" class="mb-4">
+          <Label class="mb-2" name="Transforms" />
+          <CustomMsgCollapseItem v-for="(item, idx) in task.transforms" :key="idx" :item="item" :active="activeItem == item"
+            :toggleCallback="toggleItem(item)" />
+        </div>
+        
+        <div v-if="task.actions && task.actions.length > 0">
+          <Label class="mb-2" name="Actions" />
+          <CustomMsgCollapseItem v-for="(item, idx) in task.actions" :key="idx" :item="item" :active="activeItem == item"
+            :toggleCallback="() => toggleItem(item)" />
+        </div>
+      </div>
+    </div>
+      
+    <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
 
     <Label class="mb-2" name="Schedule" />
 
@@ -63,7 +77,9 @@ import { getWasmExecMsg, encodeMessage } from "@/utils/mvpData"
 import { appConfig } from "@/utils/constants"
 import {
   ArrowPathRoundedSquareIcon,
+  ChevronUpIcon,
 } from '@heroicons/vue/24/outline'
+import CustomMsgCollapseItem from "../core/display/CustomMsgCollapseItem.vue";
 import Label from '@/components/core/display/Label.vue'
 import Loader from '@/components/Loader.vue'
 import Balance from "@/components/core/display/Balance.vue";
@@ -74,6 +90,8 @@ import { TaskRequest } from '../../utils/types';
 export default {
   components: {
     ArrowPathRoundedSquareIcon,
+    ChevronUpIcon,
+    CustomMsgCollapseItem,
     Balance,
     Label,
     Loader,
@@ -83,6 +101,8 @@ export default {
   data() {
     return {
       simulating: true,
+      showAdvanced: false,
+      activeItem: null,
     }
   },
 
@@ -106,9 +126,11 @@ export default {
     summary() {
       const summary: any = {}
 
-      if (this.fundsTotal) summary.funds_total = this.fundsTotal
-      if (this.feesTotal) summary.fees_total = this.feesTotal
-      if (this.occurrences) summary.occurrences = this.occurrences
+      // TODO: Sum fees + deposit
+      summary.total_cost = { amount: '0', denom: '' }
+      if (this.feesTotal) summary.total_fees = this.feesTotal
+      if (this.fundsTotal) summary.total_deposit = this.fundsTotal
+      if (this.occurrences) summary.total_occurrences = this.occurrences
       console.log('summary', summary);
 
       return summary
@@ -150,6 +172,13 @@ export default {
       'getManagerQueryInstance',
       'getContractAddressesByChain',
     ]),
+    toggleAdvanced() {
+      this.showAdvanced = !this.showAdvanced
+    },
+    toggleItem(item: any) {
+      if (this.activeItem === item) this.activeItem = null
+      else this.activeItem = item
+    },
     formatTitle(str: string) {
       return str.replace(/_/g, ' ')
     },
@@ -196,6 +225,8 @@ export default {
       const p = []
       const actions = this.task.actions || []
       const queries = this.task.queries || []
+      console.log('actions', actions);
+      console.log('HERE:', encodeMessage({tick:{}}));
       
       // setup promises for each action simulation
       actions.forEach(a => p.push(this.simulateExec(signer, [a])))
@@ -209,9 +240,8 @@ export default {
         return a
       })
       const encodedActions = [...actions].map((a, i) => {
-        // TODO: Check if needed
         // only encode wasm execute msgs
-        // if ('wasm' in a.msg) a.msg.wasm.execute.msg = encodeMessage(a.msg.wasm.execute.msg)
+        if ('wasm' in a.msg && typeof a.msg.wasm.execute.msg === 'string') a.msg.wasm.execute.msg = encodeMessage(a.msg.wasm.execute.msg)
         return a
       })
       const encodedQueries = [...queries].map((q, i) => {
@@ -221,7 +251,7 @@ export default {
         if ('smart_query' in q) q.smart_query.msg = encodeMessage(q.smart_query.msg)
         return q
       })
-      this.updateTask({ actions: tmpActions })
+      this.updateTask({ actions: encodedActions })
       console.log('encodedActions', tmpActions, encodedActions);
 
       // Compute correct funds to attach, including enough for future fees, any per-action funds

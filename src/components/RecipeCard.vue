@@ -113,6 +113,8 @@ const computeTitle = (task: Task, occurs: number): string => {
     context.startStr = '' // `, starting at block 123,456`
     context.endStr = '' // `, ending at block 123,656`
 
+    // TODO: Consider query context: if balance lower than X
+
     if ('wasm' in a.msg) {
       const m = a.msg.wasm.execute.msg
 
@@ -157,7 +159,7 @@ const computeTitle = (task: Task, occurs: number): string => {
       break;
     case 'payroll':
       const recipients = `recipient${context.totalRecipients != 1 ? 's' : ''}`
-      title = `Send ${context.paymentAssets.join(' & ')} payments to ${context.totalRecipients} ${recipients} ${occurs} ${context.times}${context.startStr}${context.endStr}`
+      title = `Send ${context.paymentAssets.join(' & ')} tokens to ${context.totalRecipients} ${recipients} ${occurs} ${context.times}${context.startStr}${context.endStr}`
       break;
     default:
       break;

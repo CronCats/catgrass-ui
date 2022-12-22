@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import parser from "cron-parser"
 import type { Boundary, Empty, Task, TaskRequest } from "@/utils/types";
-import { Interval } from "@/utils/taskHelpers";
+
+const MAX_OCCURRENCES = 100
+const MAX_END_RANGE = 365 * 24 * 60 * 60 * 1000
 
 // type: Height | Time
 export function getBoundaryDiff(boundary: Boundary, type: string = 'Height', currentValue: number): any {
@@ -31,7 +33,11 @@ export function getOccurrences(task: Task, blockHeight?: number): number {
   if (interval === "Once") occurrences = 1
 
   // Both immediate & block required boundary logic
-  if (interval === "Immediate" || (typeof interval === "object" && Object.keys(interval).includes('Block'))) {
+  if (interval === "Immediate") {
+    const { diff } = getBoundaryDiff(boundary, 'Height', blockHeight)
+    occurrences = diff
+  }
+  if (typeof interval === "object" && Object.keys(interval).includes('Block')) {
     const { diff } = getBoundaryDiff(boundary, 'Height', blockHeight)
     
     // How many times does interval fit inside boundary?
@@ -41,14 +47,17 @@ export function getOccurrences(task: Task, blockHeight?: number): number {
   // Cron string evaluates a diff kind of interval, then needs boundary logic
   if (typeof interval === "object" && Object.keys(interval).includes('Cron')) {
     // only use timestamp boundaries
-    const { diff, start, end } = getBoundaryDiff(boundary, 'Time', +new Date())
+    const curr = +new Date()
+    const { start, end } = getBoundaryDiff(boundary, 'Time', curr)
+    const s = !start || start < curr ? new Date(curr) : new Date(start / 1000)
+    const e = !end || end < curr ? new Date(curr + MAX_END_RANGE) : new Date(end / 1000)    
 
     // calculate cron interval amounts
     try {
-      let i = 0
+      let i = 1
       const iter = parser.parseExpression(interval.Cron, {
-        currentDate: new Date(start / 1000),
-        endDate: new Date(end / 1000),
+        currentDate: s,
+        endDate: e,
         iterator: true
       })
 
@@ -56,18 +65,22 @@ export function getOccurrences(task: Task, blockHeight?: number): number {
         try {
           const o: any = iter.next()
           if (o.done != true) i++
+          if (i > MAX_OCCURRENCES) break;
         } catch (e) {
           break;
         }
       }
 
       // How many times does interval fit inside boundary?
-      occurrences = Math.floor(diff / i)
+      occurrences = i > 0 ? i : 1
     } catch (e) {
       console.log('Cron Parser Error: ' + e.message);
       occurrences = 0
     }
   }
+
+  // Set a max?! yes.
+  if (occurrences > MAX_OCCURRENCES) occurrences = MAX_OCCURRENCES
 
   return occurrences
 }

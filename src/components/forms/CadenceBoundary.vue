@@ -193,8 +193,12 @@ export default {
         case Interval.Once:
           i = "Once"
           break;
+        case Interval.Immediate:
+          i = "Immediate"
+          break;
         case Interval.Block:
-          i = { "Block": interval.data.intervalValue }
+        case null:
+          i = { "Block": interval.data.intervalValue || 100 }
           break;
         case Interval.Cron:
           i = { "Cron": interval.data.intervalValue }

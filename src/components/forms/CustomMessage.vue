@@ -37,11 +37,7 @@
             :indent-with-tab="true"
             :tab-size="2"
             :extensions="extensions"
-            @ready="handleReady"
           />
-          <!-- 
-            @focus="log('focus', $event)"
-            @blur="log('blur', $event)" -->
         </div>
 
         <Button @click="addJsonByType" :active="true" class="mt-6 mb-4 btn-success" variant="primary">

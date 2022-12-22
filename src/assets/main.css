@@ -330,3 +330,9 @@ input[type='number'] {
   overflow: auto;
   min-height: 350px;
 }
+
+.ͼ1 .cm-selectionLayer,
+.ͼ1 .cm-cursorLayer {
+  position: absolute;
+  left: 0;
+}

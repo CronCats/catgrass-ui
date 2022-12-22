@@ -51,7 +51,7 @@
 
           <div class="my-12">
             <a href="/profile/recipes">
-              <RecipeCard :bgColor="successRecipeData.bgColor" :data="successRecipeData" />
+              <RecipeCard :data="recipeData" />
             </a>
           </div>
         </section>
@@ -86,7 +86,7 @@ import { useMultiWallet } from "@/stores/multiWallet";
 import { useTaskCreator } from "@/stores/taskCreator";
 import PageHeader from "@/components/PageHeader.vue";
 import ActionSelector from "@/components/ActionSelector.vue";
-import DollarCostAverage from "@/components/forms/DollarCostAverage.vue";
+// import DollarCostAverage from "@/components/forms/DollarCostAverage.vue";
 import PaymentMultiSend from "@/components/forms/PaymentMultiSend.vue";
 import CustomMessage from "@/components/forms/CustomMessage.vue";
 import CadenceBoundary from "@/components/forms/CadenceBoundary.vue";
@@ -102,18 +102,18 @@ import {
   CakeIcon,
   DocumentTextIcon,
 } from '@heroicons/vue/24/outline'
-import { log } from 'console';
 
 const actions = [
-  {
-    Icon: ArrowPathRoundedSquareIcon,
-    title: 'Dollar Cost Average',
-    subtitle: 'Periodically swap a token to another token',
-    Component: DollarCostAverage,
-  },
+  // NOTE: Junoswap now paused for WYND migration. :(
+  // {
+  //   Icon: ArrowPathRoundedSquareIcon,
+  //   title: 'Dollar Cost Average',
+  //   subtitle: 'Periodically swap a token to another token',
+  //   Component: DollarCostAverage,
+  // },
   {
     Icon: BanknotesIcon,
-    title: 'Payment Multi-Sender',
+    title: 'Token Multi-Sender',
     subtitle: 'Send funds to one or many accounts periodically',
     Component: PaymentMultiSend,
   },
@@ -146,7 +146,6 @@ export default {
     return {
       currentIndex: 0,
       selectedAction: actions[0],
-      successRecipeData: successRecipeData,
       actions,
     }
   },
@@ -154,6 +153,12 @@ export default {
   computed: {
     ...mapState(useMultiWallet, ['accounts']),
     ...mapState(useTaskCreator, ['task', 'context']),
+    recipeData() {
+      return {
+        task: this.task,
+        // TODO: Add task hash once available
+      }
+    },
   },
 
   methods: {

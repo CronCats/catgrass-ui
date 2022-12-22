@@ -7,34 +7,6 @@
     <br />
     <br />
 
-    <div class="relative p-3 mt-2 mb-2 w-full text-left bg-white rounded-md cursor-default sm:text-sm">
-      <div class="flex justify-between" @click="toggleAdvanced">
-        <Label name="Advanced" />
-        <ChevronUpIcon :class="showAdvanced != true ? 'rotate-180 transform' : ''" class="h-5 w-5 text-gray-500" />
-      </div>
-      <div v-if="showAdvanced == true" class="pt-4">
-        <div v-if="task.queries && task.queries.length > 0" class="mb-4">
-          <Label class="mb-2" name="Queries" />
-          <CustomMsgCollapseItem v-for="(item, idx) in task.queries" :key="idx" :item="item" :active="activeItem == item"
-            :toggleCallback="toggleItem(item)" />
-        </div>
-        
-        <div v-if="task.transforms && task.transforms.length > 0" class="mb-4">
-          <Label class="mb-2" name="Transforms" />
-          <CustomMsgCollapseItem v-for="(item, idx) in task.transforms" :key="idx" :item="item" :active="activeItem == item"
-            :toggleCallback="toggleItem(item)" />
-        </div>
-        
-        <div v-if="task.actions && task.actions.length > 0">
-          <Label class="mb-2" name="Actions" />
-          <CustomMsgCollapseItem v-for="(item, idx) in task.actions" :key="idx" :item="item" :active="activeItem == item"
-            :toggleCallback="() => toggleItem(item)" />
-        </div>
-      </div>
-    </div>
-      
-    <hr class="my-8 mx-auto w-1/2 border-2 border-gray-100" />
-
     <Label class="mb-2" name="Schedule" />
 
     <div class="py-2 px-4 bg-white rounded-lg">
@@ -60,6 +32,32 @@
     </div>
 
     <br />
+
+    <div class="relative p-3 mt-2 mb-2 w-full text-left bg-white rounded-md cursor-default sm:text-sm">
+      <div class="flex justify-between" @click="toggleAdvanced">
+        <Label name="Advanced" />
+        <ChevronUpIcon :class="showAdvanced != true ? 'rotate-180 transform' : ''" class="h-5 w-5 text-gray-500" />
+      </div>
+      <div v-if="showAdvanced == true" class="pt-4">
+        <div v-if="task.queries && task.queries.length > 0" class="mb-4">
+          <Label class="mb-2" name="Queries" />
+          <CustomMsgCollapseItem v-for="(item, idx) in task.queries" :key="idx" :item="item" :active="activeItem == item"
+            :toggleCallback="toggleItem(item)" />
+        </div>
+        
+        <div v-if="task.transforms && task.transforms.length > 0" class="mb-4">
+          <Label class="mb-2" name="Transforms" />
+          <CustomMsgCollapseItem v-for="(item, idx) in task.transforms" :key="idx" :item="item" :active="activeItem == item"
+            :toggleCallback="toggleItem(item)" />
+        </div>
+        
+        <div v-if="task.actions && task.actions.length > 0">
+          <Label class="mb-2" name="Actions" />
+          <CustomMsgCollapseItem v-for="(item, idx) in task.actions" :key="idx" :item="item" :active="activeItem == item"
+            :toggleCallback="() => toggleItem(item)" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -126,8 +124,16 @@ export default {
     summary() {
       const summary: any = {}
 
-      // TODO: Sum fees + deposit
-      summary.total_cost = { amount: '0', denom: '' }
+      // Sum fees + deposit
+      if (this.feesTotal && this.fundsTotal) {
+        // TODO: Abstract this
+        const feeAmt = this.feesTotal ? parseInt(this.feesTotal.amount) : 0
+        const fundAmt = this.fundsTotal ? parseInt(this.fundsTotal.amount) : 0
+        const denom = this.fundsTotal.denom ? this.fundsTotal.denom : ''
+        summary.total_cost = { amount: `${feeAmt + fundAmt}`, denom }
+      }
+      else summary.total_cost = { amount: '0', denom: '' }
+      
       if (this.feesTotal) summary.total_fees = this.feesTotal
       if (this.fundsTotal) summary.total_deposit = this.fundsTotal
       if (this.occurrences) summary.total_occurrences = this.occurrences
@@ -214,10 +220,14 @@ export default {
 
       // get base croncat operation gas, from on-chain config
       // NOTE: Likely config.gas_price will be available, but will utilize chain registry avg
-      const gasBaseFee = parseInt(`${config.gas_base_fee}`) || 30000;
-      const actionFee = parseInt(`${config.gas_action_fee}`) || 20000;
+      // REF: https://github.com/CronCats/cw-croncat/blob/main/contracts/cw-croncat/src/contract.rs#L19
+      const gasBaseFee = parseInt(`${config.gas_base_fee}`) || 300000;
+      const actionFee = parseInt(`${config.gas_action_fee}`) || 130000;
       const agentFee = parseInt(`${config.agent_fee}`) || 5; // percent
       const ownerFee = parseInt(`${config.owner_fee}`) || 5; // percent
+      const baseExitFee = 60000; // TODO: Was getting weird simulate issues, and needed this number to get passed "not enough funds attached" warning.
+      console.log(gasBaseFee, actionFee, agentFee, ownerFee);
+      
       // based on initial testing, easy external query adds this much gas (~57980)
       const queryGas = 60000
 
@@ -226,12 +236,14 @@ export default {
       const actions = this.task.actions || []
       const queries = this.task.queries || []
       console.log('actions', actions);
+      console.log('queries', queries);
       console.log('HERE:', encodeMessage({tick:{}}));
       
       // setup promises for each action simulation
       actions.forEach(a => p.push(this.simulateExec(signer, [a])))
 
       const gasAmounts = await Promise.all(p)
+      console.log('gasAmounts', gasAmounts);
 
       // Assign each found gas to each action, including app multiplier
       const tmpActions = actions.map((a, i) => {
@@ -261,6 +273,8 @@ export default {
 
       // Computing a single task txn cost
       const actionFees = this.calcFee(gasTotal, signer.chain)
+      console.log('actionFees', actionFees);
+      
       const actionFeeValue = parseInt(actionFees.amount[0].amount || '0')
       // add agent+owner fees into the mix as well!
       const singleTaskTxFees = Math.ceil(actionFeeValue + (actionFeeValue * ((agentFee + ownerFee) / 100)))
@@ -271,15 +285,13 @@ export default {
       // compute: occurrences, cap at the max of worst case attached funds/fees maths
       // TODO: Allow override via input as necessary
       let occurrences = this.getTaskOccurrences(this.task, this.context.blockHeight || 0)
-      if (attachedAmount / singleTaskTxFees < occurrences) occurrences = Math.floor(attachedAmount / singleTaskTxFees)
-      console.log('occurrences', occurrences);
 
       // fee needs to include the occurance multiplier
       const totalTaskTxFeesAmount = singleTaskTxFees * occurrences
       const totalTaskTxAttachedAmount = attachedAmount * occurrences
       const totalAttachedFunds = { amount: `${totalTaskTxAttachedAmount}`, denom: attachedFunds.denom || signer.chain.base }
       const totalAttachedFees = { amount: `${totalTaskTxFeesAmount}`, denom: actionFees.amount[0].denom || signer.chain.base }
-      const totalTaskCost = Math.ceil(totalTaskTxFeesAmount + totalTaskTxAttachedAmount)
+      const totalTaskCost = Math.ceil(totalTaskTxFeesAmount + totalTaskTxAttachedAmount + baseExitFee)
       const totalTaskTxFees = { amount: `${totalTaskCost}`, denom: actionFees.amount[0].denom || signer.chain.base }
 
       // Simulate the task creation gas, then add to the summary/attached fees

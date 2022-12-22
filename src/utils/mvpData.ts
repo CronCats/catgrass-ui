@@ -53,20 +53,32 @@ export const getWasmExecMsg = ({ contract_addr, msg, funds }: { contract_addr: A
 // TODO: Remove someday :)
 export const queriesCatalog = {
   hasBalanceLogicType({ contract_addr, type, address, required_balance }: { contract_addr: Addr, address: Addr, type: string, required_balance: GenericBalance }) {
+    // return {
+    //   contract_addr,
+    //   msg: encodeMessage({
+    //     // has_balance_gte
+    //     // has_balance_gt
+    //     // has_balance_lte
+    //     // has_balance_lt
+    //     // has_balance_eq
+    //     // has_balance_ne
+    //     [type]: {
+    //       address,
+    //       required_balance,
+    //     }
+    //   }),
+    // }
     return {
-      contract_addr,
-      msg: encodeMessage({
-        // has_balance_gte
-        // has_balance_gt
-        // has_balance_lte
-        // has_balance_lt
-        // has_balance_eq
-        // has_balance_ne
-        [type]: {
-          address,
-          required_balance,
-        }
-      }),
+      // has_balance_gte
+      // has_balance_gt
+      // has_balance_lte
+      // has_balance_lt
+      // has_balance_eq
+      // has_balance_ne
+      [type]: {
+        address,
+        required_balance,
+      }
     }
   },
   getNativeBalance({ contract_addr, address, denom }: { contract_addr: Addr, address: Addr, denom: string }) {

@@ -188,6 +188,9 @@ export default {
     if (!acc) return
     this.availableTokens = getChainAssetList(acc.chain)
     if (this.availableTokens) this.selectedToken = this.availableTokens[0]
+    setTimeout(() => {
+      this.updateTaskContext({ signer_addr: acc.address })
+    }, 10)
   },
 };
 </script>

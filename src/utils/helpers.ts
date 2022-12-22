@@ -59,7 +59,7 @@ export const getAssetByDenomOnChain = (denom: string, chain: any): Asset | undef
   if (!assetList) return;
   
   return assetList.find((a: Asset) => {
-    return a.denom_units.find(d => d.denom === fromMicroDenom(denom))
+    return a.denom_units.find(d => d.denom === fromMicroDenom(`${denom}`))
   })
 }
 

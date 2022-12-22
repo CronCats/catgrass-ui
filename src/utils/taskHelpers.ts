@@ -53,7 +53,7 @@ export const intervalUxOptions = [
     type: 'cron_daily',
     data: {
       intervalType: Interval.Cron,
-      intervalValue: '0 0 * * * *',
+      intervalValue: '0 0 0 * * *',
     },
   },
   {
@@ -63,7 +63,7 @@ export const intervalUxOptions = [
     type: 'cron_hourly',
     data: {
       intervalType: Interval.Cron,
-      intervalValue: '0 * * * * *',
+      intervalValue: '0 0 * * * *',
     },
   },
   {
@@ -73,7 +73,7 @@ export const intervalUxOptions = [
     type: 'cron_minutely',
     data: {
       intervalType: Interval.Cron,
-      intervalValue: '* * * * * *',
+      intervalValue: '0 * * * * *',
     },
   },
   {

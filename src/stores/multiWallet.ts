@@ -362,8 +362,12 @@ export const useMultiWallet = defineStore(
       calcFee(gasLimit: number, chain: Chain): StdFee | undefined {
         const feeToken = chain.fees?.fee_tokens[0]
         if (!feeToken || !feeToken.denom) return;
+        console.log('feeToken', feeToken);
+        
         const gasPrice = GasPrice.fromString(`${feeToken?.average_gas_price}${feeToken?.denom}`)
+        console.log('gasPrice', gasPrice);
         if (!gasPrice) return;
+        console.log('fake fee', feeToken.average_gas_price * gasLimit);
 
         // Fee: (gas / exponent * price) example: 635024/1000000*0.04 = 0.025401 units
         return calculateFee(gasLimit, gasPrice)

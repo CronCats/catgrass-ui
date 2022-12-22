@@ -43,7 +43,7 @@
       <Label v-if="selectedStart.type === 'Height'" class="mb-2" name="Block Height" />
       <!-- <Label v-if="selectedStart.type === 'Time'" class="mb-2" name="Timestamp" /> -->
       <template v-if="selectedStart.type === 'Time'">
-        <DatePicker v-model="timestampStart" mode="dateTime" is24hr is-expanded>
+        <DatePicker v-model="timestampStart" mode="dateTime" circle is24hr is-expanded>
           <template v-slot="{ inputValue, togglePopover }">
             <div @click="togglePopover()" class="flex gap-1 items-center py-[17px] px-3 font-mono text-sm bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default">
               <CalendarDaysIcon class="mr-2 w-6 h-6" color="currentColor" />
@@ -72,7 +72,7 @@
         <Label v-if="selectedEnd.type === 'Height'" class="mb-2" name="Block Height" />
         <!-- <Label v-if="selectedEnd.type === 'Time'" class="mb-2" name="Timestamp" /> -->
         <template v-if="selectedEnd.type === 'Time'">
-          <DatePicker v-model="timestampEnd" mode="dateTime" is24hr>
+          <DatePicker v-model="timestampEnd" mode="dateTime" circle is24hr>
             <template v-slot="{ inputValue, togglePopover }">
               <div @click="togglePopover()"
                 class="flex gap-1 items-center py-[17px] px-3 font-mono text-sm bg-white rounded-lg border-2 focus-within:outline-none focus-within:ring-2 ring-offset-0 transition border-default">

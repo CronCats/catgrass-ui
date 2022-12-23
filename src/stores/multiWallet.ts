@@ -13,11 +13,11 @@ import { CwCroncatCoreQueryClient } from "@/utils/contracts/cw-croncat-core/CwCr
 import type { Addr, Coin, Account, ChainMetadata } from "@/utils/types";
 import { getChainData, uniq } from "@/utils/helpers";
 import { appConfig, filteredChainNames, deployedContracts } from "@/utils/constants";
-// import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
-// import { wallets as keplrWallet } from "@cosmos-kit/keplr";
-// import { wallets as leapwallets } from "@cosmos-kit/leap";
+import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
+import { wallets as keplrWallet } from "@cosmos-kit/keplr";
+import { wallets as leapwallets } from "@cosmos-kit/leap";
 import { wallets as vectiswallets } from "@cosmos-kit/vectis";
-// import { wallets as trustwallets } from "@cosmos-kit/trust";
+import { wallets as trustwallets } from "@cosmos-kit/trust";
 // TODO: Soon!
 // import { wallets as omniwallets } from "@cosmos-kit/omni";
 
@@ -155,11 +155,11 @@ export const useMultiWallet = defineStore(
           chains: filteredChains,
           assetLists: assets,
           wallets: [
-            // ...keplrWallet,
-            // ...cosmostationWallets,
-            // ...leapwallets,
+            ...keplrWallet,
+            ...cosmostationWallets,
+            ...leapwallets,
             ...vectiswallets,
-            // ...trustwallets,
+            ...trustwallets,
             // ...omniwallets,
           ],
           signerOptions: {
@@ -169,7 +169,6 @@ export const useMultiWallet = defineStore(
                 const fee = chain?.fees.fee_tokens[0]
                 const feeUnit = `${fee.low_gas_price || fee.fixed_min_gas_price}${fee.denom.replace('u', '')}`
                 gasPrice = GasPrice.fromString(feeUnit)
-                console.log('fee', chain, fee, feeUnit);
               }
               return { gasPrice };
             },
@@ -179,7 +178,6 @@ export const useMultiWallet = defineStore(
                 const fee = chain?.fees.fee_tokens[0]
                 const feeUnit = `${fee.low_gas_price || fee.fixed_min_gas_price}${fee.denom.replace('u', '')}`
                 gasPrice = GasPrice.fromString(feeUnit)
-                console.log('fee', chain, fee, feeUnit);
               }
               return { gasPrice };
             },

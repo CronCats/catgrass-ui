@@ -41,7 +41,6 @@
   "devDependencies": {
     "@chain-registry/types": "^0.13.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
-    "@rollup/plugin-commonjs": "^24.0.0",
     "@rushstack/eslint-patch": "^1.1.4",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.8",

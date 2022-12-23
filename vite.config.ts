@@ -4,10 +4,6 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-// import commonjs from '@rollup/plugin-commonjs';
-// commonjs({
-//   include: /node_modules/
-// }), 
 
 // https://vitejs.dev/config/
 export default defineConfig({

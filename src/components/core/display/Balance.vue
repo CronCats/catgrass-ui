@@ -35,8 +35,10 @@ export default {
 
   computed: {
     symbol() {
-      if (this.balance?.denom) return nativeTokenLabel(this.balance.denom);
-      return nativeTokenLabel(this.denom);
+      let s = ''
+      if (this.denom) s = nativeTokenLabel(this.denom);
+      if (this.balance?.denom) s = nativeTokenLabel(this.balance.denom);
+      return `${s}`.toUpperCase();
     },
     icon() {
       return nativeTokenLogoURI(this.denom);

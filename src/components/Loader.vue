@@ -8,6 +8,7 @@
       :width="size"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
+      :fill="$attrs.color"
     >
       <defs>
         <filter
@@ -30,7 +31,7 @@
       <g filter="url(#ldio-uz2zvqbd99e-filter)">
         <g transform="translate(50 50)">
           <g>
-            <circle cx="17" cy="0" r="5" fill="#357D92">
+            <circle cx="17" cy="0" r="5" :fill="color || '#357D92'">
               <animate
                 attributeName="r"
                 keyTimes="0;0.5;1"
@@ -53,7 +54,7 @@
         </g>
         <g transform="translate(50 50)">
           <g>
-            <circle cx="17" cy="0" r="5" fill="#357D92">
+            <circle cx="17" cy="0" r="5" :fill="color || '#357D92'">
               <animate
                 attributeName="r"
                 keyTimes="0;0.5;1"
@@ -76,7 +77,7 @@
         </g>
         <g transform="translate(50 50)">
           <g>
-            <circle cx="17" cy="0" r="5" fill="#357D92">
+            <circle cx="17" cy="0" r="5" :fill="color || '#357D92'">
               <animate
                 attributeName="r"
                 keyTimes="0;0.5;1"
@@ -99,7 +100,7 @@
         </g>
         <g transform="translate(50 50)">
           <g>
-            <circle cx="17" cy="0" r="5" fill="#357D92">
+            <circle cx="17" cy="0" r="5" :fill="color || '#357D92'">
               <animate
                 attributeName="r"
                 keyTimes="0;0.5;1"
@@ -122,7 +123,7 @@
         </g>
         <g transform="translate(50 50)">
           <g>
-            <circle cx="17" cy="0" r="5" fill="#357D92">
+            <circle cx="17" cy="0" r="5" :fill="color || '#357D92'">
               <animate
                 attributeName="r"
                 keyTimes="0;0.5;1"
@@ -152,5 +153,6 @@
 defineProps<{
   size?: number | string;
   className?: string;
+  color?: string;
 }>();
 </script>

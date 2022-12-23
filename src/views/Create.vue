@@ -43,7 +43,7 @@
               Great Job!
             </h3>
             <p class="text-gray-500">
-              All transactions completed, your recipe is now running successfully.
+              All transactions completed, your recipe is now running!
             </p>
 
             <!-- {/* TODO: Add transaction links to explorers */} -->
@@ -154,9 +154,10 @@ export default {
     ...mapState(useMultiWallet, ['accounts']),
     ...mapState(useTaskCreator, ['task', 'context']),
     recipeData() {
+      const taskHash = this.context.taskHash ? this.context.taskHash : null
       return {
         task: this.task,
-        // TODO: Add task hash once available
+        taskHash,
       }
     },
   },

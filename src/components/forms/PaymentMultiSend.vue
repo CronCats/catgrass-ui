@@ -135,7 +135,7 @@ export default {
         balance: this.balance,
       }
       // push the action needed for payment
-      const ctx = this.context
+      const ctx = this.task
       let actions = ctx.actions || []
       const asset = getAssetByDenomOnChain(recipient.balance.denom, this.selectedAccount?.chain)
       if (!asset) return;

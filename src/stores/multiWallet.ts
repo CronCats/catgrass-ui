@@ -13,12 +13,13 @@ import { CwCroncatCoreQueryClient } from "@/utils/contracts/cw-croncat-core/CwCr
 import type { Addr, Coin, Account, ChainMetadata } from "@/utils/types";
 import { getChainData, uniq } from "@/utils/helpers";
 import { appConfig, filteredChainNames, deployedContracts } from "@/utils/constants";
-import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
-import { wallets as keplrWallet } from "@cosmos-kit/keplr";
-import { wallets as leapwallets } from "@cosmos-kit/leap";
+// import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
+// import { wallets as keplrWallet } from "@cosmos-kit/keplr";
+// import { wallets as leapwallets } from "@cosmos-kit/leap";
 import { wallets as vectiswallets } from "@cosmos-kit/vectis";
-// TODO: Soon!
 // import { wallets as trustwallets } from "@cosmos-kit/trust";
+// TODO: Soon!
+// import { wallets as omniwallets } from "@cosmos-kit/omni";
 
 // cache'd queriers, intentionally blank
 const tmProviderCache: any = {}
@@ -153,45 +154,34 @@ export const useMultiWallet = defineStore(
         const walletManager: any = WalletProvider({
           chains: filteredChains,
           assetLists: assets,
-          wallets: [...keplrWallet, ...cosmostationWallets, ...leapwallets, ...vectiswallets],
+          wallets: [
+            // ...keplrWallet,
+            // ...cosmostationWallets,
+            // ...leapwallets,
+            ...vectiswallets,
+            // ...trustwallets,
+            // ...omniwallets,
+          ],
           signerOptions: {
-            // TODO: Define these better!
             signingStargate: (chain: Chain) => {
-              switch (chain.chain_name) {
-                case "osmosis":
-                  return {
-                    gasPrice: new GasPrice(Decimal.zero(1), "uosmo"),
-                  };
-                case "juno":
-                  return {
-                    // gasPrice: new GasPrice("0.025", "ujuno"),
-                    gasPrice: GasPrice.fromString("0.025juno"),
-                  };
-                default:
-                  const fee = chain?.fees.fee_tokens[0]
-                  return {
-                    gasPrice: GasPrice.fromString(`${fee.low_gas_price}${fee.denom}`),
-                  };
+              let gasPrice: any = `0.04${chain.bech32_prefix}`
+              if (chain?.fees && chain?.fees.fee_tokens) {
+                const fee = chain?.fees.fee_tokens[0]
+                const feeUnit = `${fee.low_gas_price || fee.fixed_min_gas_price}${fee.denom.replace('u', '')}`
+                gasPrice = GasPrice.fromString(feeUnit)
+                console.log('fee', chain, fee, feeUnit);
               }
+              return { gasPrice };
             },
-            // TODO: Define these better!
             signingCosmwasm: (chain: Chain) => {
-              switch (chain.chain_name) {
-                case "osmosis":
-                  return {
-                    gasPrice: new GasPrice(Decimal.zero(1), "uosmo"),
-                  };
-                case "juno":
-                  return {
-                    // gasPrice: new GasPrice("0.025", "ujuno"),
-                    gasPrice: GasPrice.fromString("0.025juno"),
-                  };
-                default:
-                  const fee = chain?.fees.fee_tokens[0]
-                  return {
-                    gasPrice: GasPrice.fromString(`${fee.low_gas_price}${fee.denom}`),
-                  };
+              let gasPrice: any = `0.04${chain.bech32_prefix}`
+              if (chain?.fees && chain?.fees.fee_tokens) {
+                const fee = chain?.fees.fee_tokens[0]
+                const feeUnit = `${fee.low_gas_price || fee.fixed_min_gas_price}${fee.denom.replace('u', '')}`
+                gasPrice = GasPrice.fromString(feeUnit)
+                console.log('fee', chain, fee, feeUnit);
               }
+              return { gasPrice };
             },
           },
           endpointOptions: {

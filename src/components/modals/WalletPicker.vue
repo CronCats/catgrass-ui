@@ -75,7 +75,7 @@
                   <Label class="mt-8 mb-2" name="More Wallet Options:" />
 
                   <div v-for="(wallet, index) in installWallets" :key="index">
-                    <a :href="wallet.link" target="_blank"
+                    <a :href="walletDownloadLink(wallet)" target="_blank"
                       class="flex w-full bg-gray-50 hover:bg-gray-200 cursor-pointer p-2 my-1 rounded-lg">
                       <div class="flex-col" :style="{ minWidth: '42px' }">
                         <LogoFromImage class="block mr-4" :size="42" :src="wallet.logo || ''" />
@@ -265,6 +265,8 @@ export default {
       this.view = !newAccount ? this.viewStatus.errored : this.viewStatus.connected;
     },
     walletDownloadLink(wallet: any) {
+      console.log('wallet', wallet);
+      
       return wallet.downloads[0].link
     },
   }

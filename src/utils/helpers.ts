@@ -259,46 +259,6 @@ export const formatBoundary = (boundary: any, type: string) => {
   return s
 }
 
-export const getFeeEstimateTotal = () => {
-  // gasEstimate: 66668
-  // gasMultiplier: 1.3
-  // gasAmount: 86668
-  // fee: Math.round(0.025 * 86668) / 1e6 = 0.002167
-}
-
-// Returns the total estimated count of occurances based on 3 scenarios:
-// 1. Block range (Once, Immediate, Block Height)
-// 2. Cron Spec
-// 3. Rule Based - Queries make open ended results. This will always report 1, until future computations can be made.
-//      TODO: Add a way to make advanced funding adjustments if people wanna fill their task more than the computed.
-export const getOccurancesTotal = (task: TaskRequest) => {
-  // Once / Immediate: will always report 1, until future computations can be made.
-  if (task.interval === 'Once' || task.interval === 'Immediate') return 1
-
-  // Block Height: compute range
-  if ('Block' in task.interval) {
-    const start = 0
-    const end = 0
-    const blocks = parseInt(task.interval.Block)
-
-    // if have start && end, then we know finite range (includes current block), rounds down
-    if (start && end) return Math.floor((end - start) / blocks)
-
-    // if have no end, then we have to know total funds attached, rounds down
-    if (start && !end) {
-      // TODO: THIS!!
-      // return Math.floor((end - start) / parseInt(task.interval.Block))
-    }
-
-    // if no start/end, we must assume this is happening only 1 time
-    return 1
-  }
-
-  // Cron Spec: compute range
-  if ('Cron' in task.interval) {
-    // TODO: Compute the times based on funds, rounds down
-    return 'TODO:'
-  }
-
-  return 0
+export const ellipseLongString = (str: any, len: number = 8) => {
+  return `${str.substring(0, len / 2)}...${str.substring(str.length - (len / 2), str.length)}`
 }

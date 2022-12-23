@@ -1,10 +1,6 @@
 <template>
   <small
-    :class="{
-      'text-red-700': error,
-      'text-gray-700': !error,
-      ...className
-    }"
+    :class="error ? 'text-red-700' : className || 'text-gray-700'"
   >
     {{text}}
   </small>

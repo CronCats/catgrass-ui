@@ -1,5 +1,5 @@
 <template>
-  <div class="flex cursor-pointer">
+  <div class="flex flex-col cursor-pointer">
     <div
       class="flex flex-col h-full relative z-20 p-6 text-white bg-pink-600 rounded-2xl"
       :style="{ backgroundColor: bgColor, transition: 'background-color 220ms ease-in-out' }"
@@ -45,21 +45,20 @@
       </div>
     </div>
     <div
-      v-if="data.recipeHash"
+      v-if="data.taskHash"
       class="relative z-10 px-6 pt-5 pb-2 -mt-4 bg-gray-200 rounded-b-2xl"
     >
       <div class="flex justify-between text-xs">
         <small
           class="overflow-hidden pr-8 my-auto w-full text-ellipsis break-normal"
         >
-          Hash:&nbsp;
-          <span class="overflow-hidden text-ellipsis break-normal">
-            {{ data.recipeHash }}
+          ID: <span class="overflow-hidden text-ellipsis break-normal">
+            {{ ellipseLongString(data.taskHash, 32) }}
           </span>
         </small>
-        <DocumentDuplicateIcon
+        <!-- <DocumentDuplicateIcon
           class="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer"
-        />
+        /> -->
       </div>
     </div>
   </div>
@@ -76,7 +75,7 @@ import type { Action, Addr, ChainMetadata, Coin, Rule, Task } from "@/utils/type
 import { appConfig } from '@/utils/constants'
 import { junoswap, junoswapPools } from '@/utils/junoswap'
 import { decodedMessage } from "@/utils/mvpData";
-import { getChainData, fromMicroDenom } from "@/utils/helpers";
+import { getChainData, fromMicroDenom, ellipseLongString } from "@/utils/helpers";
 import { getTaskHash } from "@/utils/taskHelpers";
 import { getChainForAccount } from "@/stores/multiWallet";
 import Balance from "./core/display/Balance.vue";
@@ -191,6 +190,7 @@ export default defineComponent({
   data() {
     return {
       task: null as Task | null,
+      ellipseLongString,
     }
   },
 
@@ -209,9 +209,15 @@ export default defineComponent({
       return ''
     },
     subtitle() {
-      const b = this.task && this.task.owner_id ? fromBech32(this.task.owner_id) : null
-      const prefix = b && b.prefix ? `.${b.prefix}` : ''
-      return `by <strong>croncat${prefix}</strong>`
+      let s = ''
+      if (this.task && this.task.owner_id) {
+        s = ellipseLongString(this.task.owner_id, 16)
+      } else {
+        const b = this.recipeChains.length > 0 ? this.recipeChains[0].asset.display : null
+        s = `croncat.${b}`
+      }
+      
+      return `by <strong>${s}</strong>`
     },
     stats() {
       let copycats = 0
